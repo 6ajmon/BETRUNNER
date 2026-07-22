@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dv8e5e5yflpig"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_126ht"]
+size = Vector3(4, 0.2, 4)
+
+[node name="FloorPanel" type="AnimatableBody3D" unique_id=1924456861]
+collision_layer = 2
+collision_mask = 0
+sync_to_physics = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=247288766]
+shape = SubResource("BoxShape3D_126ht")
+debug_color = Color(0, 3.3270552, 3.8332746, 0.77254903)

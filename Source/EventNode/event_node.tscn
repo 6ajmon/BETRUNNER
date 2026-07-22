@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cx8mg5moh6k3y"]
+
+[ext_resource type="Script" uid="uid://u4gco1pgre3a" path="res://Source/EventNode/EventNode.cs" id="1_30710"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_126ht"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_126ht"]
+
+[node name="EventNode" type="Area3D" unique_id=1389099546]
+collision_layer = 4
+script = ExtResource("1_30710")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=639539813]
+shape = SubResource("SphereShape3D_126ht")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=733530217]
+mesh = SubResource("SphereMesh_126ht")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

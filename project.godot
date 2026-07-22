@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="New Game Project"
+run/main_scene="uid://c6e3g3qojq4hp"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameManager="*uid://b7cr6skqn6wyy"
 
 [display]
 
@@ -50,6 +55,12 @@ Run={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
+
+[layer_names]
+
+3d_physics/layer_1="Player"
+3d_physics/layer_2="Walls"
+3d_physics/layer_3="Event"
 
 [physics]
 

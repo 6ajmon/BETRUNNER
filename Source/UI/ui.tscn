@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bg4brd8hew2uc"]
+
+[ext_resource type="Script" uid="uid://d1tvbpv8330po" path="res://Source/UI/Ui.cs" id="1_a1sus"]
+
+[node name="UI" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_countdownTimer", "_countdownLabel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a1sus")
+_countdownTimer = NodePath("Timer")
+_countdownLabel = NodePath("MarginContainer/TimeLabel")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1842317583]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 15
+
+[node name="TimeLabel" type="Label" parent="MarginContainer" unique_id=899549681]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 48
+text = "15.00"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Timer" type="Timer" parent="." unique_id=994486562]
+one_shot = true
