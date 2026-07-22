@@ -18,6 +18,7 @@ mesh = SubResource("CapsuleMesh_sdrnp")
 [node name="Camera3D" type="Camera3D" parent="." unique_id=544643710]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5194597, -0.16218841)
 current = true
+fov = 90.0
 
 [node name="Movement" type="Node" parent="." unique_id=108750409]
 script = ExtResource("2_joxjj")

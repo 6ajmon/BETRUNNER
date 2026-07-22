@@ -28,6 +28,8 @@ public partial class Player : CharacterBody3D
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 	}
 
+	public float CameraPitch => _pitch;
+
 	public void BumpCamera(float amount)
 	{
 		_cameraBump += amount;
@@ -67,10 +69,24 @@ public partial class Player : CharacterBody3D
 		if (Mathf.Abs(_cameraBump) < 0.0005f)
 			_cameraBump = 0.0f;
 
-		// Dynamic FOV based on horizontal speed
-		float speed = new Vector3(Velocity.X, 0, Velocity.Z).Length();
+		// Dynamic FOV — direction-based
+		Vector3 horizontalVel = new Vector3(Velocity.X, 0, Velocity.Z);
+		float speed = horizontalVel.Length();
 		float maxSpeed = _movement?.MaxSprintSpeed ?? 10.0f;
-		float t = Mathf.Clamp(speed / maxSpeed, 0.0f, 1.0f);
+		float speedRatio = Mathf.Clamp(speed / maxSpeed, 0.0f, 1.0f);
+
+		// Direction factor: dot(moveDir, cameraForward) → 1 = full FOV, 0 = no FOV
+		float dirFactor = 0.0f;
+		if (speed > 0.1f)
+		{
+			Vector3 moveDir = horizontalVel / speed;
+			Vector3 camForward = -_camera.GlobalTransform.Basis.Z;
+			camForward.Y = 0;
+			camForward = camForward.Normalized();
+			dirFactor = Mathf.Clamp(moveDir.Dot(camForward), 0.0f, 1.0f);
+		}
+
+		float t = speedRatio * dirFactor;
 		float targetFov = Mathf.Lerp(DefaultFov, MaxFov, t);
 		_currentFov = Mathf.Lerp(_currentFov, targetFov, FovLerpSpeed * dt);
 		_camera.Fov = _currentFov;
