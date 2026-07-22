@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://d3o83ikxfnant" path="res://MovingPlatform.cs" id="2_gaqjs"]
 [ext_resource type="PackedScene" uid="uid://cti64iusnyvhe" path="res://Assets/gtlf/Floor_Tile_Carpet_Grey.glb" id="3_yclfp"]
 [ext_resource type="PackedScene" uid="uid://qurbeehr7tu1" path="res://Assets/gtlf/Wall_Red.glb" id="4_yclfp"]
+[ext_resource type="PackedScene" uid="uid://i0eepuf3dxvn" path="res://Assets/gtlf/Wall_With_Door_Red.glb" id="7_gaqjs"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dcwvj"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -209,3 +210,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 4)
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=10995941]
 transform = Transform3D(-0.7186315, 0, 0.6953911, 0, 1, 0, -0.6953911, 0, -0.7186315, 3.8439462, 9.675089, -20.41606)
+
+[node name="SciFi Assets33" parent="." unique_id=1174944177 instance=ExtResource("7_gaqjs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -4)
