@@ -38,4 +38,5 @@ public partial class MovingPlatform : Node3D
 			_reverseDirection = false;
 		}
 	}
+	
 }
