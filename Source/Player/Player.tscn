@@ -8,7 +8,7 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sdrnp"]
 
 [node name="Player" type="CharacterBody3D" unique_id=839987394 node_paths=PackedStringArray("_camera", "_movement")]
-collision_mask = 3
+collision_mask = 11
 script = ExtResource("1_r3bfb")
 _camera = NodePath("Camera3D")
 _movement = NodePath("Movement")
