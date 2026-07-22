@@ -8,6 +8,7 @@ public enum PlayerMovementState
 
 public partial class PlayerMovement : Node
 {
+	private const uint COLLISION_MASK = 2; // Layer 2: "World" (walls, floors, etc.)
 	[ExportGroup("Movement")]
 	[Export] public float WalkSpeed { get; set; } = 5.0f;
 	[Export] public float SprintSpeed { get; set; } = 10.0f;
@@ -371,7 +372,7 @@ public partial class PlayerMovement : Node
 			var query = PhysicsRayQueryParameters3D.Create(
 				pos + Vector3.Up * 0.6f,
 				pos + dir * WallDetectionDistance + Vector3.Up * 0.6f,
-				(uint)1
+				COLLISION_MASK
 			);
 			var result = spaceState.IntersectRay(query);
 			if (result.Count > 0)
@@ -400,7 +401,7 @@ public partial class PlayerMovement : Node
 		// there's no room to stand. Exclude the player's own body.
 		var spaceState = _player.GetWorld3D().DirectSpaceState;
 		Vector3 origin = _player.GlobalPosition + Vector3.Up * checkHeight + wallNormal * 0.2f;
-		var query = PhysicsRayQueryParameters3D.Create(origin, origin - wallNormal * 1.0f, (uint)1);
+		var query = PhysicsRayQueryParameters3D.Create(origin, origin - wallNormal * 1.0f, COLLISION_MASK);
 		query.Exclude = new Godot.Collections.Array<Rid> { _player.GetRid() };
 		var result = spaceState.IntersectRay(query);
 
