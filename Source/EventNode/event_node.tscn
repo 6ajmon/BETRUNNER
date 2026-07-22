@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cx8mg5moh6k3y"]
 
-[ext_resource type="Script" uid="uid://u4gco1pgre3a" path="res://Source/EventNode.cs" id="1_30710"]
+[ext_resource type="Script" uid="uid://u4gco1pgre3a" path="res://Source/EventNode/EventNode.cs" id="1_30710"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_126ht"]
 

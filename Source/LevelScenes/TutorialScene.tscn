@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c6e3g3qojq4hp"]
 
 [ext_resource type="PackedScene" uid="uid://d38pigd56rdna" path="res://Assets/gtlf/Hazard_Floor_1.glb" id="1_upkqs"]
-[ext_resource type="Script" uid="uid://d3o83ikxfnant" path="res://Source/MovingPlatform/MovingPlatform.cs" id="2_swqnx"]
+[ext_resource type="Script" uid="uid://d3o83ikxfnant" path="res://Source/MapObjects/MovingPlatform/MovingPlatform.cs" id="2_swqnx"]
 [ext_resource type="PackedScene" uid="uid://dv8e5e5yflpig" path="res://Source/MapObjects/FloorPanel.tscn" id="3_csbdl"]
 [ext_resource type="PackedScene" uid="uid://6wccyr8pnnbw" path="res://Assets/gtlf/Floor_Metal_Square.glb" id="4_0ra11"]
 [ext_resource type="PackedScene" uid="uid://73cnbyc160xa" path="res://Assets/gtlf/Ramp_Grey.glb" id="5_jgtea"]
@@ -12,7 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://bh2u0crmw0n4c" path="res://Source/MapObjects/wall.tscn" id="10_mjvqp"]
 [ext_resource type="PackedScene" uid="uid://i0eepuf3dxvn" path="res://Assets/gtlf/Wall_With_Door_Red.glb" id="11_y4sfe"]
 [ext_resource type="PackedScene" uid="uid://b50je4svyhxt6" path="res://Source/Player/Player.tscn" id="12_sskno"]
-[ext_resource type="PackedScene" uid="uid://cx8mg5moh6k3y" path="res://Source/event_node.tscn" id="13_swqnx"]
+[ext_resource type="PackedScene" uid="uid://cx8mg5moh6k3y" path="res://Source/EventNode/event_node.tscn" id="13_swqnx"]
+[ext_resource type="PackedScene" uid="uid://bg4brd8hew2uc" path="res://Source/UI/ui.tscn" id="14_csbdl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dcwvj"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -419,3 +420,9 @@ _speed = 2.5
 
 [node name="EventNode" parent="." unique_id=431245136 instance=ExtResource("13_swqnx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03910494, 5.4384594, -0.06849599)
+_event = 1
+
+[node name="UI" parent="." unique_id=1477386783 instance=ExtResource("14_csbdl")]
+
+[node name="EventNode2" parent="." unique_id=1389099546 instance=ExtResource("13_swqnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.93939, 1.1958802, -2.0043042)
