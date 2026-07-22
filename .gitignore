@@ -1,0 +1,41 @@
+# Godot 4+
+.godot/
+
+# Local project overrides (created by editor)
+*.godot-local/
+*.godot-global/
+*.godot-presentation/
+
+# Android export
+/android/
+
+# .NET — local installs and cache
+.mono/
+.dotnet/
+**/Generated_*/
+**/Generated_*.cs
+obj/
+bin/
+
+# Game exports
+export/
+exports/
+
+/AGENTS.md
+/SKILL.md
+
+# System
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDE/editors
+.vscode/
+.idea/
+*.user
+*.suo
