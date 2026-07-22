@@ -15,28 +15,31 @@ public partial class PlayerMovement : Node
 	[Export] public float AirAcceleration { get; set; } = 8.0f;
 	[Export] public float Friction { get; set; } = 12.0f;
 	[Export] public float AirFriction { get; set; } = 0.8f;
+	[Export] public float AirTurnPenalty { get; set; } = 0.03f;
 
 	[ExportGroup("Jump")]
-	[Export] public float JumpVelocity { get; set; } = 9.0f;
-	[Export] public float Gravity { get; set; } = 28.0f;
+	[Export] public float JumpVelocity { get; set; } = 7.0f;
+	[Export] public float Gravity { get; set; } = 18.0f;
 	[Export] public float CoyoteTime { get; set; } = 0.08f;
 	[Export] public float JumpBufferTime { get; set; } = 0.1f;
 	[Export] public float JumpCamBump { get; set; } = 0.03f;
 	[Export] public float LandCamBump { get; set; } = -0.04f;
 
 	[ExportGroup("Wall Jump")]
-	[Export] public float WallJumpHorizontalForce { get; set; } = 18.0f;
-	[Export] public float WallJumpVerticalForce { get; set; } = 10.0f;
-	[Export] public float WallJumpCooldownTime { get; set; } = 0.15f;
-	[Export] public float WallJumpAirPenaltyDuration { get; set; } = 0.5f;
-	[Export] public float WallDetectionDistance { get; set; } = 0.6f;
+	[Export] public float WallJumpHorizontalForce { get; set; } = 9.0f;
+	[Export] public float WallJumpSpeedMultiplier { get; set; } = 2.5f;
+	[Export] public float WallJumpVerticalForce { get; set; } = 7.0f;
+	[Export] public float WallJumpCooldownTime { get; set; } = 0.01f;
+	[Export] public float WallJumpAirPenaltyDuration { get; set; } = 0.1f;
+	[Export] public float WallDetectionDistance { get; set; } = 0.8f;
 
 	[ExportGroup("Climb Boost")]
-	[Export] public float ClimbBoostVertical { get; set; } = 8.0f;
+	[Export] public float ClimbBoostVertical { get; set; } = 6.5f;
 	[Export] public float ClimbBoostHorizontal { get; set; } = 0.0f;
-	[Export] public float ClimbStartDelay { get; set; } = 0.1f;
+	[Export] public float ClimbStartDelay { get; set; } = 0.16f;
 	[Export] public float ClimbCooldownTime { get; set; } = 0.6f;
-	[Export] public float PlayerHeight { get; set; } = 1.8f;
+    [Export] public float ClimbClearanceHeight { get; set; } = 1.0f;
+    [Export] public float PlayerHeight { get; set; } = 1.8f;
 
 	public float MaxSprintSpeed => SprintSpeed;
 	public PlayerMovementState CurrentState => _state;
@@ -64,6 +67,9 @@ public partial class PlayerMovement : Node
 
 	// Jump input tracking (Space key)
 	private bool _spacePrevPressed;
+
+	// Velocity before MoveAndSlide collision snapping
+	private Vector3 _preCollisionVelocity;
 
 	public override void _Ready()
 	{
@@ -159,7 +165,26 @@ public partial class PlayerMovement : Node
 			Vector3 wallNormal = FindWallNormal();
 			if (wallNormal != Vector3.Zero)
 			{
-				_velocity = wallNormal * WallJumpHorizontalForce;
+				// Speed towards the wall — use pre-collision velocity so wall hit doesn't eat it
+				float speedIntoWall = Mathf.Max(0.0f, -_preCollisionVelocity.Dot(wallNormal));
+				float pushStrength = WallJumpHorizontalForce + WallJumpSpeedMultiplier * Mathf.Log(1.0f + speedIntoWall);
+				_velocity = wallNormal * pushStrength;
+
+				// Add input direction along the wall — boost when running parallel to it
+				Vector3 inputDir = GetInputDirection();
+				if (inputDir != Vector3.Zero)
+				{
+					float inputIntoWall = Mathf.Max(0.0f, -inputDir.Dot(wallNormal));
+					float dot = inputDir.Dot(wallNormal);
+					Vector3 alongWall = inputDir - wallNormal * dot;
+					if (alongWall.LengthSquared() > 0.001f)
+					{
+						// Less sideways boost the more you're running INTO the wall
+						float alongFactor = 1.0f - inputIntoWall;
+						_velocity += alongWall.Normalized() * SprintSpeed * alongFactor;
+					}
+				}
+
 				_velocity.Y = WallJumpVerticalForce;
 				_wallJumpCooldown = WallJumpCooldownTime;
 				_airControlPenalty = WallJumpAirPenaltyDuration;
@@ -185,8 +210,8 @@ public partial class PlayerMovement : Node
 		ApplyAirMovement(delta);
 		ApplyVelocityAndMove(delta);
 
-		// Climb boost: touching wall + ascending + ready + delay elapsed + pressing W
-		if (_player.IsOnWall() && _velocity.Y > 0.0f && _climbReady && _jumpTimer >= ClimbStartDelay && _climbCooldown <= 0.0f && Input.IsActionPressed("MoveForward"))
+		// Climb boost: touching wall + ascending + ready + delay elapsed + pressing W + headroom
+		if (_player.IsOnWall() && _velocity.Y > 0.0f && _climbReady && _jumpTimer >= ClimbStartDelay && _climbCooldown <= 0.0f && Input.IsActionPressed("MoveForward") && HasClimbClearance())
 		{
 			DoClimbBoost();
 		}
@@ -275,9 +300,25 @@ public partial class PlayerMovement : Node
 
 		if (inputDir != Vector3.Zero)
 		{
+			// Direction reversal penalty: harder to turn around in air
+			float turnPenalty = 1.0f;
+			Vector3 currentH = new Vector3(_velocity.X, 0.0f, _velocity.Z);
+			float currentSpeed = currentH.Length();
+			if (currentSpeed > 0.1f)
+			{
+				float alignment = inputDir.Dot(currentH / currentSpeed);
+				if (alignment < 0.0f)
+				{
+					// Input opposes current velocity — scale acceleration down
+					float t = 1.0f + alignment; // 0 at full opposite, 1 at perpendicular
+					turnPenalty = Mathf.Lerp(AirTurnPenalty, 1.0f, t);
+				}
+			}
+
 			Vector3 targetVel = inputDir * SprintSpeed;
-			_velocity.X = Mathf.Lerp(_velocity.X, targetVel.X, AirAcceleration * airAccelFactor * delta);
-			_velocity.Z = Mathf.Lerp(_velocity.Z, targetVel.Z, AirAcceleration * airAccelFactor * delta);
+			float effectiveAccel = AirAcceleration * airAccelFactor * turnPenalty;
+			_velocity.X = Mathf.Lerp(_velocity.X, targetVel.X, effectiveAccel * delta);
+			_velocity.Z = Mathf.Lerp(_velocity.Z, targetVel.Z, effectiveAccel * delta);
 		}
 		else
 		{
@@ -288,6 +329,7 @@ public partial class PlayerMovement : Node
 
 	private void ApplyVelocityAndMove(float delta)
 	{
+		_preCollisionVelocity = _velocity;
 		_player.Velocity = _velocity;
 		_player.MoveAndSlide();
 		_velocity = _player.Velocity;
@@ -341,6 +383,28 @@ public partial class PlayerMovement : Node
 			}
 		}
 		return Vector3.Zero;
+	}
+
+	/// <summary>Check if there's enough headroom above the wall for the player to stand on top.</summary>
+	private bool HasClimbClearance()
+	{
+		if (!_player.IsOnWall())
+			return false;
+
+		// Use the actual wall normal from the last MoveAndSlide collision
+		Vector3 wallNormal = _player.GetWallNormal();
+		float checkHeight = PlayerHeight + ClimbClearanceHeight;
+
+		// Cast from slightly in front of the wall towards it, at head height.
+		// If we hit something (wall continues up or another block on top),
+		// there's no room to stand. Exclude the player's own body.
+		var spaceState = _player.GetWorld3D().DirectSpaceState;
+		Vector3 origin = _player.GlobalPosition + Vector3.Up * checkHeight + wallNormal * 0.2f;
+		var query = PhysicsRayQueryParameters3D.Create(origin, origin - wallNormal * 1.0f, (uint)1);
+		query.Exclude = new Godot.Collections.Array<Rid> { _player.GetRid() };
+		var result = spaceState.IntersectRay(query);
+
+		return result.Count <= 0;
 	}
 
 	/// <summary>Boost player up and slightly forward — like a wall-assisted second jump.</summary>
