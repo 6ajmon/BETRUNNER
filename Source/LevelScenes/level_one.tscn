@@ -1,0 +1,152 @@
+[gd_scene format=3 uid="uid://bya1w335wfbrl"]
+
+[ext_resource type="PackedScene" uid="uid://bb8t61o8gjj5l" path="res://Source/LevelScenes/WaitingRoom.tscn" id="1_ylal4"]
+[ext_resource type="PackedScene" uid="uid://daawyxd153sdm" path="res://Assets/gtlf/Floor_Tile_Carpet_Red.glb" id="2_pn0le"]
+[ext_resource type="PackedScene" uid="uid://dv8e5e5yflpig" path="res://Source/MapObjects/FloorPanel.tscn" id="3_bqgef"]
+[ext_resource type="PackedScene" uid="uid://d38pigd56rdna" path="res://Assets/gtlf/Hazard_Floor_1.glb" id="4_vvojn"]
+[ext_resource type="Script" uid="uid://d3o83ikxfnant" path="res://Source/MapObjects/MovingPlatform/MovingPlatform.cs" id="5_k83py"]
+[ext_resource type="PackedScene" uid="uid://qurbeehr7tu1" path="res://Assets/gtlf/Wall_Red.glb" id="7_35dpr"]
+[ext_resource type="PackedScene" uid="uid://bh2u0crmw0n4c" path="res://Source/MapObjects/wall.tscn" id="8_xhkal"]
+[ext_resource type="PackedScene" uid="uid://cx8mg5moh6k3y" path="res://Source/EventNode/event_node.tscn" id="9_xhkal"]
+[ext_resource type="PackedScene" uid="uid://bg4brd8hew2uc" path="res://Source/UI/ui.tscn" id="10_vkhhe"]
+[ext_resource type="Script" uid="uid://d1s8onifidf5r" path="res://Source/LevelScenes/Preview.cs" id="10_xhkal"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yev6l"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_8v7kk"]
+sky_material = SubResource("ProceduralSkyMaterial_yev6l")
+
+[sub_resource type="Environment" id="Environment_yvvyt"]
+background_mode = 2
+sky = SubResource("Sky_8v7kk")
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xhkal"]
+size = Vector3(100, 1, 50)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xhkal"]
+size = Vector2(100, 50)
+
+[sub_resource type="Curve3D" id="Curve3D_35dpr"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0.241, 0.112, 0, 0, 0, 0, 0, 0, 45.428684, 0, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[node name="LevelOne" type="Node3D" unique_id=1460699718]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1453606977]
+environment = SubResource("Environment_yvvyt")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=685590980]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="MapContainer" type="Node3D" parent="." unique_id=1326409321]
+
+[node name="WaitingRoom" parent="MapContainer" unique_id=1226178956 instance=ExtResource("1_ylal4")]
+
+[node name="Floor" type="Node3D" parent="MapContainer" unique_id=2058969069]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
+
+[node name="F4" parent="MapContainer/Floor" unique_id=2045216136 instance=ExtResource("2_pn0le")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/Floor/F4" unique_id=1924456861 instance=ExtResource("3_bqgef")]
+
+[node name="MovingPlatform" parent="MapContainer" unique_id=1347168704 instance=ExtResource("4_vvojn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 4)
+script = ExtResource("5_k83py")
+_target = Vector3(0, 0, -12)
+_speed = 2.0
+
+[node name="FloorPanel" parent="MapContainer/MovingPlatform" unique_id=1975008222 instance=ExtResource("3_bqgef")]
+
+[node name="MovingPlatform2" parent="MapContainer" unique_id=844358150 instance=ExtResource("4_vvojn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, -12)
+script = ExtResource("5_k83py")
+_target = Vector3(0, 0, 12)
+_speed = 2.0
+
+[node name="FloorPanel" parent="MapContainer/MovingPlatform2" unique_id=2107897147 instance=ExtResource("3_bqgef")]
+
+[node name="JumpWall" type="Node3D" parent="MapContainer" unique_id=1298369258]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 0)
+
+[node name="Wall2" parent="MapContainer/JumpWall" unique_id=749041566 instance=ExtResource("7_35dpr")]
+
+[node name="Wall" parent="MapContainer/JumpWall/Wall2" unique_id=364830610 instance=ExtResource("8_xhkal")]
+
+[node name="Wall3" parent="MapContainer/JumpWall" unique_id=251690686 instance=ExtResource("7_35dpr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="Wall" parent="MapContainer/JumpWall/Wall3" unique_id=489479435 instance=ExtResource("8_xhkal")]
+
+[node name="JumpWall2" type="Node3D" parent="MapContainer" unique_id=1415120076]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, -6)
+
+[node name="Wall2" parent="MapContainer/JumpWall2" unique_id=438510102 instance=ExtResource("7_35dpr")]
+
+[node name="Wall" parent="MapContainer/JumpWall2/Wall2" unique_id=1518710854 instance=ExtResource("8_xhkal")]
+
+[node name="Wall3" parent="MapContainer/JumpWall2" unique_id=449828702 instance=ExtResource("7_35dpr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="Wall" parent="MapContainer/JumpWall2/Wall3" unique_id=1551606634 instance=ExtResource("8_xhkal")]
+
+[node name="JumpWall3" type="Node3D" parent="MapContainer" unique_id=271118735]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 0)
+
+[node name="Wall2" parent="MapContainer/JumpWall3" unique_id=25455484 instance=ExtResource("7_35dpr")]
+
+[node name="Wall" parent="MapContainer/JumpWall3/Wall2" unique_id=2046460174 instance=ExtResource("8_xhkal")]
+
+[node name="Wall3" parent="MapContainer/JumpWall3" unique_id=1757862486 instance=ExtResource("7_35dpr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="Wall" parent="MapContainer/JumpWall3/Wall3" unique_id=887700584 instance=ExtResource("8_xhkal")]
+
+[node name="EndFloor" parent="MapContainer" unique_id=599627585 instance=ExtResource("2_pn0le")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 0, -3)
+
+[node name="FloorPanel" parent="MapContainer/EndFloor" unique_id=545606217 instance=ExtResource("3_bqgef")]
+
+[node name="Events" type="Node3D" parent="." unique_id=1643115249]
+
+[node name="StartLevel" parent="Events" unique_id=1389099546 instance=ExtResource("9_xhkal")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1, -4)
+
+[node name="SetSpawn" parent="Events/StartLevel" unique_id=325995591 instance=ExtResource("9_xhkal")]
+_event = 3
+
+[node name="EndLevel" parent="Events" unique_id=613073637 instance=ExtResource("9_xhkal")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 1, -3)
+_event = 1
+
+[node name="BackToSpawn" parent="Events" unique_id=383528875 instance=ExtResource("9_xhkal")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.188936, -2.279169, -4)
+_event = 2
+
+[node name="CollisionShape3D" parent="Events/BackToSpawn" index="0" unique_id=639539813]
+shape = SubResource("BoxShape3D_xhkal")
+
+[node name="MeshInstance3D" parent="Events/BackToSpawn" index="1" unique_id=733530217]
+mesh = SubResource("PlaneMesh_xhkal")
+
+[node name="UI" parent="." unique_id=1477386783 instance=ExtResource("10_vkhhe")]
+
+[node name="Path3D" type="Path3D" parent="." unique_id=156258744]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 4, -4)
+curve = SubResource("Curve3D_35dpr")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D" unique_id=1165583208]
+transform = Transform3D(0.0024653114, 0.0053048795, -0.9999784, 0, 0.99998003, 0.0053049033, 0.999993, -1.3078272e-05, 0.0024652756, 0, 0.241, 0.112)
+script = ExtResource("10_xhkal")
+
+[node name="Camera3D" type="Camera3D" parent="Path3D/PathFollow3D" unique_id=116565718]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
+
+[editable path="Events/BackToSpawn"]

@@ -26,6 +26,7 @@ public partial class Player : CharacterBody3D
 
 		_currentFov = DefaultFov;
 		Input.MouseMode = Input.MouseModeEnum.Captured;
+		GameManager.Instance.PlayerCharacter = this;
 	}
 
 	public float CameraPitch => _pitch;
@@ -34,6 +35,19 @@ public partial class Player : CharacterBody3D
 	{
 		_cameraBump += amount;
 	}
+	
+	public void LookAtDirection(Vector3 direction)
+{
+    direction = direction.Normalized();
+    
+    Rotation = new Vector3(
+        Rotation.X,
+        Mathf.Atan2(-direction.X, -direction.Z),
+        Rotation.Z
+    );
+    
+    _pitch = Mathf.Asin(direction.Y);
+}
 
 	public override void _Input(InputEvent @event)
 	{

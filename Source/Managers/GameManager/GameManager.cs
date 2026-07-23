@@ -7,6 +7,9 @@ public partial class GameManager : Node
 	[Signal] public delegate void StartCountdownEventHandler(double time);
 	[Signal] public delegate void StopCountdownEventHandler();
 	
+	public Vector3 SpawnPosition { get; set; }
+	public Player PlayerCharacter { get; set; }
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -15,5 +18,12 @@ public partial class GameManager : Node
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+	}
+
+
+	public void PlayerToSpawn(Vector3 facingDirection)
+	{
+		PlayerCharacter.GlobalPosition = SpawnPosition;
+		PlayerCharacter.LookAtDirection(facingDirection);
 	}
 }

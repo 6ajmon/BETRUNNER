@@ -134,7 +134,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.051263, 0.22723866, 42.709
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.629782, 0, 42.507233)
 
 [node name="SciFi Assets33" parent="." unique_id=1174944177 instance=ExtResource("33_hcesq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.5499735, 0, 42.35365)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.555649, -0.030017853, 42.338406)
 
 [node name="SciFi Assets34" parent="." unique_id=749041566 instance=ExtResource("34_2vr7j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2439866, 0, 36.481453)
