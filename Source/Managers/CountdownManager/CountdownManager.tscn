@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c0272nme14a8y"]
+
+[ext_resource type="Script" uid="uid://c4yiim8mi4ivm" path="res://Source/Managers/CountdownManager/CountdownManager.cs" id="1_6l8ok"]
+
+[node name="CountdownManager" type="Node" unique_id=1131327225]
+script = ExtResource("1_6l8ok")

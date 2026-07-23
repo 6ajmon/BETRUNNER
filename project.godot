@@ -18,7 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameManager="*uid://b7cr6skqn6wyy"
-CameraManager="*uid://4syjceh2p516"
+CameraManager="*uid://cd7jiewdlsnft"
 
 [display]
 
