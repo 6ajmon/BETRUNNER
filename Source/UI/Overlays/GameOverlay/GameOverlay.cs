@@ -3,13 +3,13 @@ using System;
 
 public partial class GameOverlay : Control
 {
-	private Timer _countdownTimer;
 	[Export] private Label _countdownLabel;
+
+	private double _remainingTime;
+	private bool _isRunning;
 
 	public override void _Ready()
 	{
-		_countdownTimer = GetNodeOrNull<Timer>("Timer");
-
 		if (GameManager.Instance != null)
 		{
 			GameManager.Instance.StartCountdown += StartCountdown;
@@ -28,26 +28,29 @@ public partial class GameOverlay : Control
 
 	public override void _Process(double delta)
 	{
-		if (GodotObject.IsInstanceValid(_countdownTimer) && _countdownLabel != null)
-		{
-			_countdownLabel.Text = Math.Round(_countdownTimer.TimeLeft, 1).ToString();
-		}
+		if (!_isRunning || !GodotObject.IsInstanceValid(_countdownLabel))
+			return;
+
+		_remainingTime -= delta;
+		_countdownLabel.Text = $"{_remainingTime:F1}s";
 	}
 
 	private void StartCountdown(double time)
 	{
-		if (!GodotObject.IsInstanceValid(this) || !GodotObject.IsInstanceValid(_countdownTimer))
+		if (!GodotObject.IsInstanceValid(this))
 			return;
 
-		_countdownTimer.Paused = false;
-		_countdownTimer.OneShot = true;
-		_countdownTimer.Start(time);
+		_remainingTime = time;
+		_isRunning = true;
 	}
 
 	private void StopCountdown()
 	{
-		if (GodotObject.IsInstanceValid(this) && GodotObject.IsInstanceValid(_countdownTimer))
-			_countdownTimer.Paused = true;
+		_isRunning = false;
+
+		// Zapisz rzeczywisty czas spędzony na poziomie (może być > betTime)
+		double actualTime = CountdownManager.Instance.CurrentBetTime - _remainingTime;
+		CountdownManager.Instance.SetActualTimeUsed(actualTime);
 
 		if (GameManager.Instance != null)
 			GameManager.Instance.EmitSignal(nameof(GameManager.CountdownPaused));

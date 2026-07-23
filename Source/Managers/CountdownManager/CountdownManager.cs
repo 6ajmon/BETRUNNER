@@ -50,12 +50,21 @@ public partial class CountdownManager : Node
 	public double PenaltyForNextLevel  => _penaltyForNextLevel;
 	public bool   IsBetPlaced          => _betPlaced;
 	public string CurrentLevelId       => _currentLevelId;
+	/// <summary>Set by GameOverlay when countdown stops.</summary>
+	public double ActualTimeUsed       { get; private set; }
 
 	/// <summary>
 	/// The UI slider sets this before the player confirms the bet.
 	/// GameManager reads it inside <see cref="PlaceBet()"/> (parameterless).
 	/// </summary>
 	public double PendingBet { get; set; }
+
+	// ── Public API ──────────────────────────────────────────────────────────
+
+	/// <summary>
+	/// Store the actual elapsed time (set by GameOverlay on stop).
+	/// </summary>
+	public void SetActualTimeUsed(double time) => ActualTimeUsed = time;
 
 	// ── Public API ──────────────────────────────────────────────────────────
 
@@ -114,8 +123,10 @@ public partial class CountdownManager : Node
 
 	/// <summary>
 	/// Call this when the player finishes the level (success or failure).
-	/// If they exceeded their bet the extra time is drained from the pool
-	/// and the excess becomes a penalty on the next level's allocation.
+	/// If overshoot > 0:
+	///   - time is deducted as if the player had bet the actual time used,
+	///   - then an ADDITIONAL penalty equal to the overshoot is applied,
+	///   - the overshoot also reduces the next level's time allocation.
 	/// </summary>
 	/// <param name="actualTimeUsed">Real time the player spent.</param>
 	public void OnLevelFinished(double actualTimeUsed)
@@ -124,7 +135,13 @@ public partial class CountdownManager : Node
 
 		if (overshoot > 0.0)
 		{
+			// 1) Deduct the "correction" — treat bet as if it were actualTimeUsed
 			_totalAvailableTime -= overshoot;
+
+			// 2) Additional penalty equal to the overshoot
+			_totalAvailableTime -= overshoot;
+
+			// 3) Next level's base time is also reduced by the overshoot
 			_penaltyForNextLevel = overshoot;
 
 			EmitSignal(nameof(TimeExceeded), overshoot, Math.Max(0.0, _totalAvailableTime));

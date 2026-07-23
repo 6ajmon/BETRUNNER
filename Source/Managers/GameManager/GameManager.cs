@@ -132,9 +132,9 @@ public partial class GameManager : Node
 
 	private void OnCountdownPaused()
 	{
-		// Timer ran out — the player used all of their bet time
-		double betTime = CountdownManager.Instance.CurrentBetTime;
-		CountdownManager.Instance.OnLevelFinished(betTime);
+		// Timer został zatrzymany — weź rzeczywisty czas spędzony na poziomie
+		double actualTime = CountdownManager.Instance.ActualTimeUsed;
+		CountdownManager.Instance.OnLevelFinished(actualTime);
 
 		// Advance to the next level
 		CurrentState = gameState.Loading;
