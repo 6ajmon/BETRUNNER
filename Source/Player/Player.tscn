@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dx7v61743xu0x" path="res://Source/Player/Player.cs" id="1_r3bfb"]
 [ext_resource type="Script" uid="uid://gfj1pwclmwfm" path="res://Source/Player/PlayerMovement.cs" id="2_joxjj"]
+[ext_resource type="PackedScene" uid="uid://dw73236w7at7a" path="res://Assets/Arms/Arms.glb" id="3_joxjj"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sdrnp"]
 
@@ -26,3 +27,6 @@ script = ExtResource("2_joxjj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1479924260]
 shape = SubResource("CapsuleShape3D_sdrnp")
+
+[node name="Arms" parent="." unique_id=343274322 instance=ExtResource("3_joxjj")]
+transform = Transform3D(-1.5, 0, 2.2649371e-07, 0, 1.5, 0, -2.2649371e-07, 0, -1.5, 0, -1.4811163, -0.085950255)
