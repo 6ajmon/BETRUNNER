@@ -47,7 +47,8 @@ public partial class EventNode : Area3D
 
 	private void StartCountdown()
 	{
-		GameManager.Instance.EmitSignal(nameof(GameManager.StartCountdown), 15d);
+		double betTime = CountdownManager.Instance.CurrentBetTime;
+		GameManager.Instance.EmitSignal(nameof(GameManager.StartCountdown), betTime);
 		this.QueueFree();
 	}
 

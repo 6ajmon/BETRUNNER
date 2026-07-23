@@ -39,7 +39,6 @@ public partial class Player : CharacterBody3D
 		_smoothedArmGlobalYaw = Rotation.Y + Mathf.Pi;
 		_previousBodyYaw = Rotation.Y;
 		_currentFov = DefaultFov;
-		Input.MouseMode = Input.MouseModeEnum.Captured;
 		GameManager.Instance.PlayerCharacter = this;
 		CameraManager.Instance.PlayerCamera = _camera;
 	}
@@ -68,8 +67,13 @@ public partial class Player : CharacterBody3D
 	{
 		if (@event is InputEventMouseButton mouseBtn && mouseBtn.ButtonIndex == MouseButton.Left)
 		{
-			if (Input.MouseMode == Input.MouseModeEnum.Visible)
+			if (Input.MouseMode == Input.MouseModeEnum.Visible
+				&& GameManager.Instance.CurrentState != GameManager.gameState.Preview
+				&& GameManager.Instance.CurrentState != GameManager.gameState.Loading
+				&& GameManager.Instance.CurrentState != GameManager.gameState.MainMenu)
+			{
 				Input.MouseMode = Input.MouseModeEnum.Captured;
+			}
 		}
 
 		if (@event is InputEventMouseMotion motion && Input.MouseMode == Input.MouseModeEnum.Captured)
@@ -86,6 +90,14 @@ public partial class Player : CharacterBody3D
 		{
 			Input.MouseMode = Input.MouseModeEnum.Visible;
 		}
+	}
+
+	/// <summary>
+	/// Called when betting ends — enables mouse look and movement.
+	/// </summary>
+	public void EnablePlayerControls()
+	{
+		Input.MouseMode = Input.MouseModeEnum.Captured;
 	}
 
 	public override void _PhysicsProcess(double delta)

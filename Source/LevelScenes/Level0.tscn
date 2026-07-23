@@ -11,19 +11,27 @@
 [ext_resource type="PackedScene" uid="uid://d38pigd56rdna" path="res://Assets/gtlf/Hazard_Floor_1.glb" id="9_wsmac"]
 [ext_resource type="Script" uid="uid://d3o83ikxfnant" path="res://Source/MapObjects/MovingPlatform/MovingPlatform.cs" id="10_l3tf0"]
 [ext_resource type="PackedScene" uid="uid://b50je4svyhxt6" path="res://Source/Player/Player.tscn" id="11_jegd7"]
-[ext_resource type="PackedScene" uid="uid://cx8mg5moh6k3y" path="res://Source/EventNode/event_node.tscn" id="12_v0ymg"]
-[ext_resource type="PackedScene" uid="uid://bg4brd8hew2uc" path="res://Source/UI/ui.tscn" id="13_acfbe"]
-[ext_resource type="Script" uid="uid://d1s8onifidf5r" path="res://Source/Preview.cs" id="14_nwub4"]
+[ext_resource type="PackedScene" uid="uid://cx8mg5moh6k3y" path="res://Source/Components/EventNode/EventNode.tscn" id="12_nwub4"]
+[ext_resource type="PackedScene" uid="uid://bjckh1vja8nig" path="res://Source/Components/CameraPathFollow/CameraPathFollow.tscn" id="13_nwub4"]
+[ext_resource type="Script" uid="uid://u4gco1pgre3a" path="res://Source/Components/EventNode/EventNode.cs" id="13_poj3h"]
 
 [sub_resource type="Environment" id="Environment_akxdk"]
 background_mode = 2
 sky = ExtResource("1_dscqw")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_akxdk"]
-size = Vector3(100, 1, 100)
+[sub_resource type="BoxShape3D" id="BoxShape3D_nwub4"]
+size = Vector3(200, 5, 200)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_xlrhq"]
-size = Vector2(100, 100)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rr6tj"]
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(1.1617441, 0.83696973, 0.50704014, 1)
+emission_energy_multiplier = 16.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_126ht"]
+material = SubResource("StandardMaterial3D_rr6tj")
+radius = 0.45
+height = 0.9
 
 [sub_resource type="Curve3D" id="Curve3D_poj3h"]
 _data = {
@@ -330,40 +338,39 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4, 
 
 [node name="Events" type="Node3D" parent="." unique_id=1603143352]
 
-[node name="StartLevel" parent="Events" unique_id=1389099546 instance=ExtResource("12_v0ymg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1, -4)
+[node name="EventNode" parent="Events" unique_id=1389099546 instance=ExtResource("12_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7960331, 1.3430266, -3.9686599)
 
-[node name="SetSpawn" parent="Events/StartLevel" unique_id=788186590 instance=ExtResource("12_v0ymg")]
-_event = 3
-
-[node name="EndLevel" parent="Events" unique_id=547548326 instance=ExtResource("12_v0ymg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 1, 24)
+[node name="EventNode3" parent="Events" unique_id=30034304 instance=ExtResource("12_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.885754, 1.3430266, 24.019217)
 _event = 1
 
-[node name="BackToSpawn" parent="Events" unique_id=1756330731 instance=ExtResource("12_v0ymg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.188936, -17.253092, -4)
+[node name="EventNode4" type="Area3D" parent="Events" unique_id=1207619478]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.62362, -16.5446, 8.6232395)
+collision_layer = 4
+script = ExtResource("13_poj3h")
 _event = 2
 
-[node name="CollisionShape3D" parent="Events/BackToSpawn" index="0" unique_id=639539813]
-shape = SubResource("BoxShape3D_akxdk")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Events/EventNode4" unique_id=639539813]
+shape = SubResource("BoxShape3D_nwub4")
 
-[node name="MeshInstance3D" parent="Events/BackToSpawn" index="1" unique_id=733530217]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.9692802)
-mesh = SubResource("PlaneMesh_xlrhq")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Events/EventNode4" unique_id=733530217]
+mesh = SubResource("SphereMesh_126ht")
 
-[node name="UI" parent="." unique_id=1477386783 instance=ExtResource("13_acfbe")]
+[node name="Direction" type="RayCast3D" parent="Events/EventNode4" unique_id=1820536039]
+target_position = Vector3(2, 0, 0)
+
+[node name="EventNode2" parent="Events" unique_id=1223537873 instance=ExtResource("12_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9872165, 1.3430266, -3.9686599)
+_event = 3
 
 [node name="Preview" type="Path3D" parent="." unique_id=1937417307]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.053154, 2.641975, -4)
 curve = SubResource("Curve3D_poj3h")
 
-[node name="PathFollow3D" type="PathFollow3D" parent="Preview" unique_id=1496706632]
-transform = Transform3D(-4.3711e-08, 0, -0.99998724, 0, 0.9999901, 0, 0.9999912, 0, -4.371083e-08, 0, 0, 0)
-script = ExtResource("14_nwub4")
+[node name="PathFollow3D" parent="Preview" unique_id=384614118 instance=ExtResource("13_nwub4")]
 _speed = 0.1
 
-[node name="Camera3D" type="Camera3D" parent="Preview/PathFollow3D" unique_id=132137824]
-transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
+[connection signal="body_entered" from="Events/EventNode4" to="Events/EventNode4" method="_on_body_entered"]
 
 [editable path="MapContainer/WaitingRoom"]
-[editable path="Events/BackToSpawn"]

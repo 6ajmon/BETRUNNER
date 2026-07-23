@@ -6,6 +6,30 @@ public partial class SceneManager : Node
 {
 	
 	public static SceneManager Instance => ((SceneTree)Engine.GetMainLoop()).Root.GetNode<SceneManager>("SceneManager");
+
+	// ── Overlay references (assign in Godot editor) ────────────────────────
+	[Export] private Control _bettingOverlay;
+	[Export] private Control _gameOverlay;
+
+	// ── Overlay visibility control ─────────────────────────────────────────
+
+	public void ShowBettingOverlay()
+	{
+		if (_bettingOverlay != null) _bettingOverlay.Visible = true;
+		if (_gameOverlay != null)    _gameOverlay.Visible = false;
+	}
+
+	public void ShowGameOverlay()
+	{
+		if (_bettingOverlay != null) _bettingOverlay.Visible = false;
+		if (_gameOverlay != null)    _gameOverlay.Visible = true;
+	}
+
+	public void HideAllOverlays()
+	{
+		if (_bettingOverlay != null) _bettingOverlay.Visible = false;
+		if (_gameOverlay != null)    _gameOverlay.Visible = false;
+	}
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

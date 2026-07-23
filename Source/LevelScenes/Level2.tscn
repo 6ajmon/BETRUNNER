@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bh2u0crmw0n4c" path="res://Source/MapObjects/wall.tscn" id="8_28nkh"]
 [ext_resource type="PackedScene" uid="uid://d38pigd56rdna" path="res://Assets/gtlf/Hazard_Floor_1.glb" id="9_840ds"]
 [ext_resource type="Script" uid="uid://d3o83ikxfnant" path="res://Source/MapObjects/MovingPlatform/MovingPlatform.cs" id="10_mpnyv"]
-[ext_resource type="PackedScene" uid="uid://cx8mg5moh6k3y" path="res://Source/EventNode/event_node.tscn" id="12_mpnyv"]
+[ext_resource type="PackedScene" uid="uid://cx8mg5moh6k3y" path="res://Source/Components/EventNode/EventNode.tscn" id="12_mpnyv"]
 
 [sub_resource type="Environment" id="Environment_akxdk"]
 background_mode = 2
