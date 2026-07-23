@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bya1w335wfbrl"]
 
 [ext_resource type="Sky" uid="uid://d4ngfxc1qga1l" path="res://Assets/Textures + Materials/Skybox/Skybox.tres" id="1_2xrgl"]
+[ext_resource type="PackedScene" uid="uid://b50je4svyhxt6" path="res://Source/Player/Player.tscn" id="1_k83py"]
 [ext_resource type="PackedScene" uid="uid://bb8t61o8gjj5l" path="res://Source/LevelScenes/WaitingRoom.tscn" id="1_ylal4"]
 [ext_resource type="PackedScene" uid="uid://daawyxd153sdm" path="res://Assets/gtlf/Floor_Tile_Carpet_Red.glb" id="2_pn0le"]
 [ext_resource type="PackedScene" uid="uid://dv8e5e5yflpig" path="res://Source/MapObjects/FloorPanel.tscn" id="3_bqgef"]
@@ -8,9 +9,8 @@
 [ext_resource type="Script" uid="uid://d3o83ikxfnant" path="res://Source/MapObjects/MovingPlatform/MovingPlatform.cs" id="5_k83py"]
 [ext_resource type="PackedScene" uid="uid://qurbeehr7tu1" path="res://Assets/gtlf/Wall_Red.glb" id="7_35dpr"]
 [ext_resource type="PackedScene" uid="uid://bh2u0crmw0n4c" path="res://Source/MapObjects/wall.tscn" id="8_xhkal"]
-[ext_resource type="PackedScene" uid="uid://cx8mg5moh6k3y" path="res://Source/EventNode/event_node.tscn" id="9_xhkal"]
-[ext_resource type="PackedScene" uid="uid://bg4brd8hew2uc" path="res://Source/UI/ui.tscn" id="10_vkhhe"]
-[ext_resource type="Script" uid="uid://d1s8onifidf5r" path="res://Source/Preview.cs" id="10_xhkal"]
+[ext_resource type="PackedScene" uid="uid://cx8mg5moh6k3y" path="res://Source/Components/EventNode/EventNode.tscn" id="9_xhkal"]
+[ext_resource type="PackedScene" uid="uid://bjckh1vja8nig" path="res://Source/Components/CameraPathFollow/CameraPathFollow.tscn" id="11_vkhhe"]
 
 [sub_resource type="Environment" id="Environment_d2rsb"]
 background_mode = 2
@@ -129,18 +129,15 @@ shape = SubResource("BoxShape3D_xhkal")
 [node name="MeshInstance3D" parent="Events/BackToSpawn" index="1" unique_id=733530217]
 mesh = SubResource("PlaneMesh_xhkal")
 
-[node name="UI" parent="." unique_id=1477386783 instance=ExtResource("10_vkhhe")]
+[node name="Player" parent="." unique_id=839987394 instance=ExtResource("1_k83py")]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, -4, 1, -4)
 
 [node name="Preview" type="Path3D" parent="." unique_id=156258744]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 4, -4)
 curve = SubResource("Curve3D_35dpr")
 
-[node name="PathFollow3D" type="PathFollow3D" parent="Preview" unique_id=1165583208]
-transform = Transform3D(0.003199873, 0.0068854233, -0.9999642, 0, 0.99996793, 0.006885468, 0.9999909, -2.2032682e-05, 0.0031997876, 0, 0.241, 0.112)
-script = ExtResource("10_xhkal")
-_speed = 0.1
-
-[node name="Camera3D" type="Camera3D" parent="Preview/PathFollow3D" unique_id=116565718]
-transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
+[node name="PathFollow3D" parent="Preview" unique_id=384614118 instance=ExtResource("11_vkhhe")]
+transform = Transform3D(0.0031998577, 0.0068854126, -0.9999584, 0, 0.9999664, 0.006885428, 0.99998605, -2.2032647e-05, 0.0031997692, 0, 0.241, 0.112)
+_speed = 0.09
 
 [editable path="Events/BackToSpawn"]

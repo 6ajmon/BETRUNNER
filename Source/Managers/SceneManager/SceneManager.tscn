@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://xkg8f0c6e1ql"]
+
+[ext_resource type="Script" uid="uid://c8q6sh8g5mows" path="res://Source/Managers/SceneManager/SceneManager.cs" id="1_f70il"]
+[ext_resource type="PackedScene" uid="uid://bg4brd8hew2uc" path="res://Source/UI/Overlays/GameOverlay/GameOverlay.tscn" id="2_8h0h3"]
+[ext_resource type="PackedScene" uid="uid://b0vre76lrmauc" path="res://Source/UI/Overlays/BettingOverlay/BettingOverlay.tscn" id="3_8yohe"]
+
+[node name="SceneManager" type="Node" unique_id=1743745418 node_paths=PackedStringArray("_bettingOverlay", "_gameOverlay")]
+script = ExtResource("1_f70il")
+_bettingOverlay = NodePath("CanvasLayer/BettingOverlay")
+_gameOverlay = NodePath("CanvasLayer/GameOverlay")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=59557020]
+
+[node name="GameOverlay" parent="CanvasLayer" unique_id=1477386783 instance=ExtResource("2_8h0h3")]
+visible = false
+
+[node name="BettingOverlay" parent="CanvasLayer" unique_id=524152719 instance=ExtResource("3_8yohe")]
+visible = false

@@ -31,6 +31,8 @@ public partial class CountdownManager : Node
 	{
 		{ "Tutorial", 120.0 },
 		{ "Level1",   60.0 },
+        { "Level2",   40.0 },
+        { "Level3",   30.0 },
 	};
 
 	// ── Runtime state ───────────────────────────────────────────────────────
@@ -42,12 +44,18 @@ public partial class CountdownManager : Node
 	private bool _betPlaced = false;
 
 	// ── Public read-only properties ─────────────────────────────────────────
-	public double TotalAvailableTime  => _totalAvailableTime;
+	public double TotalAvailableTime   => _totalAvailableTime;
 	public double CurrentLevelBaseTime => _currentLevelBaseTime;
-	public double CurrentBetTime      => _currentBetTime;
+	public double CurrentBetTime       => _currentBetTime;
 	public double PenaltyForNextLevel  => _penaltyForNextLevel;
-	public bool   IsBetPlaced           => _betPlaced;
+	public bool   IsBetPlaced          => _betPlaced;
 	public string CurrentLevelId       => _currentLevelId;
+
+	/// <summary>
+	/// The UI slider sets this before the player confirms the bet.
+	/// GameManager reads it inside <see cref="PlaceBet()"/> (parameterless).
+	/// </summary>
+	public double PendingBet { get; set; }
 
 	// ── Public API ──────────────────────────────────────────────────────────
 
@@ -93,6 +101,15 @@ public partial class CountdownManager : Node
 		_betPlaced = true;
 
 		EmitSignal(SignalName.BetPlaced, _currentBetTime, _totalAvailableTime);
+	}
+
+	/// <summary>
+	/// Parameterless overload — uses <see cref="PendingBet"/> as the bet amount.
+	/// Called by GameManager when <c>EndBettingPhase</c> fires.
+	/// </summary>
+	public void PlaceBet()
+	{
+		PlaceBet(PendingBet);
 	}
 
 	/// <summary>

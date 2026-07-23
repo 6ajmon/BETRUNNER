@@ -14,8 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://i0eepuf3dxvn" path="res://Assets/gtlf/Wall_With_Door_Red.glb" id="11_y4sfe"]
 [ext_resource type="PackedScene" uid="uid://b50je4svyhxt6" path="res://Source/Player/Player.tscn" id="12_sskno"]
 [ext_resource type="PackedScene" uid="uid://n1gvwytmx4ul" path="res://Source/MapObjects/door.tscn" id="13_436rc"]
-[ext_resource type="PackedScene" uid="uid://cx8mg5moh6k3y" path="res://Source/EventNode/event_node.tscn" id="13_swqnx"]
-[ext_resource type="PackedScene" uid="uid://bg4brd8hew2uc" path="res://Source/UI/ui.tscn" id="14_csbdl"]
+[ext_resource type="PackedScene" uid="uid://cx8mg5moh6k3y" path="res://Source/Components/EventNode/EventNode.tscn" id="13_swqnx"]
+[ext_resource type="PackedScene" uid="uid://bg4brd8hew2uc" path="res://Source/UI/Overlays/GameOverlay/GameOverlay.tscn" id="14_csbdl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dcwvj"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
