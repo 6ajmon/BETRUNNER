@@ -35,8 +35,12 @@ public partial class GameManager : Node
 	/// <summary>
 	/// Przeciągnij sceny poziomów w kolejności (0, 1, 2…).
 	/// ID poziomu generowane automatycznie: "Level1", "Level2" …
+	/// <summary>
+	/// Przeciągnij sceny poziomów w kolejności (0, 1, 2…).
+	/// ID poziomu generowane automatycznie: "Level1", "Level2" …
 	/// </summary>
 	[Export] private PackedScene[] _levelScenes;
+	[Export] private PackedScene _mainMenuScene;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -134,11 +138,69 @@ public partial class GameManager : Node
 	{
 		// Timer został zatrzymany — weź rzeczywisty czas spędzony na poziomie
 		double actualTime = CountdownManager.Instance.ActualTimeUsed;
-		CountdownManager.Instance.OnLevelFinished(actualTime);
+		bool hasTimeLeft = CountdownManager.Instance.OnLevelFinished(actualTime);
 
-		// Advance to the next level
+		CurrentState = gameState.Loading;
+
+		// Zwolnij myszkę i włącz kamerę podglądu
+		Input.MouseMode = Input.MouseModeEnum.Visible;
+		CameraManager.Instance.EmitSignal(nameof(CameraManager.SwitchToPreviewCamera));
+
+		// Pokaż odpowiedni ekran podsumowania
+		if (!hasTimeLeft || CountdownManager.Instance.IsBankrupt)
+		{
+			// Bankructwo — brak czasu w puli
+			SceneManager.Instance.ShowFailureOverlay();
+			var fail = SceneManager.Instance.GetFailureOverlay();
+			if (fail != null) fail.ShowStats();
+		}
+		else if (_currentLevelIndex >= _levelScenes.Length - 1)
+		{
+			// Ostatni poziom ukończony — też summary
+			SceneManager.Instance.ShowSummaryOverlay();
+			var summary = SceneManager.Instance.GetSummaryOverlay();
+			if (summary != null) summary.ShowStats();
+		}
+		else
+		{
+			// Normalny poziom — pokaż summary przed następnym
+			SceneManager.Instance.ShowSummaryOverlay();
+			var summary = SceneManager.Instance.GetSummaryOverlay();
+			if (summary != null) summary.ShowStats();
+		}
+	}
+
+	/// <summary>
+	/// Called by SummaryOverlay's Continue button.
+	/// Advances to the next level or ends the game.
+	/// </summary>
+	public void ContinueAfterSummary()
+	{
+		if (_currentLevelIndex >= _levelScenes.Length - 1)
+		{
+			// Wszystkie poziomy ukończone — wróć do menu
+			ReturnToMainMenu();
+			return;
+		}
+
 		CurrentState = gameState.Loading;
 		TryAdvanceToNextLevel();
+	}
+
+	/// <summary>
+	/// Called by FailureOverlay's Menu button (or from summary on last level).
+	/// </summary>
+	public void ReturnToMainMenu()
+	{
+		CurrentState = gameState.MainMenu;
+		CountdownManager.Instance.Reset();
+		SceneManager.Instance.HideAllOverlays();
+
+		if (_mainMenuScene != null)
+		{
+			string path = _mainMenuScene.ResourcePath;
+			Callable.From(() => SceneManager.Instance.ChangeSceneByPathAsync(path)).CallDeferred();
+		}
 	}
 
 	/// <summary>

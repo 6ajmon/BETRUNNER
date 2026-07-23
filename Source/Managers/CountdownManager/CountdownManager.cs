@@ -26,13 +26,26 @@ public partial class CountdownManager : Node
 	[Signal]
 	public delegate void TimeExceededEventHandler(double excessTime, double remainingTime);
 
+	// ── Level stats ────────────────────────────────────────────────────────
+	public struct LevelStat
+	{
+		public string LevelId;
+		public double BetTime;
+		public double ActualTime;
+		public double Overshoot;
+		public double Penalty;
+	}
+
+	private List<LevelStat> _levelHistory = new();
+	public IReadOnlyList<LevelStat> LevelHistory => _levelHistory.AsReadOnly();
+
 	// ── Level time configuration (level ID → base time in seconds) ──────────
 	private Dictionary<string, double> _levelBaseTimes = new()
 	{
 		{ "Tutorial", 120.0 },
 		{ "Level1",   60.0 },
-        { "Level2",   40.0 },
-        { "Level3",   30.0 },
+		{ "Level2",   40.0 },
+		{ "Level3",   30.0 },
 	};
 
 	// ── Runtime state ───────────────────────────────────────────────────────
@@ -127,27 +140,51 @@ public partial class CountdownManager : Node
 	///   - time is deducted as if the player had bet the actual time used,
 	///   - then an ADDITIONAL penalty equal to the overshoot is applied,
 	///   - the overshoot also reduces the next level's time allocation.
+	/// Returns true if the player still has time left, false if bankrupt.
 	/// </summary>
-	/// <param name="actualTimeUsed">Real time the player spent.</param>
-	public void OnLevelFinished(double actualTimeUsed)
+	public bool OnLevelFinished(double actualTimeUsed)
 	{
-		double overshoot = actualTimeUsed - _currentBetTime;
+		double overshoot = Math.Max(0.0, actualTimeUsed - _currentBetTime);
+		double penalty = 0.0;
 
 		if (overshoot > 0.0)
 		{
-			// 1) Deduct the "correction" — treat bet as if it were actualTimeUsed
-			_totalAvailableTime -= overshoot;
-
-			// 2) Additional penalty equal to the overshoot
-			_totalAvailableTime -= overshoot;
-
-			// 3) Next level's base time is also reduced by the overshoot
+			penalty = overshoot; // additional penalty = overshoot amount
+			_totalAvailableTime -= overshoot; // correction
+			_totalAvailableTime -= overshoot; // penalty
 			_penaltyForNextLevel = overshoot;
-
-			EmitSignal(nameof(TimeExceeded), overshoot, Math.Max(0.0, _totalAvailableTime));
 		}
-		// If overshoot ≤ 0 → player finished within bet.  The unused bet
-		// time is already gone (it was subtracted in PlaceBet).
+
+		// Save level stats
+		_levelHistory.Add(new LevelStat
+		{
+			LevelId = _currentLevelId,
+			BetTime = _currentBetTime,
+			ActualTime = actualTimeUsed,
+			Overshoot = overshoot,
+			Penalty = penalty,
+		});
+
+		EmitSignal(nameof(TimeExceeded), overshoot, Math.Max(0.0, _totalAvailableTime));
+
+		return _totalAvailableTime > 0.0;
+	}
+
+	/// <summary>True if the player has run out of total time.</summary>
+	public bool IsBankrupt => _totalAvailableTime <= 0.0;
+
+	/// <summary>Reset all state for a new game.</summary>
+	public void Reset()
+	{
+		_currentLevelId = "";
+		_totalAvailableTime = 0.0;
+		_currentLevelBaseTime = 0.0;
+		_currentBetTime = 0.0;
+		_penaltyForNextLevel = 0.0;
+		_betPlaced = false;
+		ActualTimeUsed = 0.0;
+		PendingBet = 0.0;
+		_levelHistory.Clear();
 	}
 
 	/// <summary>

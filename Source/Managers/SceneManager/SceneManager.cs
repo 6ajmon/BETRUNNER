@@ -10,6 +10,8 @@ public partial class SceneManager : Node
 	// ── Overlay references (assign in Godot editor) ────────────────────────
 	[Export] private Control _bettingOverlay;
 	[Export] private Control _gameOverlay;
+	[Export] private Control _summaryOverlay;
+	[Export] private Control _failureOverlay;
 
 	// ── Overlay visibility control ─────────────────────────────────────────
 
@@ -17,19 +19,45 @@ public partial class SceneManager : Node
 	{
 		if (_bettingOverlay != null) _bettingOverlay.Visible = true;
 		if (_gameOverlay != null)    _gameOverlay.Visible = false;
+		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
+		if (_failureOverlay != null) _failureOverlay.Visible = false;
 	}
 
 	public void ShowGameOverlay()
 	{
 		if (_bettingOverlay != null) _bettingOverlay.Visible = false;
 		if (_gameOverlay != null)    _gameOverlay.Visible = true;
+		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
+		if (_failureOverlay != null) _failureOverlay.Visible = false;
+	}
+
+	public void ShowSummaryOverlay()
+	{
+		if (_bettingOverlay != null) _bettingOverlay.Visible = false;
+		if (_gameOverlay != null)    _gameOverlay.Visible = false;
+		if (_summaryOverlay != null) _summaryOverlay.Visible = true;
+		if (_failureOverlay != null) _failureOverlay.Visible = false;
+	}
+
+	public void ShowFailureOverlay()
+	{
+		if (_bettingOverlay != null) _bettingOverlay.Visible = false;
+		if (_gameOverlay != null)    _gameOverlay.Visible = false;
+		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
+		if (_failureOverlay != null) _failureOverlay.Visible = true;
 	}
 
 	public void HideAllOverlays()
 	{
 		if (_bettingOverlay != null) _bettingOverlay.Visible = false;
 		if (_gameOverlay != null)    _gameOverlay.Visible = false;
+		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
+		if (_failureOverlay != null) _failureOverlay.Visible = false;
 	}
+
+	// ── Overlay accessors for code-behind ──────────────────────────────────
+	public SummaryOverlay GetSummaryOverlay() => _summaryOverlay as SummaryOverlay;
+	public FailureOverlay GetFailureOverlay() => _failureOverlay as FailureOverlay;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
