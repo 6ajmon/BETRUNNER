@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://c3sg4vp604qt6" path="res://Assets/gtlf/Wall_Glass_Clear.glb" id="5_28nkh"]
 [ext_resource type="PackedScene" uid="uid://b3ogk047evk56" path="res://Source/MapObjects/Glass.tscn" id="6_840ds"]
 [ext_resource type="PackedScene" uid="uid://qurbeehr7tu1" path="res://Assets/gtlf/Wall_Red.glb" id="7_buect"]
-[ext_resource type="PackedScene" uid="uid://b50je4svyhxt6" path="res://Source/Player/Player.tscn" id="7_mpnyv"]
 [ext_resource type="PackedScene" uid="uid://bh2u0crmw0n4c" path="res://Source/MapObjects/wall.tscn" id="8_28nkh"]
 [ext_resource type="PackedScene" uid="uid://d38pigd56rdna" path="res://Assets/gtlf/Hazard_Floor_1.glb" id="9_840ds"]
 [ext_resource type="Script" uid="uid://d3o83ikxfnant" path="res://Source/MapObjects/MovingPlatform/MovingPlatform.cs" id="10_mpnyv"]
@@ -36,7 +35,7 @@ shadow_enabled = true
 
 [node name="WaitingRoom" parent="MapContainer" unique_id=1226178956 instance=ExtResource("1_w4yxo")]
 
-[node name="Door" parent="MapContainer/WaitingRoom/Wall3/D1" parent_id_path=PackedInt32Array(1226178956, 1174944177) index="1" unique_id=1212585329]
+[node name="Door" parent="MapContainer/WaitingRoom/Walls/Wall3/D1" parent_id_path=PackedInt32Array(1226178956, 1174944177) index="1" unique_id=1212585329]
 collision_layer = 8
 
 [node name="FirstBridge" type="Node3D" parent="MapContainer" unique_id=1571318747]
@@ -315,9 +314,6 @@ _target = Vector3(-3, 0, 3)
 _speed = 2.0
 
 [node name="FloorPanel" parent="MapContainer/MovingPlatform" unique_id=2031017677 instance=ExtResource("4_buect")]
-
-[node name="Player" parent="." unique_id=839987394 instance=ExtResource("7_mpnyv")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4, 1.2, -4)
 
 [node name="Events" type="Node3D" parent="." unique_id=1603143352]
 

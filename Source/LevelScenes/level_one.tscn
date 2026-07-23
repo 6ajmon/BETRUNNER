@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bya1w335wfbrl"]
 
 [ext_resource type="Sky" uid="uid://d4ngfxc1qga1l" path="res://Assets/Textures + Materials/Skybox/Skybox.tres" id="1_2xrgl"]
-[ext_resource type="PackedScene" uid="uid://b50je4svyhxt6" path="res://Source/Player/Player.tscn" id="1_k83py"]
 [ext_resource type="PackedScene" uid="uid://bb8t61o8gjj5l" path="res://Source/LevelScenes/WaitingRoom.tscn" id="1_ylal4"]
 [ext_resource type="PackedScene" uid="uid://daawyxd153sdm" path="res://Assets/gtlf/Floor_Tile_Carpet_Red.glb" id="2_pn0le"]
 [ext_resource type="PackedScene" uid="uid://dv8e5e5yflpig" path="res://Source/MapObjects/FloorPanel.tscn" id="3_bqgef"]
@@ -132,15 +131,12 @@ mesh = SubResource("PlaneMesh_xhkal")
 
 [node name="UI" parent="." unique_id=1477386783 instance=ExtResource("10_vkhhe")]
 
-[node name="Player" parent="." unique_id=839987394 instance=ExtResource("1_k83py")]
-transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, -4, 1, -4)
-
 [node name="Preview" type="Path3D" parent="." unique_id=156258744]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 4, -4)
 curve = SubResource("Curve3D_35dpr")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Preview" unique_id=1165583208]
-transform = Transform3D(0.003199873, 0.0068854257, -0.99996454, 0, 0.9999683, 0.0068854704, 0.9999909, -2.203269e-05, 0.0031997887, 0, 0.241, 0.112)
+transform = Transform3D(0.003199873, 0.0068854233, -0.9999642, 0, 0.99996793, 0.006885468, 0.9999909, -2.2032682e-05, 0.0031997876, 0, 0.241, 0.112)
 script = ExtResource("10_xhkal")
 _speed = 0.1
 
