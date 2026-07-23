@@ -4,7 +4,16 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_126ht"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rr6tj"]
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(1.1617441, 0.83696973, 0.50704014, 1)
+emission_energy_multiplier = 16.0
+
 [sub_resource type="SphereMesh" id="SphereMesh_126ht"]
+material = SubResource("StandardMaterial3D_rr6tj")
+radius = 0.45
+height = 0.9
 
 [node name="EventNode" type="Area3D" unique_id=1389099546]
 collision_layer = 4
