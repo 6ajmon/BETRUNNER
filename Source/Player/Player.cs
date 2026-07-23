@@ -11,9 +11,18 @@ public partial class Player : CharacterBody3D
 	[Export] public float FovLerpSpeed { get; set; } = 8.0f;
 	[Export] public float CameraBumpRecovery { get; set; } = 10.0f;
 
+	[ExportGroup("Arms")]
+	[Export] public float DefaultArmYaw { get; set; } = Mathf.DegToRad(30.0f);
+	[Export] public float ArmYawSpeed { get; set; } = 8.0f;
+
 	[Export] private Camera3D _camera;
 	[Export] private PlayerMovement _movement;
+	[Export] private PlayerAnimation _animation;
+
+	private Node3D _arms;
 	private float _pitch;
+	private float _smoothedArmGlobalYaw;
+	private float _previousBodyYaw;
 	private float _currentFov;
 	private float _cameraBump;
 
@@ -23,7 +32,12 @@ public partial class Player : CharacterBody3D
 			_camera = GetNode<Camera3D>("Camera3D");
 		if (_movement == null)
 			_movement = GetNode<PlayerMovement>("Movement");
+		if (_animation == null)
+			_animation = GetNode<PlayerAnimation>("Animation");
 
+		_arms = GetNode<Node3D>("Arms");
+		_smoothedArmGlobalYaw = Rotation.Y + Mathf.Pi;
+		_previousBodyYaw = Rotation.Y;
 		_currentFov = DefaultFov;
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 	}
@@ -45,8 +59,10 @@ public partial class Player : CharacterBody3D
 
 		if (@event is InputEventMouseMotion motion && Input.MouseMode == Input.MouseModeEnum.Captured)
 		{
+			// Body rotates instantly with mouse — no gameplay impact
 			RotateY(-motion.Relative.X * MouseSensitivity);
 
+			// Vertical: camera pitch
 			_pitch -= motion.Relative.Y * MouseSensitivity;
 			_pitch = Mathf.Clamp(_pitch, Mathf.DegToRad(-90.0f), Mathf.DegToRad(90.0f));
 		}
@@ -63,11 +79,28 @@ public partial class Player : CharacterBody3D
 
 		_movement?.HandleMovement(dt);
 
-		// Apply camera pitch + bump (bump decays over time)
+		// Camera follows body instantly + pitch
 		_camera.Rotation = new Vector3(_pitch + _cameraBump, 0, 0);
 		_cameraBump = Mathf.Lerp(_cameraBump, 0.0f, CameraBumpRecovery * dt);
 		if (Mathf.Abs(_cameraBump) < 0.0005f)
 			_cameraBump = 0.0f;
+
+		// Arms: purely cosmetic smooth follow (does NOT affect movement or camera)
+		if (_arms != null && (_animation == null || !_animation.IsLocked))
+		{
+			PlayerAnimState animState = _animation?.CurrentAnimState ?? PlayerAnimState.Idle;
+			bool useBias = animState == PlayerAnimState.Idle || animState == PlayerAnimState.Fall;
+			float bias = useBias ? DefaultArmYaw : 0.0f;
+
+			// Target = body's current global Y + PI (model flip) + bias
+			float targetGlobalYaw = Rotation.Y + Mathf.Pi + bias;
+
+			// Smoothly catch up — purely visual lag
+			_smoothedArmGlobalYaw = Mathf.LerpAngle(_smoothedArmGlobalYaw, targetGlobalYaw, ArmYawSpeed * dt);
+
+			// Convert smoothed global to local (relative to body)
+			_arms.Rotation = new Vector3(0, _smoothedArmGlobalYaw - Rotation.Y, 0);
+		}
 
 		// Dynamic FOV — direction-based
 		Vector3 horizontalVel = new Vector3(Velocity.X, 0, Velocity.Z);

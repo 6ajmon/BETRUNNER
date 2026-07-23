@@ -44,6 +44,10 @@ public partial class PlayerMovement : Node
 
 	public float MaxSprintSpeed => SprintSpeed;
 	public PlayerMovementState CurrentState => _state;
+	public bool IsSprinting { get; private set; }
+	public bool IsClimbing => _climbBoostFired;
+	public bool IsWallJumping => _wallJumpJustFired;
+	public Vector3 LastWallJumpNormal { get; private set; }
 
 	private Player _player;
 	private Vector3 _velocity;
@@ -66,6 +70,10 @@ public partial class PlayerMovement : Node
 	private bool _climbReady;
 	private float _climbCooldown;
 
+	// Animation state flags (reset each frame)
+	private bool _climbBoostFired;
+	private bool _wallJumpJustFired;
+
 	// Jump input tracking (Space key)
 	private bool _spacePrevPressed;
 
@@ -82,6 +90,10 @@ public partial class PlayerMovement : Node
 
 	public void HandleMovement(float delta)
 	{
+		// Reset animation flags each frame
+		_climbBoostFired = false;
+		_wallJumpJustFired = false;
+
 		// --- Detect landing (floor transition) ---
 		bool isOnFloor = _player.IsOnFloor();
 		if (!_wasOnFloor && isOnFloor)
@@ -166,6 +178,8 @@ public partial class PlayerMovement : Node
 			Vector3 wallNormal = FindWallNormal();
 			if (wallNormal != Vector3.Zero)
 			{
+				LastWallJumpNormal = wallNormal;
+
 				// Speed towards the wall — use pre-collision velocity so wall hit doesn't eat it
 				float speedIntoWall = Mathf.Max(0.0f, -_preCollisionVelocity.Dot(wallNormal));
 				float pushStrength = WallJumpHorizontalForce + WallJumpSpeedMultiplier * Mathf.Log(1.0f + speedIntoWall);
@@ -189,6 +203,7 @@ public partial class PlayerMovement : Node
 				_velocity.Y = WallJumpVerticalForce;
 				_wallJumpCooldown = WallJumpCooldownTime;
 				_airControlPenalty = WallJumpAirPenaltyDuration;
+				_wallJumpJustFired = true;
 				_jumpBufferTimer = 0.0f;
 				_player.BumpCamera(JumpCamBump * 1.5f);
 				ApplyVelocityAndMove(delta);
@@ -266,8 +281,8 @@ public partial class PlayerMovement : Node
 	private void ApplyGroundMovement(float delta)
 	{
 		Vector3 inputDir = GetInputDirection();
-		bool isSprinting = Input.IsActionPressed("Run");
-		float targetSpeed = isSprinting ? SprintSpeed : WalkSpeed;
+		IsSprinting = Input.IsActionPressed("Run");
+		float targetSpeed = IsSprinting ? SprintSpeed : WalkSpeed;
 
 		if (inputDir != Vector3.Zero)
 		{
@@ -416,6 +431,7 @@ public partial class PlayerMovement : Node
 		_player.Velocity = _velocity;
 		_climbReady = false;
 		_climbCooldown = ClimbCooldownTime;
+		_climbBoostFired = true;
 		_player.BumpCamera(JumpCamBump * 1.2f);
 	}
 }
