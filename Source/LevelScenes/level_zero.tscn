@@ -1,0 +1,369 @@
+[gd_scene format=3 uid="uid://bdho08khidsli"]
+
+[ext_resource type="Sky" uid="uid://d4ngfxc1qga1l" path="res://Assets/Textures + Materials/Skybox/Skybox.tres" id="1_dscqw"]
+[ext_resource type="PackedScene" uid="uid://bb8t61o8gjj5l" path="res://Source/LevelScenes/WaitingRoom.tscn" id="2_acfbe"]
+[ext_resource type="PackedScene" uid="uid://6wccyr8pnnbw" path="res://Assets/gtlf/Floor_Metal_Square.glb" id="3_nwub4"]
+[ext_resource type="PackedScene" uid="uid://dv8e5e5yflpig" path="res://Source/MapObjects/FloorPanel.tscn" id="4_poj3h"]
+[ext_resource type="PackedScene" uid="uid://c3sg4vp604qt6" path="res://Assets/gtlf/Wall_Glass_Clear.glb" id="5_74x7x"]
+[ext_resource type="PackedScene" uid="uid://b3ogk047evk56" path="res://Source/MapObjects/Glass.tscn" id="6_o8g5b"]
+[ext_resource type="PackedScene" uid="uid://qurbeehr7tu1" path="res://Assets/gtlf/Wall_Red.glb" id="7_kiuba"]
+[ext_resource type="PackedScene" uid="uid://bh2u0crmw0n4c" path="res://Source/MapObjects/wall.tscn" id="8_wl206"]
+[ext_resource type="PackedScene" uid="uid://d38pigd56rdna" path="res://Assets/gtlf/Hazard_Floor_1.glb" id="9_wsmac"]
+[ext_resource type="Script" uid="uid://d3o83ikxfnant" path="res://Source/MapObjects/MovingPlatform/MovingPlatform.cs" id="10_l3tf0"]
+[ext_resource type="PackedScene" uid="uid://b50je4svyhxt6" path="res://Source/Player/Player.tscn" id="11_jegd7"]
+[ext_resource type="PackedScene" uid="uid://cx8mg5moh6k3y" path="res://Source/EventNode/event_node.tscn" id="12_v0ymg"]
+[ext_resource type="PackedScene" uid="uid://bg4brd8hew2uc" path="res://Source/UI/ui.tscn" id="13_acfbe"]
+[ext_resource type="Script" uid="uid://d1s8onifidf5r" path="res://Source/Preview.cs" id="14_nwub4"]
+
+[sub_resource type="Environment" id="Environment_akxdk"]
+background_mode = 2
+sky = ExtResource("1_dscqw")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_akxdk"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xlrhq"]
+size = Vector2(100, 100)
+
+[sub_resource type="Curve3D" id="Curve3D_poj3h"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6.83, 0, 0.64, 46, 0, 0, 0, 0, 0, 0, 0, 0, 53, 0, 7, 0, 0, 0, -1, 0, 6, 53, 0, 21, 0, 0, 0, 0, 0, 0, 46, 0, 28, 0, 0, 0, 0, 0, 0, 40, 0, 28),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
+}
+point_count = 6
+
+[node name="LevelZero" type="Node3D" unique_id=1459536150]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2116560221]
+environment = SubResource("Environment_akxdk")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1069609245]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="MapContainer" type="Node3D" parent="." unique_id=1109551296]
+
+[node name="WaitingRoom" parent="MapContainer" unique_id=1226178956 instance=ExtResource("2_acfbe")]
+
+[node name="Door" parent="MapContainer/WaitingRoom/Wall3/D1" parent_id_path=PackedInt32Array(1226178956, 1174944177) index="1" unique_id=1212585329]
+collision_layer = 8
+
+[node name="FirstBridge" type="Node3D" parent="MapContainer" unique_id=1571318747]
+
+[node name="Panel" parent="MapContainer/FirstBridge" unique_id=866185957 instance=ExtResource("3_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/FirstBridge/Panel" unique_id=1924456861 instance=ExtResource("4_poj3h")]
+
+[node name="Panel2" parent="MapContainer/FirstBridge" unique_id=1153815953 instance=ExtResource("3_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/FirstBridge/Panel2" unique_id=533115730 instance=ExtResource("4_poj3h")]
+
+[node name="Panel3" parent="MapContainer/FirstBridge" unique_id=1180799299 instance=ExtResource("3_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/FirstBridge/Panel3" unique_id=717395976 instance=ExtResource("4_poj3h")]
+
+[node name="Glass1" parent="MapContainer/FirstBridge" unique_id=921049014 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 6, 2, -2)
+
+[node name="Glass" parent="MapContainer/FirstBridge/Glass1" unique_id=1273704857 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass2" parent="MapContainer/FirstBridge" unique_id=577450056 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 10, 2, -2)
+
+[node name="Glass" parent="MapContainer/FirstBridge/Glass2" unique_id=1035286972 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass3" parent="MapContainer/FirstBridge" unique_id=1128943430 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 14, 2, -2)
+
+[node name="Glass" parent="MapContainer/FirstBridge/Glass3" unique_id=1434513024 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass4" parent="MapContainer/FirstBridge" unique_id=1544197257 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 6, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge/Glass4" unique_id=1904566952 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass5" parent="MapContainer/FirstBridge" unique_id=1173826313 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 10, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge/Glass5" unique_id=554197325 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass6" parent="MapContainer/FirstBridge" unique_id=1196269844 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 14, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge/Glass6" unique_id=151322979 instance=ExtResource("6_o8g5b")]
+
+[node name="FirstBridge2" type="Node3D" parent="MapContainer" unique_id=1538676858]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 0)
+
+[node name="Panel" parent="MapContainer/FirstBridge2" unique_id=2133880988 instance=ExtResource("3_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/FirstBridge2/Panel" unique_id=482090705 instance=ExtResource("4_poj3h")]
+
+[node name="Panel2" parent="MapContainer/FirstBridge2" unique_id=101197604 instance=ExtResource("3_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/FirstBridge2/Panel2" unique_id=550301617 instance=ExtResource("4_poj3h")]
+
+[node name="Panel3" parent="MapContainer/FirstBridge2" unique_id=874706939 instance=ExtResource("3_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/FirstBridge2/Panel3" unique_id=715539490 instance=ExtResource("4_poj3h")]
+
+[node name="Glass1" parent="MapContainer/FirstBridge2" unique_id=1996332076 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 6, 2, -2)
+
+[node name="Glass" parent="MapContainer/FirstBridge2/Glass1" unique_id=1660163796 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass2" parent="MapContainer/FirstBridge2" unique_id=1796054049 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 10, 2, -2)
+
+[node name="Glass" parent="MapContainer/FirstBridge2/Glass2" unique_id=815448403 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass3" parent="MapContainer/FirstBridge2" unique_id=1626276334 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 14, 2, -2)
+
+[node name="Glass" parent="MapContainer/FirstBridge2/Glass3" unique_id=160889746 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass4" parent="MapContainer/FirstBridge2" unique_id=558350954 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 6, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge2/Glass4" unique_id=1791203627 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass5" parent="MapContainer/FirstBridge2" unique_id=2143943955 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 10, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge2/Glass5" unique_id=1183209862 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass6" parent="MapContainer/FirstBridge2" unique_id=1310538866 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 14, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge2/Glass6" unique_id=1317694602 instance=ExtResource("6_o8g5b")]
+
+[node name="FirstBridge3" type="Node3D" parent="MapContainer" unique_id=1147410801]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 0)
+
+[node name="Panel" parent="MapContainer/FirstBridge3" unique_id=793872946 instance=ExtResource("3_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/FirstBridge3/Panel" unique_id=1476106304 instance=ExtResource("4_poj3h")]
+
+[node name="Panel2" parent="MapContainer/FirstBridge3" unique_id=867246883 instance=ExtResource("3_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/FirstBridge3/Panel2" unique_id=1168021094 instance=ExtResource("4_poj3h")]
+
+[node name="Panel3" parent="MapContainer/FirstBridge3" unique_id=891842386 instance=ExtResource("3_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/FirstBridge3/Panel3" unique_id=2022780086 instance=ExtResource("4_poj3h")]
+
+[node name="Glass1" parent="MapContainer/FirstBridge3" unique_id=987416040 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 6, 2, -2)
+
+[node name="Glass" parent="MapContainer/FirstBridge3/Glass1" unique_id=301662420 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass2" parent="MapContainer/FirstBridge3" unique_id=584056490 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 10, 2, -2)
+
+[node name="Glass" parent="MapContainer/FirstBridge3/Glass2" unique_id=187142119 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass3" parent="MapContainer/FirstBridge3" unique_id=927976263 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 14, 2, -2)
+
+[node name="Glass" parent="MapContainer/FirstBridge3/Glass3" unique_id=878641 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass4" parent="MapContainer/FirstBridge3" unique_id=369253055 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 6, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge3/Glass4" unique_id=733912693 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass5" parent="MapContainer/FirstBridge3" unique_id=927331521 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 10, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge3/Glass5" unique_id=1350109142 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass6" parent="MapContainer/FirstBridge3" unique_id=2112545122 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 14, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge3/Glass6" unique_id=375599546 instance=ExtResource("6_o8g5b")]
+
+[node name="JumpWall" type="Node3D" parent="MapContainer" unique_id=2039378250]
+transform = Transform3D(-0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, -0.70710677, 58, 0, -2)
+
+[node name="Wall2" parent="MapContainer/JumpWall" unique_id=749041566 instance=ExtResource("7_kiuba")]
+
+[node name="Wall" parent="MapContainer/JumpWall/Wall2" unique_id=364830610 instance=ExtResource("8_wl206")]
+
+[node name="Wall3" parent="MapContainer/JumpWall" unique_id=1235998905 instance=ExtResource("7_kiuba")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="Wall" parent="MapContainer/JumpWall/Wall3" unique_id=876417858 instance=ExtResource("8_wl206")]
+
+[node name="FirstBridge4" type="Node3D" parent="MapContainer" unique_id=795778572]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 60, 0, 18)
+
+[node name="Panel" parent="MapContainer/FirstBridge4" unique_id=124742947 instance=ExtResource("3_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/FirstBridge4/Panel" unique_id=79073008 instance=ExtResource("4_poj3h")]
+
+[node name="Panel2" parent="MapContainer/FirstBridge4" unique_id=607882339 instance=ExtResource("3_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/FirstBridge4/Panel2" unique_id=111897449 instance=ExtResource("4_poj3h")]
+
+[node name="Panel3" parent="MapContainer/FirstBridge4" unique_id=1564196294 instance=ExtResource("3_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/FirstBridge4/Panel3" unique_id=532993307 instance=ExtResource("4_poj3h")]
+
+[node name="Glass1" parent="MapContainer/FirstBridge4" unique_id=897728779 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 6, 2, -2)
+
+[node name="Glass" parent="MapContainer/FirstBridge4/Glass1" unique_id=1848022075 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass2" parent="MapContainer/FirstBridge4" unique_id=1480353240 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 10, 2, -2)
+
+[node name="Glass" parent="MapContainer/FirstBridge4/Glass2" unique_id=793369257 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass3" parent="MapContainer/FirstBridge4" unique_id=902522647 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 14, 2, -2)
+
+[node name="Glass" parent="MapContainer/FirstBridge4/Glass3" unique_id=756844780 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass4" parent="MapContainer/FirstBridge4" unique_id=15276884 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 6, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge4/Glass4" unique_id=113179059 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass5" parent="MapContainer/FirstBridge4" unique_id=224612541 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 10, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge4/Glass5" unique_id=1302367216 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass6" parent="MapContainer/FirstBridge4" unique_id=611919259 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 14, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge4/Glass6" unique_id=1204026112 instance=ExtResource("6_o8g5b")]
+
+[node name="GlassWall" type="Node3D" parent="MapContainer" unique_id=1119480825]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 54, 0, 30)
+
+[node name="Glass1" parent="MapContainer/GlassWall" unique_id=1668201796 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 6, 2, -2)
+
+[node name="Glass" parent="MapContainer/GlassWall/Glass1" unique_id=174269500 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass2" parent="MapContainer/GlassWall" unique_id=2004865799 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 10, 2, -2)
+
+[node name="Glass" parent="MapContainer/GlassWall/Glass2" unique_id=187924538 instance=ExtResource("6_o8g5b")]
+
+[node name="FirstBridge5" type="Node3D" parent="MapContainer" unique_id=1447324032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 28)
+
+[node name="Panel" parent="MapContainer/FirstBridge5" unique_id=1797306825 instance=ExtResource("3_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/FirstBridge5/Panel" unique_id=2101733853 instance=ExtResource("4_poj3h")]
+
+[node name="Panel2" parent="MapContainer/FirstBridge5" unique_id=2014150355 instance=ExtResource("3_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/FirstBridge5/Panel2" unique_id=1200852267 instance=ExtResource("4_poj3h")]
+
+[node name="Panel3" parent="MapContainer/FirstBridge5" unique_id=847873489 instance=ExtResource("3_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/FirstBridge5/Panel3" unique_id=276618680 instance=ExtResource("4_poj3h")]
+
+[node name="Glass1" parent="MapContainer/FirstBridge5" unique_id=754362436 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 6, 2, -2)
+
+[node name="Glass" parent="MapContainer/FirstBridge5/Glass1" unique_id=2104910492 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass2" parent="MapContainer/FirstBridge5" unique_id=747076361 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 10, 2, -2)
+
+[node name="Glass" parent="MapContainer/FirstBridge5/Glass2" unique_id=187298898 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass3" parent="MapContainer/FirstBridge5" unique_id=1279707468 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 14, 2, -2)
+
+[node name="Glass" parent="MapContainer/FirstBridge5/Glass3" unique_id=440710158 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass4" parent="MapContainer/FirstBridge5" unique_id=1828722689 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 6, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge5/Glass4" unique_id=19227302 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass5" parent="MapContainer/FirstBridge5" unique_id=1636036842 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 10, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge5/Glass5" unique_id=299050285 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass6" parent="MapContainer/FirstBridge5" unique_id=1927621640 instance=ExtResource("5_74x7x")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 14, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge5/Glass6" unique_id=1983807859 instance=ExtResource("6_o8g5b")]
+
+[node name="Glass7" parent="MapContainer/FirstBridge5" unique_id=126463464 instance=ExtResource("5_74x7x")]
+transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, 2, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge5/Glass7" unique_id=1869745978 instance=ExtResource("6_o8g5b")]
+
+[node name="MovingPlatform" parent="MapContainer" unique_id=1347168704 instance=ExtResource("9_wsmac")]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 56.75, 0.004, 21.25)
+script = ExtResource("10_l3tf0")
+_target = Vector3(-3, 0, 3)
+_speed = 2.0
+
+[node name="FloorPanel" parent="MapContainer/MovingPlatform" unique_id=2031017677 instance=ExtResource("4_poj3h")]
+
+[node name="Player" parent="." unique_id=839987394 instance=ExtResource("11_jegd7")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4, 1.2, -4)
+
+[node name="Events" type="Node3D" parent="." unique_id=1603143352]
+
+[node name="StartLevel" parent="Events" unique_id=1389099546 instance=ExtResource("12_v0ymg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1, -4)
+
+[node name="SetSpawn" parent="Events/StartLevel" unique_id=788186590 instance=ExtResource("12_v0ymg")]
+_event = 3
+
+[node name="EndLevel" parent="Events" unique_id=547548326 instance=ExtResource("12_v0ymg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 1, 24)
+_event = 1
+
+[node name="BackToSpawn" parent="Events" unique_id=1756330731 instance=ExtResource("12_v0ymg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.188936, -17.253092, -4)
+_event = 2
+
+[node name="CollisionShape3D" parent="Events/BackToSpawn" index="0" unique_id=639539813]
+shape = SubResource("BoxShape3D_akxdk")
+
+[node name="MeshInstance3D" parent="Events/BackToSpawn" index="1" unique_id=733530217]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.9692802)
+mesh = SubResource("PlaneMesh_xlrhq")
+
+[node name="UI" parent="." unique_id=1477386783 instance=ExtResource("13_acfbe")]
+
+[node name="Preview" type="Path3D" parent="." unique_id=1937417307]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.053154, 2.641975, -4)
+curve = SubResource("Curve3D_poj3h")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Preview" unique_id=1496706632]
+transform = Transform3D(-4.3711e-08, 0, -0.99998724, 0, 0.9999901, 0, 0.9999912, 0, -4.371083e-08, 0, 0, 0)
+script = ExtResource("14_nwub4")
+_speed = 0.1
+
+[node name="Camera3D" type="Camera3D" parent="Preview/PathFollow3D" unique_id=132137824]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
+
+[editable path="MapContainer/WaitingRoom"]
+[editable path="Events/BackToSpawn"]
