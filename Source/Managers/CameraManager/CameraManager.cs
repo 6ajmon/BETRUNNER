@@ -24,11 +24,12 @@ public partial class CameraManager : Node3D
 	public void OnSwitchToPreviewCamera()
 	{
 		PreviewCamera.MakeCurrent();
+		GameManager.Instance.PlayerCharacter?.SetVisible(false);
 	}
 
 	public void OnSwitchToFirstPersonCamera()
 	{
 		PlayerCamera.MakeCurrent();
+		GameManager.Instance.PlayerCharacter?.SetVisible(true);
 	}
-	
 }

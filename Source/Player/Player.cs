@@ -100,6 +100,19 @@ public partial class Player : CharacterBody3D
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 	}
 
+	/// <summary>
+	/// Show/hide the player's 3D visuals (body mesh + arms).
+	/// Hide when preview camera is active, show for first-person.
+	/// </summary>
+	public void SetVisible(bool visible)
+	{
+		var mesh = GetNodeOrNull<MeshInstance3D>("MeshInstance3D");
+		if (mesh != null) mesh.Visible = visible;
+
+		var arms = GetNodeOrNull<Node3D>("Arms");
+		if (arms != null) arms.Visible = visible;
+	}
+
 	public override void _PhysicsProcess(double delta)
 	{
 		float dt = (float)delta;
