@@ -117,11 +117,8 @@ public partial class GameManager : Node
 		// 1. Consume the bet from the player's time pool
 		CountdownManager.Instance.PlaceBet();
 
-		// 2. Start the countdown with the time the player bet
-		double betTime = CountdownManager.Instance.CurrentBetTime;
-		EmitSignal(nameof(StartCountdown), betTime);
-
-		// 3. Switch to first-person view and enable controls
+		// 2. Switch to first-person view and enable controls
+		//    (countdown starts later when player walks into EventNode)
 		CurrentState = gameState.Waiting;
 		SceneManager.Instance.ShowGameOverlay();
 		CameraManager.Instance.EmitSignal(nameof(CameraManager.SwitchToFirstPersonCamera));

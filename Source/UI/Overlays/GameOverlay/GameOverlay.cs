@@ -15,6 +15,9 @@ public partial class GameOverlay : Control
 			GameManager.Instance.StartCountdown += StartCountdown;
 			GameManager.Instance.StopCountdown += StopCountdown;
 		}
+
+		// Pokaż początkowy czas od razu po obstawieniu (zanim EventNode ruszy odliczanie)
+		CountdownManager.Instance.BetPlaced += OnBetPlaced;
 	}
 
 	public override void _ExitTree()
@@ -24,6 +27,9 @@ public partial class GameOverlay : Control
 			GameManager.Instance.StartCountdown -= StartCountdown;
 			GameManager.Instance.StopCountdown -= StopCountdown;
 		}
+
+		if (CountdownManager.Instance != null)
+			CountdownManager.Instance.BetPlaced -= OnBetPlaced;
 	}
 
 	public override void _Process(double delta)
@@ -33,6 +39,15 @@ public partial class GameOverlay : Control
 
 		_remainingTime -= delta;
 		_countdownLabel.Text = $"{_remainingTime:F1}s";
+	}
+
+	private void OnBetPlaced(double betTime, double remainingTime)
+	{
+		if (!GodotObject.IsInstanceValid(this)) return;
+
+		_remainingTime = betTime;
+		_isRunning = false; // czeka aż EventNode ruszy
+		_countdownLabel.Text = $"{betTime:F1}s";
 	}
 
 	private void StartCountdown(double time)
