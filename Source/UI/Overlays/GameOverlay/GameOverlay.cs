@@ -4,9 +4,12 @@ using System;
 public partial class GameOverlay : Control
 {
 	[Export] private Label _countdownLabel;
+	[Export] private Label _limitLabel;
 
 	private double _remainingTime;
+	private double _initialLimit;
 	private bool _isRunning;
+	private bool _failureTriggered;
 
 	public override void _Ready()
 	{
@@ -16,7 +19,6 @@ public partial class GameOverlay : Control
 			GameManager.Instance.StopCountdown += StopCountdown;
 		}
 
-		// Pokaż początkowy czas od razu po obstawieniu (zanim EventNode ruszy odliczanie)
 		CountdownManager.Instance.BetPlaced += OnBetPlaced;
 	}
 
@@ -39,6 +41,27 @@ public partial class GameOverlay : Control
 
 		_remainingTime -= delta;
 		_countdownLabel.Text = $"{_remainingTime:F1}s";
+
+		// Limit zaczyna się zmniejszać DOPIERO gdy czas główny jest na minusie
+		double currentLimit = _initialLimit;
+		if (_remainingTime < 0.0)
+			currentLimit = _initialLimit + _remainingTime; // _remainingTime jest ujemne
+
+		if (_limitLabel != null)
+			_limitLabel.Text = $"{currentLimit:F1}s";
+
+		if (currentLimit <= 0.0 && !_failureTriggered)
+		{
+			_failureTriggered = true;
+			_isRunning = false;
+
+			double actualTime = CountdownManager.Instance.CurrentBetTime - _remainingTime;
+			CountdownManager.Instance.SetActualTimeUsed(actualTime);
+			CountdownManager.Instance.OnLevelFinished(actualTime);
+
+			if (GameManager.Instance != null)
+				GameManager.Instance.TriggerDynamicFailure();
+		}
 	}
 
 	private void OnBetPlaced(double betTime, double remainingTime)
@@ -46,8 +69,14 @@ public partial class GameOverlay : Control
 		if (!GodotObject.IsInstanceValid(this)) return;
 
 		_remainingTime = betTime;
-		_isRunning = false; // czeka aż EventNode ruszy
+		_isRunning = false;
+		_failureTriggered = false;
 		_countdownLabel.Text = $"{betTime:F1}s";
+
+		// Zapamiętaj początkowy limit — będzie stały aż do wejścia w ujemne wartości
+		_initialLimit = CountdownManager.Instance.GetEffectiveLimit(betTime);
+		if (_limitLabel != null)
+			_limitLabel.Text = $"{_initialLimit:F1}s";
 	}
 
 	private void StartCountdown(double time)
@@ -61,9 +90,10 @@ public partial class GameOverlay : Control
 
 	private void StopCountdown()
 	{
+		if (_failureTriggered) return;
+
 		_isRunning = false;
 
-		// Zapisz rzeczywisty czas spędzony na poziomie (może być > betTime)
 		double actualTime = CountdownManager.Instance.CurrentBetTime - _remainingTime;
 		CountdownManager.Instance.SetActualTimeUsed(actualTime);
 

@@ -173,6 +173,43 @@ public partial class CountdownManager : Node
 	/// <summary>True if the player has run out of total time.</summary>
 	public bool IsBankrupt => _totalAvailableTime <= 0.0;
 
+	/// <summary>Bankruptcy check that also considers the next level's bonus time.</summary>
+	public bool IsEffectivelyBankrupt
+	{
+		get
+		{
+			double nextBonus = GetNextLevelBaseTime();
+			double adjustedNext = Math.Max(0.0, nextBonus - _penaltyForNextLevel);
+			return _totalAvailableTime + adjustedNext <= 0.0;
+		}
+	}
+
+	/// <summary>
+	/// Base time of the level that follows the current one, or 0 if unknown.
+	/// </summary>
+	public double GetNextLevelBaseTime()
+	{
+		if (string.IsNullOrEmpty(_currentLevelId)) return 0.0;
+		string numStr = _currentLevelId.Replace("Level", "");
+		if (int.TryParse(numStr, out int num))
+		{
+			string nextId = $"Level{num + 1}";
+			return GetLevelBaseTime(nextId);
+		}
+		return 0.0;
+	}
+
+	/// <summary>
+	/// Effective time limit shown during gameplay:
+	/// (totalAvailablePool + nextLevelBonus) / 2
+	/// The bet is NOT included — it counts down separately in the main timer.
+	/// When this reaches ≤ 0 the player is bankrupt mid-level.
+	/// </summary>
+	public double GetEffectiveLimit(double _ = 0)
+	{
+		return (_totalAvailableTime + GetNextLevelBaseTime()) * 0.5;
+	}
+
 	/// <summary>Reset all state for a new game.</summary>
 	public void Reset()
 	{

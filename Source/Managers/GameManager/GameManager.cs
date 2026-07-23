@@ -35,9 +35,6 @@ public partial class GameManager : Node
 	/// <summary>
 	/// Przeciągnij sceny poziomów w kolejności (0, 1, 2…).
 	/// ID poziomu generowane automatycznie: "Level1", "Level2" …
-	/// <summary>
-	/// Przeciągnij sceny poziomów w kolejności (0, 1, 2…).
-	/// ID poziomu generowane automatycznie: "Level1", "Level2" …
 	/// </summary>
 	[Export] private PackedScene[] _levelScenes;
 	[Export] private PackedScene _mainMenuScene;
@@ -144,23 +141,20 @@ public partial class GameManager : Node
 		CameraManager.Instance.EmitSignal(nameof(CameraManager.SwitchToPreviewCamera));
 
 		// Pokaż odpowiedni ekran podsumowania
-		if (!hasTimeLeft || CountdownManager.Instance.IsBankrupt)
+		if (!hasTimeLeft || CountdownManager.Instance.IsEffectivelyBankrupt)
 		{
-			// Bankructwo — brak czasu w puli
 			SceneManager.Instance.ShowFailureOverlay();
 			var fail = SceneManager.Instance.GetFailureOverlay();
 			if (fail != null) fail.ShowStats();
 		}
 		else if (_currentLevelIndex >= _levelScenes.Length - 1)
 		{
-			// Ostatni poziom ukończony — też summary
 			SceneManager.Instance.ShowSummaryOverlay();
 			var summary = SceneManager.Instance.GetSummaryOverlay();
 			if (summary != null) summary.ShowStats();
 		}
 		else
 		{
-			// Normalny poziom — pokaż summary przed następnym
 			SceneManager.Instance.ShowSummaryOverlay();
 			var summary = SceneManager.Instance.GetSummaryOverlay();
 			if (summary != null) summary.ShowStats();
@@ -190,6 +184,7 @@ public partial class GameManager : Node
 	public void ReturnToMainMenu()
 	{
 		CurrentState = gameState.MainMenu;
+		_currentLevelIndex = -1;
 		CountdownManager.Instance.Reset();
 		SceneManager.Instance.HideAllOverlays();
 
@@ -198,6 +193,19 @@ public partial class GameManager : Node
 			string path = _mainMenuScene.ResourcePath;
 			Callable.From(() => SceneManager.Instance.ChangeSceneByPathAsync(path)).CallDeferred();
 		}
+	}
+
+	/// <summary>
+	/// Called by GameOverlay when the effective limit reaches 0 mid-level.
+	/// Shows the failure screen immediately.
+	/// </summary>
+	public void TriggerDynamicFailure()
+	{
+		CurrentState = gameState.Loading;
+		Input.MouseMode = Input.MouseModeEnum.Visible;
+		SceneManager.Instance.ShowFailureOverlay();
+		var fail = SceneManager.Instance.GetFailureOverlay();
+		if (fail != null) fail.ShowStats();
 	}
 
 	/// <summary>
