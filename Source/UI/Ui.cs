@@ -4,14 +4,15 @@ using System;
 public partial class Ui : Control
 {
 	[Export] private Timer _countdownTimer;
-	[Export]
-	private Label _countdownLabel;
+	[Export] private Label _countdownLabel;
+	[Export] private Button betButton;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		GameManager.Instance.StartCountdown += StartCountdown;
 		GameManager.Instance.StopCountdown += StopCountdown;
+		betButton.Pressed += OnButtonPressed;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -20,9 +21,13 @@ public partial class Ui : Control
 		_countdownLabel.Text = Math.Round(_countdownTimer.TimeLeft, 1).ToString();
 	}
 
+	private void OnButtonPressed()
+	{
+		GameManager.Instance.EmitSignal(nameof(GameManager.EndBettingPhase));
+	}
+
 	private void StartCountdown(double time)
 	{
-		GD.Print("Start Countdown");
 		_countdownTimer.SetPaused(false);
 		_countdownTimer.OneShot = true;
 		_countdownTimer.Start(time);

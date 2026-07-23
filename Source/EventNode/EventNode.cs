@@ -3,10 +3,14 @@ using System;
 
 public partial class EventNode : Area3D
 {
+	private RayCast3D _rayCast;
+	
 	private enum Event
 	{
 		StartCountdown,
 		StopCountdown,
+		BackToSpawn,
+        SetSpawn
 	}
 
 	[Export] private Event _event;
@@ -14,7 +18,12 @@ public partial class EventNode : Area3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_rayCast = GetNode<RayCast3D>("Direction");
 		BodyEntered += OnBodyEntered;
+		if (_event == Event.SetSpawn)
+		{
+			Call(_event.ToString());
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -24,13 +33,17 @@ public partial class EventNode : Area3D
 
 	private void OnBodyEntered(object body)
 	{
-		GD.Print("Body entered: " + body);
-		Call(_event.ToString());
+		if (_event != Event.SetSpawn)
+		{
+			Call(_event.ToString());
+		}
+		
 	}
 
 	private void StartCountdown()
 	{
 		GameManager.Instance.EmitSignal(nameof(GameManager.StartCountdown), 15d);
+		this.QueueFree();
 	}
 
 	private void StopCountdown()
@@ -38,4 +51,13 @@ public partial class EventNode : Area3D
 		GameManager.Instance.EmitSignal(nameof(GameManager.StopCountdown));
 	}
 
+	private void BackToSpawn()
+	{
+		GameManager.Instance.movePlayerToSpawn(_rayCast.ToGlobal(_rayCast.TargetPosition) - _rayCast.GlobalPosition);
+	}
+
+	private void SetSpawn()
+	{
+		GameManager.Instance.SpawnPosition = this.GlobalPosition;
+	}
 }
