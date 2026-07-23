@@ -33,7 +33,6 @@ public partial class EventNode : Area3D
 
 	private void OnBodyEntered(object body)
 	{
-		GD.Print("Body entered: " + body);
 		if (_event != Event.SetSpawn)
 		{
 			Call(_event.ToString());
@@ -44,6 +43,7 @@ public partial class EventNode : Area3D
 	private void StartCountdown()
 	{
 		GameManager.Instance.EmitSignal(nameof(GameManager.StartCountdown), 15d);
+		this.QueueFree();
 	}
 
 	private void StopCountdown()
@@ -53,7 +53,7 @@ public partial class EventNode : Area3D
 
 	private void BackToSpawn()
 	{
-		GameManager.Instance.PlayerToSpawn(_rayCast.ToGlobal(_rayCast.TargetPosition) - _rayCast.GlobalPosition);
+		GameManager.Instance.movePlayerToSpawn(_rayCast.ToGlobal(_rayCast.TargetPosition) - _rayCast.GlobalPosition);
 	}
 
 	private void SetSpawn()

@@ -27,6 +27,7 @@ public partial class Player : CharacterBody3D
 		_currentFov = DefaultFov;
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		GameManager.Instance.PlayerCharacter = this;
+		CameraManager.Instance.PlayerCamera = _camera;
 	}
 
 	public float CameraPitch => _pitch;

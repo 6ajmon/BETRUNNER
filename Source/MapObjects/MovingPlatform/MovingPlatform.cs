@@ -20,23 +20,32 @@ public partial class MovingPlatform : Node3D
 	{
 		float step = _speed * (float)delta;
 		
-		if (!_reverseDirection && Position.DistanceTo(_startPosition + _target) > step)
+		if (GameManager.Instance.CurrentState == GameManager.gameState.Preview ||
+		    GameManager.Instance.CurrentState == GameManager.gameState.Countdown)
 		{
-			Position += _target.Normalized() * step;
-		}
-		else
-		{
-			_reverseDirection = true;
-		}
+			if (!_reverseDirection && Position.DistanceTo(_startPosition + _target) > step)
+			{
+				Position += _target.Normalized() * step;
+			}
+			else
+			{
+				_reverseDirection = true;
+			}
 
-		if (_reverseDirection && Position.DistanceTo(_startPosition) > step)
-		{
-			Position -= _target.Normalized() * step;
+			if (_reverseDirection && Position.DistanceTo(_startPosition) > step)
+			{
+				Position -= _target.Normalized() * step;
+			}
+			else
+			{
+				_reverseDirection = false;
+			}
 		}
 		else
 		{
-			_reverseDirection = false;
+			Position = _startPosition;
 		}
+		
 	}
 	
 }
