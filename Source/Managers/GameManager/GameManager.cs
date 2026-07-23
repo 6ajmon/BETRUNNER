@@ -37,6 +37,7 @@ public partial class GameManager : Node
 	/// ID poziomu generowane automatycznie: "Level1", "Level2" …
 	/// </summary>
 	[Export] private PackedScene[] _levelScenes;
+	[Export] private PackedScene _mainMenuScene;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -113,11 +114,8 @@ public partial class GameManager : Node
 		// 1. Consume the bet from the player's time pool
 		CountdownManager.Instance.PlaceBet();
 
-		// 2. Start the countdown with the time the player bet
-		double betTime = CountdownManager.Instance.CurrentBetTime;
-		EmitSignal(nameof(StartCountdown), betTime);
-
-		// 3. Switch to first-person view and enable controls
+		// 2. Switch to first-person view and enable controls
+		//    (countdown starts later when player walks into EventNode)
 		CurrentState = gameState.Waiting;
 		SceneManager.Instance.ShowGameOverlay();
 		CameraManager.Instance.EmitSignal(nameof(CameraManager.SwitchToFirstPersonCamera));
@@ -132,13 +130,82 @@ public partial class GameManager : Node
 
 	private void OnCountdownPaused()
 	{
-		// Timer ran out — the player used all of their bet time
-		double betTime = CountdownManager.Instance.CurrentBetTime;
-		CountdownManager.Instance.OnLevelFinished(betTime);
+		// Timer został zatrzymany — weź rzeczywisty czas spędzony na poziomie
+		double actualTime = CountdownManager.Instance.ActualTimeUsed;
+		bool hasTimeLeft = CountdownManager.Instance.OnLevelFinished(actualTime);
 
-		// Advance to the next level
+		CurrentState = gameState.Loading;
+
+		// Zwolnij myszkę i włącz kamerę podglądu
+		Input.MouseMode = Input.MouseModeEnum.Visible;
+		CameraManager.Instance.EmitSignal(nameof(CameraManager.SwitchToPreviewCamera));
+
+		// Pokaż odpowiedni ekran podsumowania
+		if (!hasTimeLeft || CountdownManager.Instance.IsEffectivelyBankrupt)
+		{
+			SceneManager.Instance.ShowFailureOverlay();
+			var fail = SceneManager.Instance.GetFailureOverlay();
+			if (fail != null) fail.ShowStats();
+		}
+		else if (_currentLevelIndex >= _levelScenes.Length - 1)
+		{
+			SceneManager.Instance.ShowSummaryOverlay();
+			var summary = SceneManager.Instance.GetSummaryOverlay();
+			if (summary != null) summary.ShowStats();
+		}
+		else
+		{
+			SceneManager.Instance.ShowSummaryOverlay();
+			var summary = SceneManager.Instance.GetSummaryOverlay();
+			if (summary != null) summary.ShowStats();
+		}
+	}
+
+	/// <summary>
+	/// Called by SummaryOverlay's Continue button.
+	/// Advances to the next level or ends the game.
+	/// </summary>
+	public void ContinueAfterSummary()
+	{
+		if (_currentLevelIndex >= _levelScenes.Length - 1)
+		{
+			// Wszystkie poziomy ukończone — wróć do menu
+			ReturnToMainMenu();
+			return;
+		}
+
 		CurrentState = gameState.Loading;
 		TryAdvanceToNextLevel();
+	}
+
+	/// <summary>
+	/// Called by FailureOverlay's Menu button (or from summary on last level).
+	/// </summary>
+	public void ReturnToMainMenu()
+	{
+		CurrentState = gameState.MainMenu;
+		_currentLevelIndex = -1;
+		CountdownManager.Instance.Reset();
+		SceneManager.Instance.HideAllOverlays();
+
+		if (_mainMenuScene != null)
+		{
+			string path = _mainMenuScene.ResourcePath;
+			Callable.From(() => SceneManager.Instance.ChangeSceneByPathAsync(path)).CallDeferred();
+		}
+	}
+
+	/// <summary>
+	/// Called by GameOverlay when the effective limit reaches 0 mid-level.
+	/// Shows the failure screen immediately.
+	/// </summary>
+	public void TriggerDynamicFailure()
+	{
+		CurrentState = gameState.Loading;
+		Input.MouseMode = Input.MouseModeEnum.Visible;
+		SceneManager.Instance.ShowFailureOverlay();
+		var fail = SceneManager.Instance.GetFailureOverlay();
+		if (fail != null) fail.ShowStats();
 	}
 
 	/// <summary>
