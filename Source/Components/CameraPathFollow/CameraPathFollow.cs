@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Preview : PathFollow3D
+public partial class CameraPathFollow : PathFollow3D
 {
 	[Export] private double _speed = 0.2;
 	private Camera3D _previewCamera;

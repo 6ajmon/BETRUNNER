@@ -90,6 +90,19 @@ public partial class PlayerMovement : Node
 
 	public void HandleMovement(float delta)
 	{
+		// Block movement during betting phase
+		if (GameManager.Instance.CurrentState == GameManager.gameState.Preview
+			|| GameManager.Instance.CurrentState == GameManager.gameState.Loading)
+		{
+			// Still apply gravity to prevent floating
+			ApplyGravity(delta);
+			ApplyVelocityAndMove(delta);
+			// Reset air state so player doesn't jump on transition
+			_wallJumpCooldown = 0.0f;
+			_airControlPenalty = 0.0f;
+			return;
+		}
+
 		// Reset animation flags each frame
 		_climbBoostFired = false;
 		_wallJumpJustFired = false;
