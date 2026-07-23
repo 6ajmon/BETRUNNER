@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://n1gvwytmx4ul"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d2rsb"]
+size = Vector3(1, 4, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_126ht"]
+size = Vector3(4, 1, 0.5)
+
+[node name="Door" type="StaticBody3D" unique_id=1212585329]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2135321681]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 2, 0)
+shape = SubResource("BoxShape3D_d2rsb")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=247838784]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 2, 0)
+shape = SubResource("BoxShape3D_d2rsb")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="." unique_id=1944032395]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
+shape = SubResource("BoxShape3D_126ht")

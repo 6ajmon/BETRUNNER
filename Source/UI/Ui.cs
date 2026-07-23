@@ -23,12 +23,13 @@ public partial class Ui : Control
 	private void StartCountdown(double time)
 	{
 		GD.Print("Start Countdown");
+		_countdownTimer.SetPaused(false);
 		_countdownTimer.OneShot = true;
 		_countdownTimer.Start(time);
 	}
 	
 	private void StopCountdown()
 	{
-		_countdownTimer.Stop();
+		_countdownTimer.SetPaused(true);
 	}
 }
