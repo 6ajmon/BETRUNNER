@@ -2,16 +2,19 @@
 
 [ext_resource type="Script" uid="uid://dx7v61743xu0x" path="res://Source/Player/Player.cs" id="1_r3bfb"]
 [ext_resource type="Script" uid="uid://gfj1pwclmwfm" path="res://Source/Player/PlayerMovement.cs" id="2_joxjj"]
+[ext_resource type="PackedScene" uid="uid://dw73236w7at7a" path="res://Assets/Arms/Arms.glb" id="3_joxjj"]
+[ext_resource type="Script" uid="uid://de3vwri21x2mj" path="res://Source/Player/PlayerAnimation.cs" id="4_kk0v3"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sdrnp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sdrnp"]
 
-[node name="Player" type="CharacterBody3D" unique_id=839987394 node_paths=PackedStringArray("_camera", "_movement")]
+[node name="Player" type="CharacterBody3D" unique_id=839987394 node_paths=PackedStringArray("_camera", "_movement", "_animation")]
 collision_mask = 11
 script = ExtResource("1_r3bfb")
 _camera = NodePath("Camera3D")
 _movement = NodePath("Movement")
+_animation = NodePath("Animation")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=468608099]
 mesh = SubResource("CapsuleMesh_sdrnp")
@@ -19,10 +22,16 @@ mesh = SubResource("CapsuleMesh_sdrnp")
 [node name="Camera3D" type="Camera3D" parent="." unique_id=544643710]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5194597, -0.16218841)
 current = true
-fov = 90.0
-
-[node name="Movement" type="Node" parent="." unique_id=108750409]
-script = ExtResource("2_joxjj")
+fov = 100.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1479924260]
 shape = SubResource("CapsuleShape3D_sdrnp")
+
+[node name="Arms" parent="." unique_id=343274322 instance=ExtResource("3_joxjj")]
+transform = Transform3D(-1.5, 0, 2.2649371e-07, 0, 1.5, 0, -2.2649371e-07, 0, -1.5, 0, -1.4132289, -0.020630836)
+
+[node name="Animation" type="Node" parent="." unique_id=1867457033]
+script = ExtResource("4_kk0v3")
+
+[node name="Movement" type="Node" parent="." unique_id=108750409]
+script = ExtResource("2_joxjj")
