@@ -1183,6 +1183,39 @@ _speed = 4.0
 
 [node name="FloorPanel" parent="MapContainer/MovingPlatform" unique_id=1617930444 instance=ExtResource("8_y6gru")]
 
+[node name="Wall" type="Node3D" parent="MapContainer" unique_id=1698544066]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 8, -8)
+
+[node name="W1" parent="MapContainer/Wall" unique_id=387416756 instance=ExtResource("14_nwy88")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="Wall" parent="MapContainer/Wall/W1" unique_id=685571403 instance=ExtResource("15_24axl")]
+
+[node name="W2" parent="MapContainer/Wall" unique_id=2101719754 instance=ExtResource("14_nwy88")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2)
+
+[node name="Wall" parent="MapContainer/Wall/W2" unique_id=928004875 instance=ExtResource("15_24axl")]
+
+[node name="W3" parent="MapContainer/Wall" unique_id=383163923 instance=ExtResource("14_nwy88")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 2)
+
+[node name="Wall" parent="MapContainer/Wall/W3" unique_id=459135607 instance=ExtResource("15_24axl")]
+
+[node name="W4" parent="MapContainer/Wall" unique_id=1638208702 instance=ExtResource("14_nwy88")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 2)
+
+[node name="Wall" parent="MapContainer/Wall/W4" unique_id=1198356621 instance=ExtResource("15_24axl")]
+
+[node name="W5" parent="MapContainer/Wall" unique_id=1699861371 instance=ExtResource("14_nwy88")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 4, 2)
+
+[node name="Wall" parent="MapContainer/Wall/W5" unique_id=1559712956 instance=ExtResource("15_24axl")]
+
+[node name="W6" parent="MapContainer/Wall" unique_id=65919524 instance=ExtResource("14_nwy88")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 4, 2)
+
+[node name="Wall" parent="MapContainer/Wall/W6" unique_id=487006331 instance=ExtResource("15_24axl")]
+
 [connection signal="body_entered" from="Events/OutOfBounds" to="Events/OutOfBounds" method="_on_body_entered"]
 
 [editable path="Preview/PathFollow3D"]

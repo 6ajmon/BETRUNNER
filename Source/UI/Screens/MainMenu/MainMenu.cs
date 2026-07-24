@@ -5,6 +5,9 @@ public partial class MainMenu : Control
 {
 	
 	[Export] private Button _playButton;
+	[Export] private Camera3D _camera;
+	[Export] private float _cameraSpeed;
+	private bool _cameraGoingUp = true;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -15,10 +18,42 @@ public partial class MainMenu : Control
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if (_camera != null)
+		{
+			CameraMovement(delta);
+		}
+		
 	}
 	
 	private void OnPlayButton_Pressed()
 	{
 		GameManager.Instance.EmitSignal(nameof(GameManager.PlayButtonPressed));
+	}
+
+	private void CameraMovement(double delta)
+	{
+		if (_cameraGoingUp)
+		{
+			if (_camera.GlobalPosition.Y <= 3)
+			{
+				_camera.Position += new Vector3(0, (float)(delta * _cameraSpeed), 0);
+			}
+			else
+			{
+				_cameraGoingUp = false;
+			}
+		}
+		else
+		{
+			if (_camera.GlobalPosition.Y >= 1.17)
+			{
+				_camera.Position -= new Vector3(0, (float)(delta * _cameraSpeed), 0);
+			}
+			else
+			{
+				_cameraGoingUp = true;
+			}
+		}
+		
 	}
 }
