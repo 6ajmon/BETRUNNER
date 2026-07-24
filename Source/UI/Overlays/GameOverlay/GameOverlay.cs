@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using NewGameProject;
 
 public partial class GameOverlay : Control
 {
@@ -71,7 +72,10 @@ public partial class GameOverlay : Control
 		}
 
 		if (_limitLabel != null)
+		{
 			_limitLabel.Text = $"{currentLimit:F1}s";
+			_limitLabel.AddThemeColorOverride("font_color", UIColors.Limit);
+		}
 
 		if (currentLimit <= 0.0 && !_failureTriggered)
 		{
@@ -95,6 +99,7 @@ public partial class GameOverlay : Control
 		_isRunning = false;
 		_failureTriggered = false;
 		_countdownLabel.Text = $"{betTime:F1}s";
+		_countdownLabel.AddThemeColorOverride("font_color", UIColors.Bet);
 
 		// Zapamiętaj początkowy limit — będzie stały aż do wejścia w ujemne wartości
 		_initialLimit = CountdownManager.Instance.GetEffectiveLimit(betTime);
@@ -111,7 +116,10 @@ public partial class GameOverlay : Control
 		}
 
 		if (_limitLabel != null)
+		{
 			_limitLabel.Text = $"{_initialLimit:F1}s";
+			_limitLabel.AddThemeColorOverride("font_color", UIColors.Limit);
+		}
 	}
 
 	private void StartCountdown(double time)

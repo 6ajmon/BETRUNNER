@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using NewGameProject;
 
 public partial class BettingOverlay : Control
 {
@@ -37,10 +38,16 @@ public partial class BettingOverlay : Control
 	private void OnLevelTimeAllocated(double levelBaseTime, double totalAvailableTime)
 	{
 		if (_levelTimeLabel != null)
+		{
 			_levelTimeLabel.Text = $"Level time: {levelBaseTime:F1}s";
+			_levelTimeLabel.AddThemeColorOverride("font_color", UIColors.Bonus);
+		}
 
 		if (_totalTimeLabel != null)
+		{
 			_totalTimeLabel.Text = $"Total pool: {totalAvailableTime:F1}s";
+			_totalTimeLabel.AddThemeColorOverride("font_color", UIColors.Limit);
+		}
 
 		// Ustaw zakres suwaka
 		if (_betSlider != null)
@@ -70,7 +77,10 @@ public partial class BettingOverlay : Control
 			_sliderMaxLabel.Text = $"{_betSlider.MaxValue:F0}s";
 
 		if (_sliderValueLabel != null)
+		{
 			_sliderValueLabel.Text = $"{value:F1}s";
+			_sliderValueLabel.AddThemeColorOverride("font_color", UIColors.Bet);
+		}
 	}
 
 	// ── Progress bar helpers ────────────────────────────────────────────────

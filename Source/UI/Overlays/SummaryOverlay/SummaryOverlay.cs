@@ -1,19 +1,30 @@
 using Godot;
 using System;
+using NewGameProject;
 
 public partial class SummaryOverlay : Control
 {
-	[Export] private Label _betLabel;
-	[Export] private Label _timeLabel;
-	[Export] private Label _penaltyLabel;
-	[Export] private Label _remainingLabel;
-	[Export] private Label _calculationLabel;
+	[Export] private RichTextLabel _bonusValueLabel;
+	[Export] private RichTextLabel _betLabel;
+	[Export] private RichTextLabel _penaltyLabel;
+	[Export] private RichTextLabel _timeLabel;
+	[Export] private RichTextLabel _RemainingLabel; // RemainingTimeLabel — shows colored formula
 	[Export] private Button _continueButton;
 
 	public override void _Ready()
 	{
 		if (_continueButton != null)
 			_continueButton.Pressed += OnContinuePressed;
+
+		// Enable BBCode on all value labels (in case not set in scene)
+		foreach (var rt in new[] { _bonusValueLabel, _betLabel, _timeLabel, _penaltyLabel, _RemainingLabel })
+		{
+			if (rt != null)
+			{
+				rt.BbcodeEnabled = true;
+				rt.MouseFilter = MouseFilterEnum.Ignore;
+			}
+		}
 	}
 
 	public override void _ExitTree()
@@ -32,45 +43,99 @@ public partial class SummaryOverlay : Control
 		double actual = cm.ActualTimeUsed;
 		double overshoot = Math.Max(0.0, actual - bet);
 		double remaining = cm.TotalAvailableTime;
+		double bonusTime = cm.CurrentLevelBaseTime; // time actually added from this level
 
+		// ── Colored value labels (BBCode) ────────────────────────────────
 		if (_betLabel != null)
-			_betLabel.Text = $"{bet:F1}s";
+			_betLabel.Text = $"[color=#{UIColors.Bet.ToHtml()}]{bet:F1}s[/color]";
 
+		// ── Finished-in: bet + overshoot = actual ────────────────────────
 		if (_timeLabel != null)
-			_timeLabel.Text = $"{actual:F1}s";
+		{
+			_timeLabel.Text = overshoot > 0.001
+				? $"[color=#{UIColors.Bet.ToHtml()}]{bet:F1}[/color] + [color=#{UIColors.Penalty.ToHtml()}]{overshoot:F1}[/color] = {actual:F1}s"
+				: $"{actual:F1}s";
+		}
 
 		if (_penaltyLabel != null)
-			_penaltyLabel.Text = overshoot > 0.0 ? $"-{overshoot:F1}s" : "None";
+		{
+			_penaltyLabel.Text = overshoot > 0.001
+				? $"[color=#{UIColors.Penalty.ToHtml()}]-{overshoot:F1}s[/color]"
+				: "[color=gray]None[/color]";
+		}
 
-		if (_remainingLabel != null)
-			_remainingLabel.Text = $"{remaining:F1}s";
+		if (_bonusValueLabel != null)
+			_bonusValueLabel.Text = $"[color=#{UIColors.Bonus.ToHtml()}]+{bonusTime:F1}s[/color]";
 
-		// ── Calculation formula ───────────────────────────────────────────
-		if (_calculationLabel != null)
+		// Also color the description labels to match
+		ColorLabelsInGrid();
+
+		// ── Colored calculation formula in the RemainingTime cell ────────
+		if (_RemainingLabel != null)
 		{
 			double baseTime = cm.GetLevelBaseTime(cm.CurrentLevelId);
 			double penaltyFromPrev = cm.PenaltyAppliedToCurrentLevel;
 			double prevRemaining = cm.TotalBeforeLevelAllocation;
 
-			// Build: prevRemaining + baseTime - penaltyFromPrev - bet [- overshoot×2] = remaining
 			var parts = new System.Collections.Generic.List<string>();
 
-			// Show previous remaining only if > 0
+			// Previous remaining (limit color)
 			if (prevRemaining > 0.001)
-				parts.Add($"{prevRemaining:F1}");
+			{
+				parts.Add($"[color=#{UIColors.Limit.ToHtml()}]{prevRemaining:F1}[/color]");
+				parts.Add(" + ");
+			}
 
-			parts.Add($"{baseTime:F1}");
+			// Bonus base time (bonus color)
+			parts.Add($"[color=#{UIColors.Bonus.ToHtml()}]{baseTime:F1}[/color]");
 
+			// Penalty from previous level (penalty color)
 			if (penaltyFromPrev > 0.001)
-				parts.Add($"-{penaltyFromPrev:F1}");
+			{
+				parts.Add(" - ");
+				parts.Add($"[color=#{UIColors.Penalty.ToHtml()}]{penaltyFromPrev:F1}[/color]");
+			}
 
-			parts.Add($"-{bet:F1}");
+			// Bet (bet color)
+			parts.Add(" - ");
+			parts.Add($"[color=#{UIColors.Bet.ToHtml()}]{bet:F1}[/color]");
 
+			// Overshoot penalty (penalty color)
 			if (overshoot > 0.001)
-				parts.Add($"-{overshoot:F1}×2");
+			{
+				parts.Add(" - ");
+				parts.Add($"[color=#{UIColors.Penalty.ToHtml()}]{overshoot:F1}×2[/color]");
+			}
 
-			string formula = string.Join(" ", parts);
-			_calculationLabel.Text = $"{formula} = {remaining:F1}s";
+			string formula = string.Join("", parts);
+			_RemainingLabel.Text = $"{formula} = [color=#{UIColors.Limit.ToHtml()}]{remaining:F1}s[/color]";
+		}
+	}
+
+	/// <summary>
+	/// Apply matching colors to the description labels in the grid.
+	/// </summary>
+	private void ColorLabelsInGrid()
+	{
+		var grid = _betLabel?.GetParent() as GridContainer;
+		if (grid == null) return;
+
+		int childCount = grid.GetChildCount();
+		for (int i = 0; i < childCount; i += 2)
+		{
+			var descLabel = grid.GetChild<Label>(i);
+			if (descLabel == null) continue;
+
+			string text = descLabel.Text.ToLowerInvariant();
+
+			if (text.Contains("bet"))
+				descLabel.AddThemeColorOverride("font_color", UIColors.Bet);
+			else if (text.Contains("penalty"))
+				descLabel.AddThemeColorOverride("font_color", UIColors.Penalty);
+			else if (text.Contains("remaining"))
+				descLabel.AddThemeColorOverride("font_color", UIColors.Limit);
+			else if (text.Contains("level"))
+				descLabel.AddThemeColorOverride("font_color", UIColors.Bonus);
 		}
 	}
 

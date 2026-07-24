@@ -11,8 +11,8 @@ using System;
 public partial class StoperProgressBar : Control
 {
 	// ── Eksporty ────────────────────────────────────────────────────────────
-	[Export] private Color _betColor       = new Color(0.2f, 0.9f, 0.2f);
-	[Export] private Color _limitColor     = new Color(0.9f, 0.2f, 0.2f);
+	[Export] private Color _betColor       = new Color(0.4117647f, 0.9411765f, 0.68235296f);
+	[Export] private Color _limitColor     = new Color(1f, 0.43137255f, 0.2509804f);
 	[Export] private Color _bgColor        = new Color(0.0f, 0.0f, 0.0f);
 	[Export] private Color _borderColor    = new Color(0.5f, 0.5f, 0.5f);
 	[Export] private float _outerBorderWidth = 3f;
