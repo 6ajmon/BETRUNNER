@@ -14,7 +14,7 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 5
 
-[node name="SummaryOverlay" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_betLabel", "_timeLabel", "_penaltyLabel", "_remainingLabel", "_continueButton")]
+[node name="SummaryOverlay" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_bonusValueLabel", "_betLabel", "_timeLabel", "_penaltyLabel", "_RemainingLabel", "_continueButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,10 +22,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2vk15")
+_bonusValueLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/BonusLabel")
 _betLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/BetLabel")
 _timeLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/TimeLabel")
 _penaltyLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/PenaltyLabel")
-_remainingLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/RemainingTimeLabel")
+_RemainingLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/RemainingTimeLabel")
 _continueButton = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/Button")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1695877596]
@@ -67,6 +68,7 @@ size_flags_horizontal = 3
 [node name="VBoxContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=665736661]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_8i2ax")
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=1417215869]
@@ -84,30 +86,32 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 3.5
 columns = 2
 
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=295133774]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "Level time:"
+
+[node name="BonusLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=153840568]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "2"
+fit_content = true
+horizontal_alignment = 2
+
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=1628158942]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "Bet amount:"
 
-[node name="BetLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=719189557]
+[node name="BetLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=634594820]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "2"
-horizontal_alignment = 2
-
-[node name="Label3" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=1884958940]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 6
-text = "Finished in:"
-
-[node name="TimeLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=2144299164]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 6
-text = "1"
+fit_content = true
 horizontal_alignment = 2
 
 [node name="Label5" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=346208060]
@@ -116,11 +120,26 @@ size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "Time penalty:"
 
-[node name="PenaltyLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=184484189]
+[node name="PenaltyLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=250520962]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "1"
+fit_content = true
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=1884958940]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "Finished in:"
+
+[node name="TimeLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=317486212]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "1"
+fit_content = true
 horizontal_alignment = 2
 
 [node name="Label7" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=715654437]
@@ -129,11 +148,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "Remaining time:"
 
-[node name="RemainingTimeLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=495142800]
+[node name="RemainingTimeLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=336725668]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "11"
+fit_content = true
 horizontal_alignment = 2
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2" unique_id=1267317859]

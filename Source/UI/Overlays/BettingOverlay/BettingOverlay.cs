@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using NewGameProject;
 
 public partial class BettingOverlay : Control
 {
@@ -37,10 +38,16 @@ public partial class BettingOverlay : Control
 	private void OnLevelTimeAllocated(double levelBaseTime, double totalAvailableTime)
 	{
 		if (_levelTimeLabel != null)
+		{
 			_levelTimeLabel.Text = $"Level time: {levelBaseTime:F1}s";
+			_levelTimeLabel.AddThemeColorOverride("font_color", UIColors.Bonus);
+		}
 
 		if (_totalTimeLabel != null)
+		{
 			_totalTimeLabel.Text = $"Total pool: {totalAvailableTime:F1}s";
+			_totalTimeLabel.AddThemeColorOverride("font_color", UIColors.Limit);
+		}
 
 		// Ustaw zakres suwaka
 		if (_betSlider != null)
@@ -70,8 +77,19 @@ public partial class BettingOverlay : Control
 			_sliderMaxLabel.Text = $"{_betSlider.MaxValue:F0}s";
 
 		if (_sliderValueLabel != null)
+		{
 			_sliderValueLabel.Text = $"{value:F1}s";
+			_sliderValueLabel.AddThemeColorOverride("font_color", UIColors.Bet);
+		}
 	}
+
+	// ── Progress bar helpers ────────────────────────────────────────────────
+	/// <summary>Current bet value (for ProgressBar.Value).</summary>
+	public double BetProgress => _betSlider?.Value ?? 0.0;
+	/// <summary>Maximum bet value (for ProgressBar.MaxValue).</summary>
+	public double MaxBetProgress => _betSlider?.MaxValue ?? 0.0;
+	/// <summary>Ratio 0..1 of the current bet relative to max available.</summary>
+	public double BetRatio => MaxBetProgress > 0.0 ? BetProgress / MaxBetProgress : 0.0;
 
 	/// <summary>
 	/// Wywoływane przez przycisk Bet w edytorze (lub z .tscn).
