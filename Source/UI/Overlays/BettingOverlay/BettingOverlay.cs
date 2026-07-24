@@ -73,6 +73,14 @@ public partial class BettingOverlay : Control
 			_sliderValueLabel.Text = $"{value:F1}s";
 	}
 
+	// ── Progress bar helpers ────────────────────────────────────────────────
+	/// <summary>Current bet value (for ProgressBar.Value).</summary>
+	public double BetProgress => _betSlider?.Value ?? 0.0;
+	/// <summary>Maximum bet value (for ProgressBar.MaxValue).</summary>
+	public double MaxBetProgress => _betSlider?.MaxValue ?? 0.0;
+	/// <summary>Ratio 0..1 of the current bet relative to max available.</summary>
+	public double BetRatio => MaxBetProgress > 0.0 ? BetProgress / MaxBetProgress : 0.0;
+
 	/// <summary>
 	/// Wywoływane przez przycisk Bet w edytorze (lub z .tscn).
 	/// </summary>

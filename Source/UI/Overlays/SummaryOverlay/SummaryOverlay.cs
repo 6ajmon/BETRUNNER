@@ -7,6 +7,7 @@ public partial class SummaryOverlay : Control
 	[Export] private Label _timeLabel;
 	[Export] private Label _penaltyLabel;
 	[Export] private Label _remainingLabel;
+	[Export] private Label _calculationLabel;
 	[Export] private Button _continueButton;
 
 	public override void _Ready()
@@ -43,6 +44,34 @@ public partial class SummaryOverlay : Control
 
 		if (_remainingLabel != null)
 			_remainingLabel.Text = $"{remaining:F1}s";
+
+		// ── Calculation formula ───────────────────────────────────────────
+		if (_calculationLabel != null)
+		{
+			double baseTime = cm.GetLevelBaseTime(cm.CurrentLevelId);
+			double penaltyFromPrev = cm.PenaltyAppliedToCurrentLevel;
+			double prevRemaining = cm.TotalBeforeLevelAllocation;
+
+			// Build: prevRemaining + baseTime - penaltyFromPrev - bet [- overshoot×2] = remaining
+			var parts = new System.Collections.Generic.List<string>();
+
+			// Show previous remaining only if > 0
+			if (prevRemaining > 0.001)
+				parts.Add($"{prevRemaining:F1}");
+
+			parts.Add($"{baseTime:F1}");
+
+			if (penaltyFromPrev > 0.001)
+				parts.Add($"-{penaltyFromPrev:F1}");
+
+			parts.Add($"-{bet:F1}");
+
+			if (overshoot > 0.001)
+				parts.Add($"-{overshoot:F1}×2");
+
+			string formula = string.Join(" ", parts);
+			_calculationLabel.Text = $"{formula} = {remaining:F1}s";
+		}
 	}
 
 	private void OnContinuePressed()

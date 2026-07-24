@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://bg4brd8hew2uc"]
 
 [ext_resource type="Script" uid="uid://d1tvbpv8330po" path="res://Source/UI/Overlays/GameOverlay/GameOverlay.cs" id="1_c58pn"]
+[ext_resource type="PackedScene" uid="uid://dphhikovty8je" path="res://Source/UI/Controls/StoperProgressBar.tscn" id="2_hbv1b"]
 
-[node name="GameOverlay" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_countdownLabel", "_limitLabel")]
+[node name="GameOverlay" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_countdownLabel", "_limitLabel", "_stoperBar")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,6 +13,7 @@ grow_vertical = 2
 script = ExtResource("1_c58pn")
 _countdownLabel = NodePath("MarginContainer/TimeLabel")
 _limitLabel = NodePath("MarginContainer/LimitLabel")
+_stoperBar = NodePath("MarginContainer/VBoxContainer/HBoxContainer3/MarginContainer3/StoperProgressBar")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1842317583]
 layout_mode = 1
@@ -40,3 +42,33 @@ theme_override_font_sizes/font_size = 48
 text = "15.00"
 horizontal_alignment = 2
 vertical_alignment = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=2124125200]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1293244856]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=710315402]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=651864396]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer3" unique_id=912351570]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer3" unique_id=300064099]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer3" unique_id=2139732294]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StoperProgressBar" parent="MarginContainer/VBoxContainer/HBoxContainer3/MarginContainer3" unique_id=2119342153 instance=ExtResource("2_hbv1b")]
+layout_mode = 2

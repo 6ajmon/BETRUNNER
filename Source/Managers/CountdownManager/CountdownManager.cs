@@ -54,6 +54,9 @@ public partial class CountdownManager : Node
 	private double _currentLevelBaseTime = 0.0; // this level's allocation (after penalty)
 	private double _currentBetTime = 0.0;       // time the player bet
 	private double _penaltyForNextLevel = 0.0;  // excess to subtract from next level
+	private double _penaltyAppliedToCurrentLevel = 0.0; // penalty deducted when allocating this level
+	private double _totalBeforeLevelAllocation = 0.0;   // total available before this level's base time was added
+	private double _totalBeforeBet = 0.0;       // total available right before placing bet (for progress)
 	private bool _betPlaced = false;
 
 	// ── Public read-only properties ─────────────────────────────────────────
@@ -61,10 +64,30 @@ public partial class CountdownManager : Node
 	public double CurrentLevelBaseTime => _currentLevelBaseTime;
 	public double CurrentBetTime       => _currentBetTime;
 	public double PenaltyForNextLevel  => _penaltyForNextLevel;
+	public double PenaltyAppliedToCurrentLevel => _penaltyAppliedToCurrentLevel;
 	public bool   IsBetPlaced          => _betPlaced;
 	public string CurrentLevelId       => _currentLevelId;
 	/// <summary>Set by GameOverlay when countdown stops.</summary>
 	public double ActualTimeUsed       { get; private set; }
+
+	// ── Progress bar helpers ────────────────────────────────────────────────
+	/// <summary>Total available BEFORE this level's base time was added (for summary calculation).</summary>
+	public double TotalBeforeLevelAllocation => _totalBeforeLevelAllocation;
+	/// <summary>Total available BEFORE the bet was placed (for betting progress bar).</summary>
+	public double TotalBeforeBet => _totalBeforeBet;
+
+	/// <summary>Ratio 0..1 of the bet amount relative to what was available before betting.</summary>
+	public double BetRatio => _totalBeforeBet > 0.0 ? _currentBetTime / _totalBeforeBet : 0.0;
+
+	/// <summary>Ratio 0..1 of remaining pool relative to the pool before this level's allocation.</summary>
+	public double PoolRatio
+	{
+		get
+		{
+			double beforeLevel = _totalAvailableTime + _currentBetTime; // approximate
+			return beforeLevel > 0.0 ? Math.Clamp(_totalAvailableTime / beforeLevel, 0.0, 1.0) : 0.0;
+		}
+	}
 
 	/// <summary>
 	/// The UI slider sets this before the player confirms the bet.
@@ -90,6 +113,7 @@ public partial class CountdownManager : Node
 	{
 		_currentLevelId = levelId;
 		_betPlaced = false;
+		_totalBeforeLevelAllocation = _totalAvailableTime;
 
 		if (!_levelBaseTimes.ContainsKey(levelId))
 		{
@@ -103,6 +127,7 @@ public partial class CountdownManager : Node
 		double adjustedTime = Math.Max(0.0, baseTime - _penaltyForNextLevel);
 
 		_currentLevelBaseTime = adjustedTime;
+		_penaltyAppliedToCurrentLevel = baseTime - adjustedTime; // how much was deducted by previous overshoot
 		_totalAvailableTime += adjustedTime;
 		_penaltyForNextLevel = 0.0; // consumed
 
@@ -118,6 +143,7 @@ public partial class CountdownManager : Node
 		if (_betPlaced) return;
 
 		betTime = Math.Clamp(betTime, 0.0, _totalAvailableTime);
+		_totalBeforeBet = _totalAvailableTime;
 		_currentBetTime = betTime;
 		_totalAvailableTime -= betTime;
 		_betPlaced = true;
@@ -173,16 +199,8 @@ public partial class CountdownManager : Node
 	/// <summary>True if the player has run out of total time.</summary>
 	public bool IsBankrupt => _totalAvailableTime <= 0.0;
 
-	/// <summary>Bankruptcy check that also considers the next level's bonus time.</summary>
-	public bool IsEffectivelyBankrupt
-	{
-		get
-		{
-			double nextBonus = GetNextLevelBaseTime();
-			double adjustedNext = Math.Max(0.0, nextBonus - _penaltyForNextLevel);
-			return _totalAvailableTime + adjustedNext <= 0.0;
-		}
-	}
+	/// <summary>Bankruptcy check — only considers the current remaining pool.</summary>
+	public bool IsEffectivelyBankrupt => _totalAvailableTime <= 0.0;
 
 	/// <summary>
 	/// Base time of the level that follows the current one, or 0 if unknown.
@@ -200,14 +218,14 @@ public partial class CountdownManager : Node
 	}
 
 	/// <summary>
-	/// Effective time limit shown during gameplay:
-	/// (totalAvailablePool + nextLevelBonus) / 2
-	/// The bet is NOT included — it counts down separately in the main timer.
+	/// Effective time limit shown during gameplay.
+	/// Pokazuje rzeczywistą pozostałą pulę (bez halvingu).
+	/// Limit wizualnie leci 2× szybciej przez karę overshootu.
 	/// When this reaches ≤ 0 the player is bankrupt mid-level.
 	/// </summary>
 	public double GetEffectiveLimit(double _ = 0)
 	{
-		return (_totalAvailableTime + GetNextLevelBaseTime()) * 0.5;
+		return _totalAvailableTime;
 	}
 
 	/// <summary>Reset all state for a new game.</summary>
@@ -218,6 +236,9 @@ public partial class CountdownManager : Node
 		_currentLevelBaseTime = 0.0;
 		_currentBetTime = 0.0;
 		_penaltyForNextLevel = 0.0;
+		_penaltyAppliedToCurrentLevel = 0.0;
+		_totalBeforeLevelAllocation = 0.0;
+		_totalBeforeBet = 0.0;
 		_betPlaced = false;
 		ActualTimeUsed = 0.0;
 		PendingBet = 0.0;

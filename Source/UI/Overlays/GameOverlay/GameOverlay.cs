@@ -5,6 +5,7 @@ public partial class GameOverlay : Control
 {
 	[Export] private Label _countdownLabel;
 	[Export] private Label _limitLabel;
+	[Export] private StoperProgressBar _stoperBar;
 
 	private double _remainingTime;
 	private double _initialLimit;
@@ -43,9 +44,31 @@ public partial class GameOverlay : Control
 		_countdownLabel.Text = $"{_remainingTime:F1}s";
 
 		// Limit zaczyna się zmniejszać DOPIERO gdy czas główny jest na minusie
+		// I leci 2× szybciej — kara za overshoot
 		double currentLimit = _initialLimit;
 		if (_remainingTime < 0.0)
-			currentLimit = _initialLimit + _remainingTime; // _remainingTime jest ujemne
+			currentLimit = _initialLimit + _remainingTime * 2.0; // _remainingTime jest ujemne
+
+		// Aktualizuj stoper (okrągłe progress bary + tekst w środku)
+		if (_stoperBar != null)
+		{
+			double betRemaining = Math.Max(0.0, _remainingTime);
+			double limitRemaining = Math.Max(0.0, currentLimit);
+			double betRatio = CountdownManager.Instance.CurrentBetTime > 0.0
+				? betRemaining / CountdownManager.Instance.CurrentBetTime
+				: 0.0;
+			double limitRatio = _initialLimit > 0.0
+				? limitRemaining / _initialLimit
+				: 0.0;
+			_stoperBar.BetRatio   = (float)Math.Clamp(betRatio, 0.0, 1.0);
+			_stoperBar.LimitRatio = (float)Math.Clamp(limitRatio, 0.0, 1.0);
+			_stoperBar.BetTimerText   = $"{betRemaining:F1}s";
+			_stoperBar.LimitTimerText = $"{limitRemaining:F1}s";
+			_stoperBar.ActiveTimer = _remainingTime > 0.0
+				? StoperProgressBar.ActiveTimerEnum.Bet
+				: StoperProgressBar.ActiveTimerEnum.Limit;
+			_stoperBar.UpdateProgress();
+		}
 
 		if (_limitLabel != null)
 			_limitLabel.Text = $"{currentLimit:F1}s";
@@ -75,6 +98,18 @@ public partial class GameOverlay : Control
 
 		// Zapamiętaj początkowy limit — będzie stały aż do wejścia w ujemne wartości
 		_initialLimit = CountdownManager.Instance.GetEffectiveLimit(betTime);
+
+		// Stoper startuje z pełnymi wartościami
+		if (_stoperBar != null)
+		{
+			_stoperBar.BetRatio = 1f;
+			_stoperBar.LimitRatio = 1f;
+			_stoperBar.BetTimerText = $"{betTime:F1}s";
+			_stoperBar.LimitTimerText = $"{_initialLimit:F1}s";
+			_stoperBar.ActiveTimer = StoperProgressBar.ActiveTimerEnum.Bet;
+			_stoperBar.UpdateProgress();
+		}
+
 		if (_limitLabel != null)
 			_limitLabel.Text = $"{_initialLimit:F1}s";
 	}
