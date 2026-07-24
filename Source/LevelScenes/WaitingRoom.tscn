@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://b3ogk047evk56" path="res://Source/MapObjects/Glass.tscn" id="8_rgwm7"]
 [ext_resource type="PackedScene" uid="uid://bmxpg6nwo88sd" path="res://Assets/gtlf/Floor_Mid_Path.glb" id="10_naots"]
 [ext_resource type="Script" uid="uid://d3o83ikxfnant" path="res://Source/MapObjects/MovingPlatform/MovingPlatform.cs" id="11_eim0n"]
-[ext_resource type="PackedScene" uid="uid://b50je4svyhxt6" path="res://Source/Player/Player.tscn" id="12_eim0n"]
 [ext_resource type="PackedScene" uid="uid://dp6e5oixcsxlp" path="res://Assets/gtlf/Wall_Light_White.glb" id="13_au4s4"]
 [ext_resource type="PackedScene" uid="uid://yp2aju84bjcr" path="res://Assets/gtlf/Air_Con.glb" id="14_wuo8m"]
 [ext_resource type="PackedScene" uid="uid://b8mqiao143pks" path="res://Assets/gtlf/BioMonitor_Red.glb" id="15_rn7f4"]
@@ -286,9 +285,6 @@ _waitingRoomObject = true
 
 [node name="Wall" parent="Door" unique_id=269854888 instance=ExtResource("4_jckdt")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -2)
-
-[node name="Player" parent="." unique_id=839987394 instance=ExtResource("12_eim0n")]
-transform = Transform3D(0.6439189, 0, -0.76509374, 0, 1, 0, 0.76509374, 0, 0.6439189, -6.4995146, 1.2, -1.0187808)
 
 [node name="Light" type="Node3D" parent="." unique_id=362171694]
 
