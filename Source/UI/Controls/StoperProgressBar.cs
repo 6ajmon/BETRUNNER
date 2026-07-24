@@ -22,6 +22,13 @@ public partial class StoperProgressBar : Control
 	[Export] private float _gap = 4f;
 	[Export] private int   _arcSegments = 120;
 
+	// ── Znaczniki (jak na zegarku) ──────────────────────────────────────────
+	[Export] private Color _tickColor      = new Color(0.6f, 0.6f, 0.6f, 0.5f);
+	[Export] private float _largeTickLen   = 18f;
+	[Export] private float _smallTickLen   = 10f;
+	[Export] private int   _largeTicks     = 12;
+	[Export] private int   _smallPerLarge   = 4; // ile małych między dużymi
+
 	// ── Czcionka ────────────────────────────────────────────────────────────
 	[Export] private int _activeFontSize   = 28;
 	[Export] private int _inactiveFontSize = 18;
@@ -39,7 +46,13 @@ public partial class StoperProgressBar : Control
 	private Label _limitLabel;
 	private Label _multiplierLabel;
 	private Tween _tween;
+	private Tween _pulseTween;
 	private ActiveTimerEnum _lastActiveTimer = ActiveTimerEnum.Bet;
+
+	/// <summary>Mnożnik jasności dla pulsującego limitu (0..1).</summary>
+	public float LimitPulseFactor { get; set; } = 1f;
+	/// <summary>Wartość 0..1 sterująca pulsacją (animowana przez tween).</summary>
+	public float PulseValue { get; set; } = 0f;
 
 	// ── Lifecycle ───────────────────────────────────────────────────────────
 
@@ -95,7 +108,7 @@ public partial class StoperProgressBar : Control
 		// 0. Zewnętrzne obramowanie całego stopera
 		DrawCircle(center, radius + _outerBorderWidth, _borderColor);
 
-		// 1. Tło — czarne wypełnione koło
+		// 1. Tło — wypełnione koło
 		DrawCircle(center, radius, _bgColor);
 
 		// 2. Czerwony pierścień (limit) — wewnętrzny, rysowany pierwszy = pod spodem
@@ -109,9 +122,14 @@ public partial class StoperProgressBar : Control
 			// Obramowanie pierścienia (szersze)
 			DrawArc(center, innerRadius, from, to,
 				_arcSegments, _borderColor, _innerRingWidth + _ringBorderWidth * 2f, true);
-			// Wypełnienie
+			// Wypełnienie (z uwzględnieniem pulsacji)
+			Color pulsedLimit = new Color(
+				Mathf.Min(_limitColor.R * LimitPulseFactor, 1f),
+				Mathf.Min(_limitColor.G * LimitPulseFactor, 1f),
+				Mathf.Min(_limitColor.B * LimitPulseFactor, 1f),
+				_limitColor.A);
 			DrawArc(center, innerRadius, from, to,
-				_arcSegments, _limitColor, _innerRingWidth, true);
+				_arcSegments, pulsedLimit, _innerRingWidth, true);
 		}
 
 		// 3. Zielony pierścień (bet) — zewnętrzny, rysowany później = na wierzchu
@@ -128,6 +146,40 @@ public partial class StoperProgressBar : Control
 			// Wypełnienie
 			DrawArc(center, betRadius, from, to,
 				_arcSegments, _betColor, _outerRingWidth, true);
+		}
+
+		// 4. Znaczniki jak na zegarku — na wierzchu, nad pierścieniami
+		DrawTicks(center, radius);
+	}
+
+	/// <summary>
+	/// Rysuje znaczniki jak na tarczy zegarka — duże (12) i małe (4 między każdą parą).
+	/// </summary>
+	private void DrawTicks(Vector2 center, float radius)
+	{
+		if (_tickColor.A < 0.01f) return;
+
+		float outerR = radius - 3f;
+		float step = Mathf.Tau / _largeTicks;
+		float subStep = step / (_smallPerLarge + 1);
+
+		// Małe kreski — 4 między każdą parą dużych
+		for (int i = 0; i < _largeTicks; i++)
+		{
+			for (int j = 0; j < _smallPerLarge; j++)
+			{
+				float angle = -Mathf.Pi * 0.5f + step * i + subStep * (j + 1);
+				Vector2 dir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+				DrawLine(center + dir * outerR, center + dir * (outerR - _smallTickLen), _tickColor, 1f);
+			}
+		}
+
+		// Duże kreski — 12
+		for (int i = 0; i < _largeTicks; i++)
+		{
+			float angle = -Mathf.Pi * 0.5f + step * i;
+			Vector2 dir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+			DrawLine(center + dir * outerR, center + dir * (outerR - _largeTickLen), _tickColor, 2f);
 		}
 	}
 
@@ -155,6 +207,67 @@ public partial class StoperProgressBar : Control
 			AnimateActiveSwitch();
 			_lastActiveTimer = ActiveTimer;
 		}
+
+		// Pulsacja gdy limit spadnie poniżej połowy
+		bool warning = ActiveTimer == ActiveTimerEnum.Limit && LimitRatio < 0.5f;
+		SetLimitWarning(warning);
+		ApplyPulse();
+	}
+
+	// ── Pulsacja limitu ─────────────────────────────────────────────────────
+
+	private void SetLimitWarning(bool warning)
+	{
+		if (warning)
+		{
+			if (_pulseTween != null && _pulseTween.IsValid())
+				return;
+
+			PulseValue = 0f;
+			_pulseTween = CreateTween().SetLoops();
+			// Sekwencja: 0 → 1 → 0 → 1 → ...
+			_pulseTween.TweenProperty(this, "PulseValue", 1f, 0.5f)
+				.SetEase(Tween.EaseType.InOut).SetTrans(Tween.TransitionType.Sine);
+			_pulseTween.TweenProperty(this, "PulseValue", 0f, 0.5f)
+				.SetEase(Tween.EaseType.InOut).SetTrans(Tween.TransitionType.Sine);
+		}
+		else
+		{
+			if (_pulseTween == null || !_pulseTween.IsValid())
+				return;
+
+			_pulseTween.Kill();
+			_pulseTween = null;
+			PulseValue = 0f;
+			LimitPulseFactor = 1f;
+			if (_limitLabel != null)
+				_limitLabel.Scale = Vector2.One;
+			QueueRedraw();
+		}
+	}
+
+	/// <summary>Stosuje pulsację do koloru i skali — wołane z UpdateProgress().</summary>
+	private void ApplyPulse()
+	{
+		if (PulseValue < 0.001f && LimitPulseFactor >= 0.999f)
+		{
+			// Brak aktywnej pulsacji — upewnij się że skala = 1
+			if (_limitLabel != null && _limitLabel.Scale != Vector2.One)
+				_limitLabel.Scale = Vector2.One;
+			return;
+		}
+
+		// Mapa 0..1 → jasność 1.0..0.6
+		LimitPulseFactor = 1f - PulseValue * 0.4f;
+
+		// Mapa 0..1 → skala 1.0..1.12
+		if (_limitLabel != null)
+		{
+			float s = 1f + PulseValue * 0.12f;
+			_limitLabel.Scale = new Vector2(s, s);
+		}
+
+		QueueRedraw();
 	}
 
 	// ── Layout ──────────────────────────────────────────────────────────────
@@ -191,6 +304,15 @@ public partial class StoperProgressBar : Control
 	{
 		if (_tween != null && _tween.IsValid())
 			_tween.Kill();
+
+		// Zatrzymaj pulsację — przełącznik dostaje priorytet
+		if (_pulseTween != null && _pulseTween.IsValid())
+		{
+			_pulseTween.Kill();
+			_pulseTween = null;
+			PulseValue = 0f;
+			LimitPulseFactor = 1f;
+		}
 
 		_tween = CreateTween();
 		_tween.SetParallel(true);
