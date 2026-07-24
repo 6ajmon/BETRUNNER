@@ -15,26 +15,29 @@ public partial class PressurePlate : Area3D
 	[Signal] public delegate void TurnOnEventHandler();
 	[Signal] public delegate void TurnOffEventHandler();
 	
+	private MeshInstance3D _mesh;
+	private Material _originalMaterial;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		BodyEntered += OnBodyEntered;
 		BodyExited += OnBodyExited;
+		_mesh = GetNode<MeshInstance3D>("Hydroponics_Floor/Hydroponics Floor");
+		_originalMaterial = _mesh.GetActiveMaterial(0);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if (pressed)
-		{
-			GD.Print("pressed");
-		}
+		
 	}
 
 	private void OnBodyEntered(Node body)
 	{
 		pressed = true;
 		EmitSignalTurnOn();
+		SetRed();
 	}
 
 	private void OnBodyExited(Node body)
@@ -43,7 +46,19 @@ public partial class PressurePlate : Area3D
 		{
 			pressed = false;
 			EmitSignalTurnOff();
+			RestoreColor();
 		}
-		GD.Print("stop");
 	}
+	
+	private void SetRed()
+	{
+		var material = new StandardMaterial3D();
+		material.AlbedoColor = Colors.Red;
+		_mesh.SetSurfaceOverrideMaterial(0, material);
+	}
+	public void RestoreColor()
+	{
+		_mesh.SetSurfaceOverrideMaterial(0, _originalMaterial);
+	}
+	
 }

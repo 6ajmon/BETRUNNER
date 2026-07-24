@@ -24,7 +24,7 @@ metallic = 0.24409449
 roughness = 0.88188976
 metadata/_gltf_primary_texture_coord = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_pdsd7"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_21qf1"]
 _surfaces = [{
 "aabb": AABB(-2, -0.14046478, -2, 4, 0.15, 4),
 "format": 34896613377,
@@ -56,7 +56,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray("AAD//6oqVNUAAAAAAABU1QAA//8AAFTVAAD///9/VNUAAAAA//9U1QAA//9U1VTVAAD/////VNWqKv//////vwAAAAD///+/AAD//////7//f///////v1TVAAD///+/VNX//////7//////////v///AAD///+//////1TVVNX//wAA//9U1f///////1TV//8AAFTVVNX//////39U1f//AAD/f1TV/////1RVVNX//wAAAABU1f////+qKlTV/////wAAVNVU1f//AAD/////AAAAAP///////wAA////f///AAD//wAAAAAAAP//qir//wAA//8AAP//AAD//6oqAABVVf////8AAP9///8AAAAAAAD/////AAAAAP//AAAAAP////9U1QAA////////AABU1f////8AAP////8AAP//qir/vwAA//8AAP+/qir//wAA/7+pqv///3//v/////9U1f+/VNX//////7//////////v/9///8AAP+/VNX//wAA/7//////qir/v/////9UVf+///////9//7//f/////9U1QAA//+qKlTVVNX/////VNUAAP///39U1aoq//////+/AAD///9//7//f///////vwAA//9U1f+/AAD/////VNUAAP//VNVU1aoq/////1TV/////1TVVNX/f///AABU1f//////f1TVqar///9/VNWqKv//AABU1VTV//8AAFTV/////wAAVNX/////qipU1amqAACqKv//VNUAAAAA//+pqgAA/3////9/AACqKv//VFUAAAAA////fwAA/3///6qqAABU1f////8AAKmq////fwAAVNX//1VVAAD/////VVUAAP9///+qKgAAVNX//wAAAACqqv//AAAAAKoq//8AAAAAqipU1QAAAACqqlTVVVUAAP///7+qqv//////v///AACpqlTVVNUAAAAA//9UVQAAAAD//1RV//+qKv+/qir//1RV/7//f///VFX/v1VV////f/+/VNX//6mq/7+qqv//VNX/v1RV//+qKlTVqar//6oqVNX/f///VFVU1VTV//9UVVTVVNX//6mqVNWpqv//qir/v1TV//9UVf+/qqr/////VNWqqv//VNVU1VVV////f1TVqir//6mqVNWqKv//VFVU1aoq//+pqv+/VNX//6oq/7+pqv//AAD/v1TVAACqKv////8AAKoq//+pqgAAAAD//1TVAABVVf////8AAFRV//+pqgAAVVX///9/AAAAAP///38AAFVV//9U1QAA/3///1TVAACqqv//qqoAAKqq////fwAAqqr//1TVAABU1f//qqoAAP//////fwAA/////1VVAABU1f//qioAAP////9VVQAAqqr//wAAAABU1f//qioAAKqq//+qKgAA/3///wAAAAD/f///VFUAAFVV//8AAAAAVVX//1RVAACqKv//qioAAKoq//+qKgAAAAD//wAA//9VVVTVAAAAAFVVVNUAAAAA/39U1QAA//+qqlTVAAAAAFTVVNWqKgAA////v1VV//////+//38AAP///7+qqgAA////v/////+pqlTV//8AAFRVVNX//wAAqipU1amq//8AAP//qaoAAAAA////fwAAAAD//1RV//8AAP//qioAAAAA//+qKv//qir/v1RV//9UVf+//3////9//7//f///qar/v6qq//+pqv+/VNX//1TV/7//f///qipU1VRV//8AAFTVqar//1RVVNVU1f///39U1f////+pqlTV/3///1TVVNX/f///qapU1VVV//9U1VTVVVX//6mqVNWqKv///39U1QAA//9VVVTVVVX//////79VVf//VNX/v6oq//9U1f+/AAD//6qq/79UVaqqVFWqqlRVqqpUVaqqVFWqqlRVqqpUVaqq/3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3+qqlRVqqpUVaqqVFWqqlRVqqpUVaqqVFWqqlRVqqpUVaqqVFWqqlRV/z//v/8//7//P/+//z//v/8//7//P/+//z//v/9//z//f/8//3//P/9//z//f/8//3//P/9//z//f/8/////f////3////9/////f////3////9/////f////3////9/////f////3////9/VNWqKlTVqipU1aoqVNWqKv///3////9/////f////39U1aoqVNWqKlTVqipU1aoqVNWqKlTVqipU1aoqVNWqKlTVqipU1aoqVNWqKv9//z//f/8//3//P/9//z//f/8//3//P/9//z//f/8//3//P/9//z//f/8//3//P/9//z//f/8/VFWqqlRVqqr/f/9//3//f6qqVFX/P/+//z//v////3////9/////f////3////9/////f1TVqipU1aoqVNWqKlTVqipU1aoq////f////39U1aoqVNWqKlTVqipU1aoqVNWqKv///3////9/////f/9//z//f/8//3//P/9//z//f/8//3//P/9//z//f/8//3//P/9//z//f/8//3//P/9//z//f/8//3//P/9//z//f/8//3//P/9//z//f/8//3//P/9//z//f/8//3//P/9//z//f/8//3//P1RVqqpUVaqqVFWqqlRVqqpUVaqq/3//f/9//3//f/9//3//f6qqVFWqqlRVqqpUVf8//7//P/+//z//v/8//7//P/+/////f////3////9/////f////3////9/VNWqKlTVqipU1aoqVNWqKlTVqipU1aoqVNWqKlTVqipU1aoqVNWqKlTVqir///9/////f////3////9/")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_pdsd7")
+shadow_mesh = SubResource("ArrayMesh_21qf1")
 
 [sub_resource type="Curve3D" id="Curve3D_d262h"]
 _data = {
@@ -460,7 +460,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 4, 0)
 transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, 4, -0.1, -12)
 script = ExtResource("10_mpnyv")
 _target = Vector3(12, 0, 0)
-_speed = 2.0
+_speed = 3.0
 _pressurePlate = NodePath("../PressurePlate")
 
 [node name="FloorPanel" parent="MapContainer/MovingPlatform9" unique_id=113470189 instance=ExtResource("4_buect")]
@@ -473,7 +473,7 @@ mesh = SubResource("ArrayMesh_42477")
 transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, 8, -0.1, -12)
 script = ExtResource("10_mpnyv")
 _target = Vector3(12, 0, 0)
-_speed = 2.0
+_speed = 3.0
 _pressurePlate = NodePath("../PressurePlate")
 
 [node name="FloorPanel" parent="MapContainer/MovingPlatform10" unique_id=632020490 instance=ExtResource("4_buect")]
@@ -496,6 +496,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.045297623, 4.606387, -4.41
 light_negative = true
 omni_range = 12.0
 
+[node name="Panel3" parent="MapContainer" unique_id=1872513853 instance=ExtResource("3_syrg8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/Panel3" unique_id=1479738171 instance=ExtResource("4_buect")]
+
+[node name="Glass18" parent="MapContainer" unique_id=1721138237 instance=ExtResource("5_28nkh")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 18, 2, -2)
+
+[node name="Glass" parent="MapContainer/Glass18" unique_id=432302443 instance=ExtResource("6_840ds")]
+
+[node name="Glass19" parent="MapContainer" unique_id=1432995159 instance=ExtResource("5_28nkh")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 18, 6, -2)
+
+[node name="Glass" parent="MapContainer/Glass19" unique_id=1820916051 instance=ExtResource("6_840ds")]
+
 [node name="Player" parent="." unique_id=839987394 instance=ExtResource("10_fjbvl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.088071, 1.5136486, -4.1571574)
 
@@ -504,7 +519,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.053154, 2.641975, -4)
 curve = SubResource("Curve3D_d262h")
 
 [node name="PathFollow3D" parent="Preview" unique_id=384614118 instance=ExtResource("11_42477")]
-transform = Transform3D(-0.30688578, 0, -0.95173013, 0, 0.9999901, 0, 0.95173407, 0, -0.3068845, -1.0936694, 0, 0)
+transform = Transform3D(-0.30688575, 0, -0.95173013, 0, 0.9999901, 0, 0.95173407, 0, -0.3068845, -1.0936694, 0, 0)
 _speed = 0.1
 
 [node name="Events" type="Node3D" parent="." unique_id=1477996294]
@@ -527,6 +542,7 @@ _event = 2
 shape = SubResource("BoxShape3D_d262h")
 
 [node name="MeshInstance3D" parent="Events/OutOfBounds" index="1" unique_id=733530217]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.741146, 0, 3.4668007)
 mesh = SubResource("PlaneMesh_xul0q")
 
 [node name="EndLevelAlternative" parent="Events" unique_id=672167628 instance=ExtResource("12_mpnyv")]

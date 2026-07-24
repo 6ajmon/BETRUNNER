@@ -43,9 +43,10 @@ public partial class CountdownManager : Node
 	private Dictionary<string, double> _levelBaseTimes = new()
 	{
 		{ "Tutorial", 120.0 },
-		{ "Level1",   60.0 },
-		{ "Level2",   40.0 },
-		{ "Level3",   30.0 },
+		{ "Level1",   30.0 },
+		{ "Level2",   15.0 },
+		{ "Level3",   15.0 },
+		{"Level4",   15.0 },
 	};
 
 	// ── Runtime state ───────────────────────────────────────────────────────
