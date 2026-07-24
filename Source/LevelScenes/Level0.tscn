@@ -53,7 +53,7 @@ shadow_enabled = true
 
 [node name="WaitingRoom" parent="MapContainer" unique_id=1226178956 instance=ExtResource("2_acfbe")]
 
-[node name="Door" parent="MapContainer/WaitingRoom/Wall3/D1" parent_id_path=PackedInt32Array(1226178956, 1174944177) index="1" unique_id=1212585329]
+[node name="Door" parent="MapContainer/WaitingRoom/Walls/Wall3/D1" parent_id_path=PackedInt32Array(1226178956, 1174944177) index="1" unique_id=1212585329]
 collision_layer = 8
 
 [node name="FirstBridge" type="Node3D" parent="MapContainer" unique_id=1571318747]
@@ -338,31 +338,30 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4, 
 
 [node name="Events" type="Node3D" parent="." unique_id=1603143352]
 
-[node name="EventNode" parent="Events" unique_id=1389099546 instance=ExtResource("12_nwub4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7960331, 1.3430266, -3.9686599)
+[node name="StartLevel" parent="Events" unique_id=1389099546 instance=ExtResource("12_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4728115, 1.3430266, -3.9686599)
 
-[node name="EventNode3" parent="Events" unique_id=30034304 instance=ExtResource("12_nwub4")]
+[node name="RespawnPoint" parent="Events/StartLevel" unique_id=1223537873 instance=ExtResource("12_nwub4")]
+_event = 3
+
+[node name="EndLevel" parent="Events" unique_id=30034304 instance=ExtResource("12_nwub4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.885754, 1.3430266, 24.019217)
 _event = 1
 
-[node name="EventNode4" type="Area3D" parent="Events" unique_id=1207619478]
+[node name="OutOfBounds" type="Area3D" parent="Events" unique_id=1207619478]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.62362, -16.5446, 8.6232395)
 collision_layer = 4
 script = ExtResource("13_poj3h")
 _event = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Events/EventNode4" unique_id=639539813]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Events/OutOfBounds" unique_id=639539813]
 shape = SubResource("BoxShape3D_nwub4")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Events/EventNode4" unique_id=733530217]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Events/OutOfBounds" unique_id=733530217]
 mesh = SubResource("SphereMesh_126ht")
 
-[node name="Direction" type="RayCast3D" parent="Events/EventNode4" unique_id=1820536039]
+[node name="Direction" type="RayCast3D" parent="Events/OutOfBounds" unique_id=1820536039]
 target_position = Vector3(2, 0, 0)
-
-[node name="EventNode2" parent="Events" unique_id=1223537873 instance=ExtResource("12_nwub4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9872165, 1.3430266, -3.9686599)
-_event = 3
 
 [node name="Preview" type="Path3D" parent="." unique_id=1937417307]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.053154, 2.641975, -4)
@@ -371,6 +370,6 @@ curve = SubResource("Curve3D_poj3h")
 [node name="PathFollow3D" parent="Preview" unique_id=384614118 instance=ExtResource("13_nwub4")]
 _speed = 0.1
 
-[connection signal="body_entered" from="Events/EventNode4" to="Events/EventNode4" method="_on_body_entered"]
+[connection signal="body_entered" from="Events/OutOfBounds" to="Events/OutOfBounds" method="_on_body_entered"]
 
 [editable path="MapContainer/WaitingRoom"]

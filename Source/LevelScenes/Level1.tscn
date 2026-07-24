@@ -112,21 +112,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, -3)
 [node name="StartLevel" parent="Events" unique_id=1389099546 instance=ExtResource("9_xhkal")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1, -4)
 
-[node name="SetSpawn" parent="Events/StartLevel" unique_id=325995591 instance=ExtResource("9_xhkal")]
+[node name="RespawnPoint" parent="Events/StartLevel" unique_id=325995591 instance=ExtResource("9_xhkal")]
 _event = 3
 
 [node name="EndLevel" parent="Events" unique_id=613073637 instance=ExtResource("9_xhkal")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 1, -3)
 _event = 1
 
-[node name="BackToSpawn" parent="Events" unique_id=383528875 instance=ExtResource("9_xhkal")]
+[node name="OutOfBounds" parent="Events" unique_id=383528875 instance=ExtResource("9_xhkal")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.188936, -8.447094, -4)
 _event = 2
 
-[node name="CollisionShape3D" parent="Events/BackToSpawn" index="0" unique_id=639539813]
+[node name="CollisionShape3D" parent="Events/OutOfBounds" index="0" unique_id=639539813]
 shape = SubResource("BoxShape3D_xhkal")
 
-[node name="MeshInstance3D" parent="Events/BackToSpawn" index="1" unique_id=733530217]
+[node name="MeshInstance3D" parent="Events/OutOfBounds" index="1" unique_id=733530217]
 mesh = SubResource("PlaneMesh_xhkal")
 
 [node name="Player" parent="." unique_id=839987394 instance=ExtResource("1_k83py")]
@@ -137,7 +137,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 4, -4)
 curve = SubResource("Curve3D_35dpr")
 
 [node name="PathFollow3D" parent="Preview" unique_id=384614118 instance=ExtResource("11_vkhhe")]
-transform = Transform3D(0.0031998577, 0.0068854126, -0.9999584, 0, 0.9999664, 0.006885428, 0.99998605, -2.2032647e-05, 0.0031997692, 0, 0.241, 0.112)
+transform = Transform3D(0.0031998577, 0.0068854103, -0.9999581, 0, 0.9999661, 0.006885426, 0.99998605, -2.2032642e-05, 0.0031997683, 0, 0.241, 0.112)
 _speed = 0.09
 
-[editable path="Events/BackToSpawn"]
+[editable path="Events/OutOfBounds"]

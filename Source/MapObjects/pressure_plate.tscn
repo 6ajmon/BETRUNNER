@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://c0laht47k7bck"]
+
+[ext_resource type="Script" uid="uid://dxiqulnu8pku3" path="res://Source/MapObjects/PressurePlate.cs" id="1_b1uai"]
+[ext_resource type="PackedScene" uid="uid://de2ibr54x4f2u" path="res://Assets/gtlf/Hydroponics_Floor.glb" id="1_eswq2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_126ht"]
+size = Vector3(2.6, 0.3, 2.6)
+
+[node name="PressurePlate" type="Area3D" unique_id=158581914]
+script = ExtResource("1_b1uai")
+
+[node name="Hydroponics_Floor" parent="." unique_id=2115866903 instance=ExtResource("1_eswq2")]
+transform = Transform3D(0.65, 0, 0, 0, 1, 0, 0, 0, 0.65, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=446708775]
+shape = SubResource("BoxShape3D_126ht")
+debug_color = Color(1.67806, 0.51814485, 0.5391072, 1)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

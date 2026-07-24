@@ -3,14 +3,13 @@
 [ext_resource type="PackedScene" uid="uid://d38pigd56rdna" path="res://Assets/gtlf/Hazard_Floor_1.glb" id="1_upkqs"]
 [ext_resource type="Script" uid="uid://d3o83ikxfnant" path="res://Source/MapObjects/MovingPlatform/MovingPlatform.cs" id="2_swqnx"]
 [ext_resource type="PackedScene" uid="uid://dv8e5e5yflpig" path="res://Source/MapObjects/FloorPanel.tscn" id="3_csbdl"]
+[ext_resource type="PackedScene" uid="uid://c0laht47k7bck" path="res://Source/MapObjects/pressure_plate.tscn" id="3_jgtea"]
 [ext_resource type="PackedScene" uid="uid://6wccyr8pnnbw" path="res://Assets/gtlf/Floor_Metal_Square.glb" id="4_0ra11"]
 [ext_resource type="PackedScene" uid="uid://73cnbyc160xa" path="res://Assets/gtlf/Ramp_Grey.glb" id="5_jgtea"]
 [ext_resource type="PackedScene" uid="uid://bxid5qktyabkv" path="res://Source/MapObjects/Ramp.tscn" id="6_436rc"]
 [ext_resource type="PackedScene" uid="uid://cti64iusnyvhe" path="res://Assets/gtlf/Floor_Tile_Carpet_Grey.glb" id="7_4wiyc"]
 [ext_resource type="PackedScene" uid="uid://bad78318ygsa5" path="res://Source/MapObjects/column.tscn" id="8_oou7w"]
-[ext_resource type="PackedScene" uid="uid://c3sg4vp604qt6" path="res://Assets/gtlf/Wall_Glass_Clear.glb" id="9_jgtea"]
 [ext_resource type="PackedScene" uid="uid://qurbeehr7tu1" path="res://Assets/gtlf/Wall_Red.glb" id="9_vab8c"]
-[ext_resource type="PackedScene" uid="uid://b3ogk047evk56" path="res://Source/MapObjects/Glass.tscn" id="10_436rc"]
 [ext_resource type="PackedScene" uid="uid://bh2u0crmw0n4c" path="res://Source/MapObjects/wall.tscn" id="10_mjvqp"]
 [ext_resource type="PackedScene" uid="uid://i0eepuf3dxvn" path="res://Assets/gtlf/Wall_With_Door_Red.glb" id="11_y4sfe"]
 [ext_resource type="PackedScene" uid="uid://b50je4svyhxt6" path="res://Source/Player/Player.tscn" id="12_sskno"]
@@ -130,6 +129,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
 
 [node name="FloorPanel" parent="MapContainer/FloorContainer/Floor4/Panel4" unique_id=1319236600 instance=ExtResource("3_csbdl")]
 
+[node name="one-time" parent="MapContainer/FloorContainer/Floor4" unique_id=158581914 instance=ExtResource("3_jgtea")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0908413, 0.24999943, -4.1203957)
+
+[node name="pressure" parent="MapContainer/FloorContainer/Floor4" unique_id=403498477 instance=ExtResource("3_jgtea")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.011875, 0.24999943, -8.164227)
+_pressurePlateType = 1
+
 [node name="Ramp" parent="MapContainer" unique_id=838154036 instance=ExtResource("5_jgtea")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -8)
 
@@ -139,11 +145,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -8)
 transform = Transform3D(1, 0, 0, 0, 27, 0, 0, 0, 1, -12, 3.75, -12)
 
 [node name="Column" parent="MapContainer/Column" unique_id=979496076 instance=ExtResource("8_oou7w")]
-
-[node name="Column2" parent="MapContainer" unique_id=938053686 instance=ExtResource("7_4wiyc")]
-transform = Transform3D(1, 0, 0, 0, 27, 0, 0, 0, 1, 0, 3.75, -12)
-
-[node name="Column" parent="MapContainer/Column2" unique_id=1809945357 instance=ExtResource("8_oou7w")]
 
 [node name="Column3" parent="MapContainer" unique_id=65711560 instance=ExtResource("7_4wiyc")]
 transform = Transform3D(1, 0, 0, 0, 27, 0, 0, 0, 1, 0, 3.75, -8)
@@ -452,21 +453,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2, -26)
 [node name="Wall" parent="MapContainer/WallContainer/Wall3" unique_id=1069147230 instance=ExtResource("10_mjvqp")]
 
 [node name="GlassWall" type="Node3D" parent="MapContainer/WallContainer" unique_id=516825306]
-
-[node name="Glass1" parent="MapContainer/WallContainer/GlassWall" unique_id=921049014 instance=ExtResource("9_jgtea")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6, 4, -12)
-
-[node name="Glass" parent="MapContainer/WallContainer/GlassWall/Glass1" unique_id=1273704857 instance=ExtResource("10_436rc")]
-
-[node name="Glass2" parent="MapContainer/WallContainer/GlassWall" unique_id=575885594 instance=ExtResource("9_jgtea")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6, 4, -8)
-
-[node name="Glass" parent="MapContainer/WallContainer/GlassWall/Glass2" unique_id=1890231813 instance=ExtResource("10_436rc")]
-
-[node name="Glass3" parent="MapContainer/WallContainer/GlassWall" unique_id=1483591806 instance=ExtResource("9_jgtea")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6, 4, -4)
-
-[node name="Glass" parent="MapContainer/WallContainer/GlassWall/Glass3" unique_id=738957909 instance=ExtResource("10_436rc")]
 
 [node name="Wall_FourByThree5" type="Node3D" parent="MapContainer/WallContainer" unique_id=1196115742]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2, 0, -12)
@@ -805,6 +791,24 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12,
 
 [node name="Node3D" parent="MapContainer/Ramp4" unique_id=821510297 instance=ExtResource("6_436rc")]
 
+[node name="MovingPlatform" parent="MapContainer" unique_id=1347168704 node_paths=PackedStringArray("_pressurePlate") instance=ExtResource("1_upkqs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -12)
+script = ExtResource("2_swqnx")
+_target = Vector3(0, 4, 0)
+_speed = 3.0
+_pressurePlate = NodePath("../FloorContainer/Floor4/one-time")
+
+[node name="FloorPanel" parent="MapContainer/MovingPlatform" unique_id=1582921328 instance=ExtResource("3_csbdl")]
+
+[node name="MovingPlatform2" parent="MapContainer" unique_id=651790943 node_paths=PackedStringArray("_pressurePlate") instance=ExtResource("1_upkqs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -16)
+script = ExtResource("2_swqnx")
+_target = Vector3(0, 4, 0)
+_speed = 3.0
+_pressurePlate = NodePath("../FloorContainer/Floor4/pressure")
+
+[node name="FloorPanel" parent="MapContainer/MovingPlatform2" unique_id=827913345 instance=ExtResource("3_csbdl")]
+
 [node name="Door" parent="." unique_id=1174944177 instance=ExtResource("11_y4sfe")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -2)
 
@@ -812,22 +816,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -2)
 
 [node name="Player" parent="." unique_id=839987394 instance=ExtResource("12_sskno")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 1, 0)
-
-[node name="MovingPlatform" parent="." unique_id=1347168704 instance=ExtResource("1_upkqs")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 4, -16)
-script = ExtResource("2_swqnx")
-_target = Vector3(12, 0, 0)
-_speed = 2.5
-
-[node name="FloorPanel" parent="MovingPlatform" unique_id=2092697331 instance=ExtResource("3_csbdl")]
-
-[node name="MovingPlatform2" parent="." unique_id=63957994 instance=ExtResource("1_upkqs")]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -6, 6, -16)
-script = ExtResource("2_swqnx")
-_target = Vector3(0, 12, 0)
-_speed = 2.5
-
-[node name="FloorPanel" parent="MovingPlatform2" unique_id=1811959154 instance=ExtResource("3_csbdl")]
 
 [node name="EventNode" parent="." unique_id=431245136 instance=ExtResource("13_swqnx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03910494, 5.4384594, -0.06849599)
