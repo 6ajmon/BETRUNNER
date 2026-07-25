@@ -1,10 +1,9 @@
 using Godot;
 using System;
 
-public partial class MainMenu : Control
+public partial class MainMenu : Node
 {
 	
-	[Export] private Button _playButton;
 	[Export] private Camera3D _camera;
 	[Export] private float _cameraSpeed;
 	private bool _cameraGoingUp = true;
@@ -12,7 +11,7 @@ public partial class MainMenu : Control
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_playButton.Pressed += OnPlayButton_Pressed;
+		SceneManager.Instance.ShowMainMenuOverlay();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -23,11 +22,6 @@ public partial class MainMenu : Control
 			CameraMovement(delta);
 		}
 		
-	}
-	
-	private void OnPlayButton_Pressed()
-	{
-		GameManager.Instance.EmitSignal(nameof(GameManager.PlayButtonPressed));
 	}
 
 	private void CameraMovement(double delta)

@@ -40,17 +40,23 @@ public partial class CountdownManager : Node
 	private List<LevelStat> _levelHistory = new();
 	public IReadOnlyList<LevelStat> LevelHistory => _levelHistory.AsReadOnly();
 
-	// ── Level time configuration (level ID → base time in seconds) ──────────
-	private Dictionary<string, double> _levelBaseTimes = new()
+	// ── Difficulty ─────────────────────────────────────────────────────────
+	public enum Difficulty
 	{
-		{ "Level1",   90.0 },
-		{ "Level2",   60.0 },
-		{ "Level3",   60.0 },
-		{ "Level4",   60.0 },
-		{ "Level5",   60.0 },
-		{ "Level6",   60.0 },
-		{ "Level7",   60.0 },
-	};
+		Noob = 0,
+		Pro  = 1,
+		Dev  = 2,
+	}
+
+	/// <summary>
+	/// Current difficulty setting. Updated by SettingsOverlay slider.
+	/// </summary>
+	public Difficulty CurrentDifficulty { get; set; } = Difficulty.Pro;
+
+	// ── Level time configuration (per difficulty, by level index 0..N) ─────
+	private static readonly double[] _baseTimesNoob  = { 60.0, 40.0, 40.0, 40.0, 60.0, 40.0, 40.0 };
+	private static readonly double[] _baseTimesPro   = { 30.0, 20.0, 20.0, 20.0, 30.0, 20.0, 20.0 };
+	private static readonly double[] _baseTimesDev   = { 13.0, 10.0, 8.0, 10.0, 20.0, 10.0, 12.0 };
 
 	// ── Runtime state ───────────────────────────────────────────────────────
 	private string _currentLevelId = "";
@@ -119,7 +125,8 @@ public partial class CountdownManager : Node
 		_betPlaced = false;
 		_totalBeforeLevelAllocation = _totalAvailableTime;
 
-		if (!_levelBaseTimes.ContainsKey(levelId))
+		double baseTime = GetLevelBaseTime(levelId);
+		if (baseTime < 0.0)
 		{
 			GD.PrintErr($"CountdownManager: Unknown level '{levelId}'");
 			_currentLevelBaseTime = 0.0;
@@ -127,13 +134,12 @@ public partial class CountdownManager : Node
 			return;
 		}
 
-		double baseTime = _levelBaseTimes[levelId];
 		double adjustedTime = Math.Max(0.0, baseTime - _penaltyForNextLevel);
 
 		_currentLevelBaseTime = adjustedTime;
-		_penaltyAppliedToCurrentLevel = baseTime - adjustedTime; // how much was deducted by previous overshoot
+		_penaltyAppliedToCurrentLevel = baseTime - adjustedTime;
 		_totalAvailableTime += adjustedTime;
-		_penaltyForNextLevel = 0.0; // consumed
+		_penaltyForNextLevel = 0.0;
 
 		EmitSignal(nameof(LevelTimeAllocated), _currentLevelBaseTime, _totalAvailableTime);
 	}
@@ -255,17 +261,52 @@ public partial class CountdownManager : Node
 	public double GetMaxBet() => _totalAvailableTime;
 
 	/// <summary>
-	/// Look up a level's configured base time (ignoring penalties).
+	/// Look up a level's configured base time (ignoring penalties),
+	/// based on the current difficulty. Returns -1 if the level index is out of range.
 	/// </summary>
-	public double GetLevelBaseTime(string levelId) =>
-		_levelBaseTimes.TryGetValue(levelId, out double time) ? time : 0.0;
+	public double GetLevelBaseTime(string levelId)
+	{
+		int index = ParseLevelIndex(levelId);
+		if (index < 0) return -1.0;
+
+		double[] table = CurrentDifficulty switch
+		{
+			Difficulty.Noob => _baseTimesNoob,
+			Difficulty.Dev  => _baseTimesDev,
+			_               => _baseTimesPro,
+		};
+
+		return index < table.Length ? table[index] : -1.0;
+	}
 
 	/// <summary>
 	/// Override the base time for a given level at runtime.
+	/// Modifies the current difficulty's array (only if index is in range).
 	/// </summary>
 	public void SetLevelBaseTime(string levelId, double seconds)
 	{
-		_levelBaseTimes[levelId] = Math.Max(0.0, seconds);
+		int index = ParseLevelIndex(levelId);
+		if (index < 0) return;
+
+		double[] table = CurrentDifficulty switch
+		{
+			Difficulty.Noob => _baseTimesNoob,
+			Difficulty.Dev  => _baseTimesDev,
+			_               => _baseTimesPro,
+		};
+
+		if (index < table.Length)
+			table[index] = Math.Max(0.0, seconds);
+	}
+
+	/// <summary>Extract the zero-based level index from "Level1", "Level2" …</summary>
+	private static int ParseLevelIndex(string levelId)
+	{
+		if (string.IsNullOrEmpty(levelId)) return -1;
+		string numStr = levelId.Replace("Level", "");
+		if (int.TryParse(numStr, out int num))
+			return num - 1; // zero-based
+		return -1;
 	}
 
 	// ── Time graph data ─────────────────────────────────────────────────────

@@ -12,6 +12,8 @@ public partial class SceneManager : Node
 	[Export] private Control _gameOverlay;
 	[Export] private Control _summaryOverlay;
 	[Export] private Control _finishOverlay;
+	[Export] private Control _mainMenuOverlay;
+	[Export] private Control _settingsOverlay;
 
 	// ── Overlay visibility control ─────────────────────────────────────────
 
@@ -21,6 +23,8 @@ public partial class SceneManager : Node
 		if (_gameOverlay != null)    _gameOverlay.Visible = false;
 		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
 		if (_finishOverlay != null) _finishOverlay.Visible = false;
+		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
+		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
 	}
 
 	public void ShowGameOverlay()
@@ -29,6 +33,8 @@ public partial class SceneManager : Node
 		if (_gameOverlay != null)    _gameOverlay.Visible = true;
 		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
 		if (_finishOverlay != null) _finishOverlay.Visible = false;
+		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
+		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
 	}
 
 	public void ShowSummaryOverlay()
@@ -37,6 +43,8 @@ public partial class SceneManager : Node
 		if (_gameOverlay != null)    _gameOverlay.Visible = false;
 		if (_summaryOverlay != null) _summaryOverlay.Visible = true;
 		if (_finishOverlay != null) _finishOverlay.Visible = false;
+		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
+		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
 	}
 
 	public void ShowFinishOverlay()
@@ -45,6 +53,24 @@ public partial class SceneManager : Node
 		if (_gameOverlay != null)    _gameOverlay.Visible = false;
 		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
 		if (_finishOverlay != null) _finishOverlay.Visible = true;
+		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
+		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
+	}
+
+	public void ShowMainMenuOverlay()
+	{
+		if (_bettingOverlay != null) _bettingOverlay.Visible = false;
+		if (_gameOverlay != null)    _gameOverlay.Visible = false;
+		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
+		if (_finishOverlay != null) _finishOverlay.Visible = false;
+		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = true;
+		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
+	}
+
+	public void ShowSettingsOverlay()
+	{
+		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
+		if (_settingsOverlay != null) _settingsOverlay.Visible = true;
 	}
 
 	public void HideAllOverlays()
@@ -53,7 +79,12 @@ public partial class SceneManager : Node
 		if (_gameOverlay != null)    _gameOverlay.Visible = false;
 		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
 		if (_finishOverlay != null) _finishOverlay.Visible = false;
+		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
+		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
 	}
+
+	// ── Overlay accessors ──────────────────────────────────────────────────
+	public SettingsOverlay GetSettingsOverlay() => _settingsOverlay as SettingsOverlay;
 
 	// ── Overlay accessors for code-behind ──────────────────────────────────
 	public SummaryOverlay GetSummaryOverlay() => _summaryOverlay as SummaryOverlay;
