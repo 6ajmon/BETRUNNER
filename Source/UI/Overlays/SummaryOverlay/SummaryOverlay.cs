@@ -73,8 +73,6 @@ public partial class SummaryOverlay : Control
 		// ── Colored calculation formula in the RemainingTime cell ────────
 		if (_RemainingLabel != null)
 		{
-			double baseTime = cm.GetLevelBaseTime(cm.CurrentLevelId);
-			double penaltyFromPrev = cm.PenaltyAppliedToCurrentLevel;
 			double prevRemaining = cm.TotalBeforeLevelAllocation;
 
 			var parts = new System.Collections.Generic.List<string>();
@@ -86,15 +84,8 @@ public partial class SummaryOverlay : Control
 				parts.Add(" + ");
 			}
 
-			// Bonus base time (bonus color)
-			parts.Add($"[color=#{UIColors.Bonus.ToHtml()}]{baseTime:F1}[/color]");
-
-			// Penalty from previous level (penalty color)
-			if (penaltyFromPrev > 0.001)
-			{
-				parts.Add(" - ");
-				parts.Add($"[color=#{UIColors.Penalty.ToHtml()}]{penaltyFromPrev:F1}[/color]");
-			}
+			// Bonus base time (bonus color) — już uwzględnia karę z poprzedniego poziomu
+			parts.Add($"[color=#{UIColors.Bonus.ToHtml()}]{bonusTime:F1}[/color]");
 
 			// Bet (bet color)
 			parts.Add(" - ");

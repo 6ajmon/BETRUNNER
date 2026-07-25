@@ -3,15 +3,15 @@
 [ext_resource type="Script" uid="uid://c8q6sh8g5mows" path="res://Source/Managers/SceneManager/SceneManager.cs" id="1_f70il"]
 [ext_resource type="PackedScene" uid="uid://bg4brd8hew2uc" path="res://Source/UI/Overlays/GameOverlay/GameOverlay.tscn" id="2_8h0h3"]
 [ext_resource type="PackedScene" uid="uid://b0vre76lrmauc" path="res://Source/UI/Overlays/BettingOverlay/BettingOverlay.tscn" id="3_8yohe"]
-[ext_resource type="PackedScene" uid="uid://dswf70upb16sn" path="res://Source/UI/Overlays/FailureOverlay/FailureOverlay.tscn" id="4_eyt81"]
+[ext_resource type="PackedScene" uid="uid://dswf70upb16sn" path="res://Source/UI/Overlays/FailureOverlay/FinishOverlay.tscn" id="4_eyt81"]
 [ext_resource type="PackedScene" uid="uid://mse67hi2gqw0" path="res://Source/UI/Overlays/SummaryOverlay/SummaryOverlay.tscn" id="5_lnkby"]
 
-[node name="SceneManager" type="Node" unique_id=1743745418 node_paths=PackedStringArray("_bettingOverlay", "_gameOverlay", "_summaryOverlay", "_failureOverlay")]
+[node name="SceneManager" type="Node" unique_id=1743745418 node_paths=PackedStringArray("_bettingOverlay", "_gameOverlay", "_summaryOverlay", "_finishOverlay")]
 script = ExtResource("1_f70il")
 _bettingOverlay = NodePath("CanvasLayer/BettingOverlay")
 _gameOverlay = NodePath("CanvasLayer/GameOverlay")
 _summaryOverlay = NodePath("CanvasLayer/SummaryOverlay")
-_failureOverlay = NodePath("CanvasLayer/FailureOverlay")
+_finishOverlay = NodePath("CanvasLayer/FinishOverlay")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=59557020]
 
@@ -24,5 +24,5 @@ visible = false
 [node name="SummaryOverlay" parent="CanvasLayer" unique_id=1310264764 instance=ExtResource("5_lnkby")]
 visible = false
 
-[node name="FailureOverlay" parent="CanvasLayer" unique_id=1021833891 instance=ExtResource("4_eyt81")]
+[node name="FinishOverlay" parent="CanvasLayer" unique_id=1021833891 instance=ExtResource("4_eyt81")]
 visible = false
