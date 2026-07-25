@@ -46,7 +46,7 @@ public partial class CountdownManager : Node
 		{ "Level2",   20.0 },
 		{ "Level3",   20.0 },
 		{ "Level4",   20.0 },
-		{ "level5",   20.0 },
+		{ "Level5",   20.0 },
 		{ "Level6", 20.0 },
 	};
 
