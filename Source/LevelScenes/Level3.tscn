@@ -68,8 +68,8 @@ point_count = 5
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7uwty"]
 height = 3.0
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_d262h"]
-size = Vector3(100, 1, 50)
+[sub_resource type="BoxShape3D" id="BoxShape3D_iqcdx"]
+size = Vector3(300, 5, 300)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_xul0q"]
 size = Vector2(100, 50)
@@ -152,11 +152,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
 [node name="Floor4" type="Node3D" parent="MapContainer/FloorContainer" unique_id=1828564163]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8)
 
-[node name="Panel2" parent="MapContainer/FloorContainer/Floor4" unique_id=752215960 instance=ExtResource("7_csfd2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
-
-[node name="FloorPanel" parent="MapContainer/FloorContainer/Floor4/Panel2" unique_id=1903266712 instance=ExtResource("8_y6gru")]
-
 [node name="Panel" parent="MapContainer/FloorContainer/Floor4" unique_id=1478186390 instance=ExtResource("7_csfd2")]
 
 [node name="FloorPanel" parent="MapContainer/FloorContainer/Floor4/Panel" unique_id=111211095 instance=ExtResource("8_y6gru")]
@@ -165,11 +160,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
 
 [node name="FloorPanel" parent="MapContainer/FloorContainer/Floor4/Panel3" unique_id=1911830019 instance=ExtResource("8_y6gru")]
-
-[node name="Panel4" parent="MapContainer/FloorContainer/Floor4" unique_id=1269018150 instance=ExtResource("7_csfd2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
-
-[node name="FloorPanel" parent="MapContainer/FloorContainer/Floor4/Panel4" unique_id=77376136 instance=ExtResource("8_y6gru")]
 
 [node name="Panel3" parent="MapContainer/FloorContainer" unique_id=268400748 instance=ExtResource("7_csfd2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
@@ -459,21 +449,8 @@ transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70
 
 [node name="Wall" parent="MapContainer/WallSix/Wall10" unique_id=1706155499 instance=ExtResource("15_24axl")]
 
-[node name="MovingPlatform9" parent="MapContainer" unique_id=1347168704 node_paths=PackedStringArray("_pressurePlate") instance=ExtResource("11_csfd2")]
-transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, 4, -0.1, -12)
-script = ExtResource("12_y6gru")
-_target = Vector3(12, 0, 0)
-_speed = 3.0
-_pressurePlate = NodePath("../PressurePlate")
-
-[node name="FloorPanel" parent="MapContainer/MovingPlatform9" unique_id=113470189 instance=ExtResource("8_y6gru")]
-
-[node name="Hazard Floor 2" type="MeshInstance3D" parent="MapContainer/MovingPlatform9" unique_id=1528258112]
-transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, -0.2, 0)
-mesh = SubResource("ArrayMesh_42477")
-
 [node name="MovingPlatform10" parent="MapContainer" unique_id=1157945106 node_paths=PackedStringArray("_pressurePlate") instance=ExtResource("11_csfd2")]
-transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, 8, -0.1, -12)
+transform = Transform3D(-4.371139e-08, 0, 2, 0, 1, 0, -1, 0, -8.742278e-08, 6, 0, -12)
 script = ExtResource("12_y6gru")
 _target = Vector3(12, 0, 0)
 _speed = 3.0
@@ -545,7 +522,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.188936, -8.447094, -4)
 _event = 2
 
 [node name="CollisionShape3D" parent="Events/OutOfBounds" index="0" unique_id=639539813]
-shape = SubResource("BoxShape3D_d262h")
+shape = SubResource("BoxShape3D_iqcdx")
 
 [node name="MeshInstance3D" parent="Events/OutOfBounds" index="1" unique_id=733530217]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.741146, 0, 3.4668007)

@@ -24,7 +24,7 @@ sky = ExtResource("1_dscqw")
 height = 3.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nypq0"]
-size = Vector3(200, 5, 200)
+size = Vector3(300, 5, 300)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rr6tj"]
 metallic_specular = 0.0
@@ -36,6 +36,25 @@ emission_energy_multiplier = 16.0
 material = SubResource("StandardMaterial3D_rr6tj")
 radius = 0.45
 height = 0.9
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5a36w"]
+size = Vector3(11.5, 3, 0.5)
+
+[sub_resource type="ImageTexture" id="ImageTexture_3nuwx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g7b5x"]
+transparency = 1
+blend_mode = 1
+albedo_color = Color(0.16470589, 0.7176471, 0, 0.2901961)
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(1.1346822, 0.81628394, 0.36964175, 1)
+emission_energy_multiplier = 0.35
+emission_texture = SubResource("ImageTexture_3nuwx")
+
+[sub_resource type="BoxMesh" id="BoxMesh_m0frt"]
+material = SubResource("StandardMaterial3D_g7b5x")
+size = Vector3(11.5, 3, 0.1)
 
 [sub_resource type="Curve3D" id="Curve3D_3nuwx"]
 _data = {
@@ -382,7 +401,7 @@ transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 12.6
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="Glass6" parent="MapContainer/FourthBridge" unique_id=2128716159 instance=ExtResource("5_74x7x")]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 15.827278, -0.5, -8.786728)
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 16.696, -0.5, -7.854)
 
 [node name="Glass" parent="MapContainer/FourthBridge/Glass6" unique_id=675141326 instance=ExtResource("6_o8g5b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -723,12 +742,26 @@ _event = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Events/OutOfBounds" unique_id=1300295195]
 shape = SubResource("BoxShape3D_nypq0")
+debug_color = Color(0.8117647, 0.40784314, 0.07058824, 1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Events/OutOfBounds" unique_id=1681210758]
 mesh = SubResource("SphereMesh_e51as")
 
 [node name="Direction" type="RayCast3D" parent="Events/OutOfBounds" unique_id=2019615949]
 target_position = Vector3(2, 0, 0)
+
+[node name="Checkpoint" parent="Events" unique_id=1181480900 instance=ExtResource("12_nwub4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 0, 10)
+_event = 4
+
+[node name="CollisionShape3D" parent="Events/Checkpoint" index="0" unique_id=639539813]
+shape = SubResource("BoxShape3D_5a36w")
+
+[node name="MeshInstance3D" parent="Events/Checkpoint" index="1" unique_id=733530217]
+mesh = SubResource("BoxMesh_m0frt")
+
+[node name="Direction" parent="Events/Checkpoint" index="2" unique_id=1820536039]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 
 [node name="PressurePlate" parent="." unique_id=158581914 instance=ExtResource("14_5a36w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60.146397, -1.6387045, 53.822495)
@@ -744,4 +777,5 @@ _speed = 0.1
 [connection signal="body_entered" from="Events/OutOfBounds" to="Events/OutOfBounds" method="_on_body_entered"]
 
 [editable path="Events/EndLevel"]
+[editable path="Events/Checkpoint"]
 [editable path="Preview/PathFollow3D"]

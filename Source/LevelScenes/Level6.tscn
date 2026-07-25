@@ -40,6 +40,25 @@ material = SubResource("StandardMaterial3D_rr6tj")
 radius = 0.45
 height = 0.9
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_q0wej"]
+size = Vector3(11.5, 3, 0.5)
+
+[sub_resource type="ImageTexture" id="ImageTexture_xwbpt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g7b5x"]
+transparency = 1
+blend_mode = 1
+albedo_color = Color(0.16470589, 0.7176471, 0, 0.2901961)
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(1.1346822, 0.81628394, 0.36964175, 1)
+emission_energy_multiplier = 0.35
+emission_texture = SubResource("ImageTexture_xwbpt")
+
+[sub_resource type="BoxMesh" id="BoxMesh_6n6y5"]
+material = SubResource("StandardMaterial3D_g7b5x")
+size = Vector3(11.5, 3, 0.1)
+
 [sub_resource type="Curve3D" id="Curve3D_ggeej"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -0.03, 8, 0, 0, 0, 0, -10, 0, 0, 0, 18, 0, 12, 0, 0, 0, 0, 0, 0, 18, 0, 27),
@@ -88,6 +107,20 @@ mesh = SubResource("SphereMesh_dsrrf")
 
 [node name="Direction" type="RayCast3D" parent="Events/OutOfBounds" unique_id=1425732613]
 target_position = Vector3(2, 0, 0)
+
+[node name="Checkpoint" parent="Events" unique_id=363519441 instance=ExtResource("4_h40ev")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, -2)
+_event = 4
+
+[node name="CollisionShape3D" parent="Events/Checkpoint" index="0" unique_id=639539813]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.2874622)
+shape = SubResource("BoxShape3D_q0wej")
+
+[node name="MeshInstance3D" parent="Events/Checkpoint" index="1" unique_id=733530217]
+mesh = SubResource("BoxMesh_6n6y5")
+
+[node name="Direction" parent="Events/Checkpoint" index="2" unique_id=1820536039]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 
 [node name="Preview" type="Path3D" parent="." unique_id=630630243]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 6, -5.4)
@@ -738,4 +771,5 @@ transform = Transform3D(0.707, 0, 0, 0, 8, 0, 0, 0, 0.707, 12, 4, -6)
 [connection signal="body_entered" from="Events/OutOfBounds" to="Events/OutOfBounds" method="_on_body_entered"]
 
 [editable path="Events/EndLevel"]
+[editable path="Events/Checkpoint"]
 [editable path="Preview/PathFollow3D"]

@@ -36,6 +36,25 @@ material = SubResource("StandardMaterial3D_rr6tj")
 radius = 0.45
 height = 0.9
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_g013u"]
+size = Vector3(4, 3, 0.5)
+
+[sub_resource type="ImageTexture" id="ImageTexture_ehntc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r7pof"]
+transparency = 1
+blend_mode = 1
+albedo_color = Color(0.16470589, 0.7176471, 0, 0.2901961)
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(1.1346822, 0.81628394, 0.36964175, 1)
+emission_energy_multiplier = 0.35
+emission_texture = SubResource("ImageTexture_ehntc")
+
+[sub_resource type="BoxMesh" id="BoxMesh_tw7vy"]
+material = SubResource("StandardMaterial3D_r7pof")
+size = Vector3(11.5, 3, 0.1)
+
 [sub_resource type="Curve3D" id="Curve3D_sok74"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, -2, 0, 0, 0, -7.6, 0, 0, 7.6, 43.806, -2, 5.318, 0, 0, 0, 0, 0, 0, 30.12, -2, 20.873),
@@ -84,6 +103,19 @@ mesh = SubResource("SphereMesh_0u3kt")
 
 [node name="Direction" type="RayCast3D" parent="Events/OutOfBounds" unique_id=784419694]
 target_position = Vector3(2, 0, 0)
+
+[node name="Checkpoint" parent="Events" unique_id=872610622 instance=ExtResource("3_r7pof")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 43.611, -2, 7.264)
+_event = 4
+
+[node name="CollisionShape3D" parent="Events/Checkpoint" index="0" unique_id=639539813]
+shape = SubResource("BoxShape3D_g013u")
+
+[node name="MeshInstance3D" parent="Events/Checkpoint" index="1" unique_id=733530217]
+mesh = SubResource("BoxMesh_tw7vy")
+
+[node name="Direction" parent="Events/Checkpoint" index="2" unique_id=1820536039]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 
 [node name="Preview" type="Path3D" parent="." unique_id=1724157534]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5, -4.5)
@@ -599,4 +631,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, -4, 20)
 [connection signal="body_entered" from="Events/OutOfBounds" to="Events/OutOfBounds" method="_on_body_entered"]
 
 [editable path="Events/EndLevel"]
+[editable path="Events/Checkpoint"]
 [editable path="Preview/PathFollow3D"]

@@ -28,8 +28,39 @@ sky = ExtResource("8_gtnek")
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7uwty"]
 height = 3.0
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_050nj"]
-size = Vector3(200, 5, 200)
+[sub_resource type="ImageTexture" id="ImageTexture_e87dg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fmpw1"]
+transparency = 1
+blend_mode = 1
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(1.1346822, 0.81628394, 0.36964175, 1)
+emission_energy_multiplier = 0.35
+emission_texture = SubResource("ImageTexture_e87dg")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4rse4"]
+material = SubResource("StandardMaterial3D_fmpw1")
+height = 4.5
+
+[sub_resource type="ImageTexture" id="ImageTexture_7kfu4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kelp2"]
+transparency = 1
+blend_mode = 1
+albedo_color = Color(1, 1, 1, 0.27058825)
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(1.1346822, 0.81628394, 0.36964175, 1)
+emission_energy_multiplier = 0.1
+emission_texture = SubResource("ImageTexture_7kfu4")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_yrf7t"]
+material = SubResource("StandardMaterial3D_kelp2")
+height = 45.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e87dg"]
+size = Vector3(300, 5, 300)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rr6tj"]
 metallic_specular = 0.0
@@ -120,6 +151,13 @@ _event = 1
 [node name="CollisionShape3D" parent="Events/EndLevel" index="0" unique_id=639539813]
 shape = SubResource("CapsuleShape3D_7uwty")
 
+[node name="MeshInstance3D" parent="Events/EndLevel" index="1" unique_id=733530217]
+mesh = SubResource("CylinderMesh_4rse4")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Events/EndLevel" unique_id=1718061111]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25.0597, 0)
+mesh = SubResource("CylinderMesh_yrf7t")
+
 [node name="OutOfBounds" type="Area3D" parent="Events" unique_id=1790446927]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.62362, -5.9066305, 8.6232395)
 collision_layer = 4
@@ -127,7 +165,7 @@ script = ExtResource("11_4rse4")
 _event = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Events/OutOfBounds" unique_id=1147514649]
-shape = SubResource("BoxShape3D_050nj")
+shape = SubResource("BoxShape3D_e87dg")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Events/OutOfBounds" unique_id=1242071952]
 mesh = SubResource("SphereMesh_6uihe")
