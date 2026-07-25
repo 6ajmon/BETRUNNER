@@ -52,7 +52,7 @@ public partial class MovingPlatform : Node3D
 
 	private void Move(float step)
 	{
-		GD.Print("I move");
+		
 		//Forward
 		if (!_reverseDirection && Position.DistanceTo(_startPosition + _target) > step)
 		{

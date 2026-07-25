@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://johld78kk08"]
 
 [ext_resource type="Script" uid="uid://b1lcxn2j152tw" path="res://Source/UI/Screens/MainMenu/MainMenu.cs" id="1_i07rx"]
+[ext_resource type="PackedScene" uid="uid://bb8t61o8gjj5l" path="res://Source/LevelScenes/WaitingRoom.tscn" id="2_uxvvi"]
 
-[node name="MainMenu" type="Control" unique_id=326913936 node_paths=PackedStringArray("_playButton")]
+[node name="MainMenu" type="Control" unique_id=326913936 node_paths=PackedStringArray("_playButton", "_camera")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,6 +12,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_i07rx")
 _playButton = NodePath("Play/Button")
+_camera = NodePath("Camera3D")
+_cameraSpeed = 0.1
 
 [node name="Play" type="PanelContainer" parent="." unique_id=1274785653]
 custom_minimum_size = Vector2(100, 50)
@@ -33,5 +36,10 @@ size_flags_vertical = 4
 [node name="Button" type="Button" parent="Play" unique_id=928289144]
 layout_mode = 2
 text = "Play"
+
+[node name="WaitingRoom" parent="." unique_id=1226178956 instance=ExtResource("2_uxvvi")]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=312918269]
+transform = Transform3D(0.73387456, 0, -0.67928505, 0, 1, 0, 0.67928505, 0, 0.73387456, -8, 1.17, 0)
 
 [connection signal="pressed" from="Play/Button" to="." method="_on_play_button_pressed"]
