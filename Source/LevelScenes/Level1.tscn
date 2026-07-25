@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c3sg4vp604qt6" path="res://Assets/gtlf/Wall_Glass_Clear.glb" id="5_7uwty"]
 [ext_resource type="Script" uid="uid://d3o83ikxfnant" path="res://Source/MapObjects/MovingPlatform/MovingPlatform.cs" id="5_k83py"]
 [ext_resource type="PackedScene" uid="uid://b3ogk047evk56" path="res://Source/MapObjects/Glass.tscn" id="6_44v6c"]
+[ext_resource type="PackedScene" uid="uid://cwv82spjqiho0" path="res://Source/MapObjects/laser.tscn" id="7_7uwty"]
 [ext_resource type="PackedScene" uid="uid://qurbeehr7tu1" path="res://Assets/gtlf/Wall_Red.glb" id="7_35dpr"]
 [ext_resource type="PackedScene" uid="uid://bh2u0crmw0n4c" path="res://Source/MapObjects/wall.tscn" id="8_xhkal"]
 [ext_resource type="PackedScene" uid="uid://cx8mg5moh6k3y" path="res://Source/Components/EventNode/EventNode.tscn" id="9_xhkal"]
@@ -18,6 +19,9 @@
 [sub_resource type="Environment" id="Environment_akxdk"]
 background_mode = 2
 sky = ExtResource("1_2xrgl")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7uwty"]
+height = 3.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nwub4"]
 size = Vector3(200, 5, 200)
@@ -102,6 +106,39 @@ transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 10, 
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 14, 2, -6)
 
 [node name="Glass" parent="MapContainer/FirstBridge/Glass6" unique_id=151322979 instance=ExtResource("6_44v6c")]
+
+[node name="Panel4" parent="MapContainer/FirstBridge" unique_id=2031983997 instance=ExtResource("3_w5fxj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/FirstBridge/Panel4" unique_id=1824666000 instance=ExtResource("3_bqgef")]
+
+[node name="Glass7" parent="MapContainer/FirstBridge" unique_id=429247345 instance=ExtResource("5_7uwty")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 14, 2, -2)
+
+[node name="Glass" parent="MapContainer/FirstBridge/Glass7" unique_id=1730698811 instance=ExtResource("6_44v6c")]
+
+[node name="Glass8" parent="MapContainer/FirstBridge" unique_id=1480217309 instance=ExtResource("5_7uwty")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 14, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge/Glass8" unique_id=540697247 instance=ExtResource("6_44v6c")]
+
+[node name="Panel5" parent="MapContainer/FirstBridge" unique_id=1967421096 instance=ExtResource("3_w5fxj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -4)
+
+[node name="FloorPanel" parent="MapContainer/FirstBridge/Panel5" unique_id=485890450 instance=ExtResource("3_bqgef")]
+
+[node name="Glass9" parent="MapContainer/FirstBridge" unique_id=1196649536 instance=ExtResource("5_7uwty")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 18, 2, -2)
+
+[node name="Glass" parent="MapContainer/FirstBridge/Glass9" unique_id=76286868 instance=ExtResource("6_44v6c")]
+
+[node name="Glass10" parent="MapContainer/FirstBridge" unique_id=55912689 instance=ExtResource("5_7uwty")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 18, 2, -6)
+
+[node name="Glass" parent="MapContainer/FirstBridge/Glass10" unique_id=82915410 instance=ExtResource("6_44v6c")]
+
+[node name="Laser" parent="MapContainer/FirstBridge" unique_id=1662867146 instance=ExtResource("7_7uwty")]
+transform = Transform3D(1, 0, 0, 0, -1.7484555e-07, -1, 0, 4, -4.371139e-08, 16, 1, -4)
 
 [node name="FirstBridge2" type="Node3D" parent="MapContainer" unique_id=1538676858]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 0)
@@ -259,6 +296,9 @@ transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 14, 
 
 [node name="Glass" parent="MapContainer/FirstBridge4/Glass6" unique_id=1204026112 instance=ExtResource("6_44v6c")]
 
+[node name="Laser" parent="MapContainer/FirstBridge4" unique_id=958187053 instance=ExtResource("7_7uwty")]
+transform = Transform3D(1, 0, 0, 0, -1.7484555e-07, -1, 0, 4, -4.371139e-08, 8, 1, -4)
+
 [node name="GlassWall" type="Node3D" parent="MapContainer" unique_id=1119480825]
 transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 54, 0, 30)
 
@@ -348,16 +388,19 @@ _event = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.885754, 1.3430266, 24.019217)
 _event = 1
 
+[node name="CollisionShape3D" parent="Events/EndLevel" index="0" unique_id=639539813]
+shape = SubResource("CapsuleShape3D_7uwty")
+
 [node name="OutOfBounds" type="Area3D" parent="Events" unique_id=1207619478]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.62362, -16.5446, 8.6232395)
 collision_layer = 4
 script = ExtResource("13_ga5jh")
 _event = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Events/OutOfBounds" unique_id=639539813]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Events/OutOfBounds" unique_id=923477626]
 shape = SubResource("BoxShape3D_nwub4")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Events/OutOfBounds" unique_id=733530217]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Events/OutOfBounds" unique_id=287539137]
 mesh = SubResource("SphereMesh_126ht")
 
 [node name="Direction" type="RayCast3D" parent="Events/OutOfBounds" unique_id=1820536039]
@@ -373,3 +416,4 @@ _speed = 0.1
 [connection signal="body_entered" from="Events/OutOfBounds" to="Events/OutOfBounds" method="_on_body_entered"]
 
 [editable path="MapContainer/WaitingRoom"]
+[editable path="Events/EndLevel"]

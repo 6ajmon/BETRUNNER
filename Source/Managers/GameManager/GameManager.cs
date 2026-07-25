@@ -27,7 +27,10 @@ public partial class GameManager : Node
 	public gameState CurrentState { get; set; }
 	
 	public Vector3 SpawnPosition { get; set; }
+	public Vector3 FaceDirectionAfterRespawn { get; set; }
 	public Player PlayerCharacter { get; set; }
+
+	
 
 	// ── Level progression ───────────────────────────────────────────────────
 	private int _currentLevelIndex = -1;
@@ -219,9 +222,9 @@ public partial class GameManager : Node
 		TryAdvanceToNextLevel();
 	}
 
-	public void MovePlayerToSpawn(Vector3 facingDirection)
+	public void Respawn()
 	{
 		PlayerCharacter.GlobalPosition = SpawnPosition;
-		PlayerCharacter.LookAtDirection(facingDirection);
+		PlayerCharacter.LookAtDirection(FaceDirectionAfterRespawn);
 	}
 }

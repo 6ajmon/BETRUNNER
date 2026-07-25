@@ -65,6 +65,9 @@ _data = {
 }
 point_count = 5
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7uwty"]
+height = 3.0
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_d262h"]
 size = Vector3(100, 1, 50)
 
@@ -534,6 +537,9 @@ _event = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.5, -8)
 _event = 1
 
+[node name="CollisionShape3D" parent="Events/EndLevel" index="0" unique_id=639539813]
+shape = SubResource("CapsuleShape3D_7uwty")
+
 [node name="OutOfBounds" parent="Events" unique_id=1878307795 instance=ExtResource("4_8kf45")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.188936, -8.447094, -4)
 _event = 2
@@ -560,5 +566,6 @@ transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545
 shadow_enabled = true
 
 [editable path="MapContainer/WaitingRoom2"]
+[editable path="Events/EndLevel"]
 [editable path="Events/OutOfBounds"]
 [editable path="Events/EndLevelAlternative"]

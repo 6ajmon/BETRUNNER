@@ -19,6 +19,9 @@
 background_mode = 2
 sky = ExtResource("1_g013u")
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7uwty"]
+height = 3.0
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_yrf7t"]
 size = Vector3(200, 5, 200)
 
@@ -63,6 +66,9 @@ _event = 3
 [node name="EndLevel" parent="Events" unique_id=1185708391 instance=ExtResource("3_r7pof")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, -2.5, 20)
 _event = 1
+
+[node name="CollisionShape3D" parent="Events/EndLevel" index="0" unique_id=639539813]
+shape = SubResource("CapsuleShape3D_7uwty")
 
 [node name="OutOfBounds" type="Area3D" parent="Events" unique_id=191798683]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.624, -10, 8.623)

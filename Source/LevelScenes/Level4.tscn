@@ -25,6 +25,9 @@
 background_mode = 2
 sky = ExtResource("8_gtnek")
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7uwty"]
+height = 3.0
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_050nj"]
 size = Vector3(200, 5, 200)
 
@@ -113,6 +116,9 @@ _event = 3
 [node name="EndLevel" parent="Events" unique_id=220988174 instance=ExtResource("10_fmpw1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 1.5, 8)
 _event = 1
+
+[node name="CollisionShape3D" parent="Events/EndLevel" index="0" unique_id=639539813]
+shape = SubResource("CapsuleShape3D_7uwty")
 
 [node name="OutOfBounds" type="Area3D" parent="Events" unique_id=1790446927]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.62362, -5.9066305, 8.6232395)
@@ -775,6 +781,26 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4, 4
 
 [node name="Node3D" parent="MapContainer/Tower2/MiniRamp2" unique_id=1921828462 instance=ExtResource("12_oidvl")]
 
+[node name="Glass8" parent="MapContainer/Tower2" unique_id=1975983727 instance=ExtResource("13_su6bs")]
+transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, -2, 2, 6)
+
+[node name="Glass" parent="MapContainer/Tower2/Glass8" unique_id=1130684802 instance=ExtResource("14_urlsg")]
+
+[node name="Glass9" parent="MapContainer/Tower2" unique_id=1872864067 instance=ExtResource("13_su6bs")]
+transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, -2, 2, 2)
+
+[node name="Glass" parent="MapContainer/Tower2/Glass9" unique_id=1303948221 instance=ExtResource("14_urlsg")]
+
+[node name="Glass11" parent="MapContainer/Tower2" unique_id=1095868903 instance=ExtResource("13_su6bs")]
+transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, -2, 6, 6)
+
+[node name="Glass" parent="MapContainer/Tower2/Glass11" unique_id=603681206 instance=ExtResource("14_urlsg")]
+
+[node name="Glass12" parent="MapContainer/Tower2" unique_id=741384427 instance=ExtResource("13_su6bs")]
+transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, -2, 6, 2)
+
+[node name="Glass" parent="MapContainer/Tower2/Glass12" unique_id=627103496 instance=ExtResource("14_urlsg")]
+
 [node name="Tower3" type="Node3D" parent="MapContainer" unique_id=1746867458]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
@@ -1152,6 +1178,14 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2, 
 
 [node name="Node3D" parent="MapContainer/Tower5/Panel15/RampWallLeft" unique_id=751554770 instance=ExtResource("12_oidvl")]
 
+[node name="RampWallLeft2" parent="MapContainer/Tower5/Panel15" unique_id=796174516 instance=ExtResource("19_kelp2")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4, -4, -4)
+
+[node name="Wall" parent="MapContainer/Tower5/Panel15/RampWallLeft2" unique_id=1508897275 instance=ExtResource("4_urlsg")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2, 0, 0)
+
+[node name="Node3D" parent="MapContainer/Tower5/Panel15/RampWallLeft2" unique_id=459967411 instance=ExtResource("12_oidvl")]
+
 [node name="Panel17" parent="MapContainer/Tower5" unique_id=1581689234 instance=ExtResource("5_o68w0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 4, 0)
 
@@ -1169,6 +1203,14 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 0)
 
 [node name="Node3D" parent="MapContainer/Tower5/Panel18/RampWallRight" unique_id=611335762 instance=ExtResource("12_oidvl")]
+
+[node name="RampWallRight2" parent="MapContainer/Tower5/Panel18" unique_id=1404664167 instance=ExtResource("20_yrf7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -4, 4)
+
+[node name="Wall" parent="MapContainer/Tower5/Panel18/RampWallRight2" unique_id=130011031 instance=ExtResource("4_urlsg")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 0)
+
+[node name="Node3D" parent="MapContainer/Tower5/Panel18/RampWallRight2" unique_id=1699740559 instance=ExtResource("12_oidvl")]
 
 [node name="Panel19" parent="MapContainer/Tower5" unique_id=863640671 instance=ExtResource("5_o68w0")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 8.5, 4, 12)
@@ -1218,6 +1260,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 4, 2)
 
 [connection signal="body_entered" from="Events/OutOfBounds" to="Events/OutOfBounds" method="_on_body_entered"]
 
+[editable path="Events/EndLevel"]
 [editable path="Preview/PathFollow3D"]
 [editable path="MapContainer/Ramp/Ramp2"]
 [editable path="MapContainer/Ramp2/Ramp2"]
