@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using NewGameProject;
 
 public partial class CountdownManager : Node
 {
@@ -264,5 +265,109 @@ public partial class CountdownManager : Node
 	public void SetLevelBaseTime(string levelId, double seconds)
 	{
 		_levelBaseTimes[levelId] = Math.Max(0.0, seconds);
+	}
+
+	// ── Time graph data ─────────────────────────────────────────────────────
+
+	/// <summary>
+	/// A single segment of the time graph with its intended draw color.
+	/// </summary>
+	public struct GraphSegment
+	{
+		public Vector2 Start;
+		public Vector2 End;
+		public Color Color;
+	}
+
+	/// <summary>
+	/// Build colored segments for the remaining-time-over-game-time graph.
+	/// Segments are colored by type:
+	///   Bonus (amber)  — level allocation jump
+	///   Bet (green)    — bet consumption during normal play
+	///   Limit (orange) — flat / no-change
+	///   Penalty (red)  — overtime 2× drain
+	/// </summary>
+	public (GraphSegment[] Segments, (float X, string Label)[] Markers) BuildTimeGraphData()
+	{
+		if (_levelHistory.Count == 0)
+			return (Array.Empty<GraphSegment>(), Array.Empty<(float, string)>());
+
+		var segs = new List<GraphSegment>();
+		var markers = new List<(float, string)>();
+
+		double gameTime = 0.0;
+		double pool = 0.0;
+		double prevOvershoot = 0.0;
+
+		for (int i = 0; i < _levelHistory.Count; i++)
+		{
+			var stat = _levelHistory[i];
+			double baseTime = GetLevelBaseTime(stat.LevelId);
+			double effectiveBase = Math.Max(0.0, baseTime - prevOvershoot);
+
+			// ── Level allocation (amber) ─────────────────────────────────
+			double poolBeforeLevel = pool;
+			pool += effectiveBase;
+			segs.Add(new GraphSegment
+			{
+				Start = new Vector2((float)gameTime, (float)poolBeforeLevel),
+				End   = new Vector2((float)gameTime, (float)pool),
+				Color = UIColors.Bonus,
+			});
+
+			// Level marker on x-axis
+			markers.Add(((float)gameTime, $"L{i + 1}"));
+
+			// ── Bet consumption (green) ──────────────────────────────────
+			double actualTime = stat.ActualTime;
+			double betTime = stat.BetTime;
+			double overshoot = stat.Overshoot;
+			double poolAfterAllocation = pool;
+			double poolAfterBet = poolAfterAllocation - betTime;
+			double normalPlayTime = Math.Min(betTime, actualTime);
+			double normalEnd = gameTime + normalPlayTime;
+
+			segs.Add(new GraphSegment
+			{
+				Start = new Vector2((float)gameTime, (float)poolAfterAllocation),
+				End   = new Vector2((float)normalEnd, (float)poolAfterBet),
+				Color = UIColors.Bet,
+			});
+
+			if (overshoot > 0.001)
+			{
+				// Overtime 2× drain (red)
+				double penaltyDrain = Math.Min(overshoot * 2.0, poolAfterBet);
+				double poolAfterPenalty = poolAfterBet - penaltyDrain;
+				double overtimeEnd = gameTime + actualTime;
+				segs.Add(new GraphSegment
+				{
+					Start = new Vector2((float)normalEnd, (float)poolAfterBet),
+					End   = new Vector2((float)overtimeEnd, (float)poolAfterPenalty),
+					Color = UIColors.Penalty,
+				});
+				pool = poolAfterPenalty;
+			}
+			else
+			{
+				// No overshoot: flat (orange)
+				double levelEnd = gameTime + actualTime;
+				if (actualTime > normalPlayTime)
+				{
+					segs.Add(new GraphSegment
+					{
+						Start = new Vector2((float)normalEnd, (float)poolAfterBet),
+						End   = new Vector2((float)levelEnd, (float)poolAfterBet),
+						Color = UIColors.Limit,
+					});
+				}
+				pool = poolAfterBet;
+			}
+
+			gameTime += actualTime;
+			prevOvershoot = stat.Overshoot;
+		}
+
+		return (segs.ToArray(), markers.ToArray());
 	}
 }

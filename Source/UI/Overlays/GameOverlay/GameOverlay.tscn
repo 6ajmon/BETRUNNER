@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bg4brd8hew2uc"]
 
 [ext_resource type="Script" uid="uid://d1tvbpv8330po" path="res://Source/UI/Overlays/GameOverlay/GameOverlay.cs" id="1_c58pn"]
-[ext_resource type="PackedScene" uid="uid://dphhikovty8je" path="res://Source/UI/Controls/StoperProgressBar.tscn" id="2_hbv1b"]
+[ext_resource type="PackedScene" uid="uid://dphhikovty8je" path="res://Source/UI/Controls/StoperProgressBar/StoperProgressBar.tscn" id="2_hbv1b"]
 
 [node name="GameOverlay" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_countdownLabel", "_limitLabel", "_stoperBar")]
 layout_mode = 3
@@ -74,8 +74,6 @@ size_flags_horizontal = 3
 
 [node name="StoperProgressBar" parent="MarginContainer/VBoxContainer/HBoxContainer3/MarginContainer3" unique_id=2119342153 instance=ExtResource("2_hbv1b")]
 layout_mode = 2
-_betColor = Color(0.4117647, 0.9411765, 0.68235296, 1)
-_limitColor = Color(1, 0.43137255, 0.2509804, 1)
 _bgColor = Color(0.101960786, 0.101960786, 0.101960786, 0.5019608)
 _borderColor = Color(0.27058825, 0.3529412, 0.39215687, 1)
 _largeTickLen = 19.0

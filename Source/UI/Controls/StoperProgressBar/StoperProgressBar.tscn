@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dphhikovty8je"]
 
-[ext_resource type="Script" uid="uid://bigm3lsdablcc" path="res://Source/UI/Controls/StoperProgressBar.cs" id="1_sjhhq"]
+[ext_resource type="Script" uid="uid://bigm3lsdablcc" path="res://Source/UI/Controls/StoperProgressBar/StoperProgressBar.cs" id="1_sjhhq"]
 
 [node name="StoperProgressBar" type="Control" unique_id=2119342153]
 layout_mode = 3
