@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b1lcxn2j152tw" path="res://Source/UI/Screens/MainMenu/MainMenu.cs" id="1_i07rx"]
 [ext_resource type="PackedScene" uid="uid://bb8t61o8gjj5l" path="res://Source/LevelScenes/WaitingRoom.tscn" id="2_uxvvi"]
 
-[node name="MainMenu" type="Control" unique_id=326913936 node_paths=PackedStringArray("_playButton", "_camera")]
+[node name="MainMenu" type="Control" unique_id=326913936 node_paths=PackedStringArray("_playButton", "_creditsButton", "_exitButton", "_camera")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,6 +12,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_i07rx")
 _playButton = NodePath("MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer4/PlayButton")
+_creditsButton = NodePath("MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer4/CreditsButton")
+_exitButton = NodePath("MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer4/ExitButton")
 _camera = NodePath("Camera3D")
 _cameraSpeed = 0.1
 
