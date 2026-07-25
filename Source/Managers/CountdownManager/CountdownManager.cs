@@ -54,9 +54,9 @@ public partial class CountdownManager : Node
 	public Difficulty CurrentDifficulty { get; set; } = Difficulty.Pro;
 
 	// ── Level time configuration (per difficulty, by level index 0..N) ─────
-	private static readonly double[] _baseTimesNoob  = { 60.0, 40.0, 40.0, 40.0, 60.0, 40.0, 40.0 };
-	private static readonly double[] _baseTimesPro   = { 30.0, 20.0, 20.0, 20.0, 30.0, 20.0, 20.0 };
-	private static readonly double[] _baseTimesDev   = { 13.0, 10.0, 8.0, 10.0, 20.0, 10.0, 12.0 };
+	private static readonly double[] _baseTimesNoob  = { 60.0, 40.0, 40.0, 40.0, 60.0, 40.0, 40.0, 60.0};
+	private static readonly double[] _baseTimesPro   = { 30.0, 20.0, 20.0, 20.0, 30.0, 20.0, 20.0, 30.0 };
+	private static readonly double[] _baseTimesDev   = { 13.0, 10.0, 8.0, 10.0, 20.0, 10.0, 12.0, 15.0 };
 
 	// ── Runtime state ───────────────────────────────────────────────────────
 	private string _currentLevelId = "";
