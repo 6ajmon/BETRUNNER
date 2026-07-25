@@ -23,8 +23,8 @@ sky = ExtResource("1_2xrgl")
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7uwty"]
 height = 3.0
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_nwub4"]
-size = Vector3(200, 5, 200)
+[sub_resource type="BoxShape3D" id="BoxShape3D_7uwty"]
+size = Vector3(300, 5, 300)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rr6tj"]
 metallic_specular = 0.0
@@ -398,7 +398,8 @@ script = ExtResource("13_ga5jh")
 _event = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Events/OutOfBounds" unique_id=923477626]
-shape = SubResource("BoxShape3D_nwub4")
+shape = SubResource("BoxShape3D_7uwty")
+debug_color = Color(0.8501069, 0.34586936, 0.37161028, 1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Events/OutOfBounds" unique_id=287539137]
 mesh = SubResource("SphereMesh_126ht")

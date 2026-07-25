@@ -43,13 +43,13 @@ public partial class CountdownManager : Node
 	// ── Level time configuration (level ID → base time in seconds) ──────────
 	private Dictionary<string, double> _levelBaseTimes = new()
 	{
-		{ "Level1",   30.0 },
-		{ "Level2",   20.0 },
-		{ "Level3",   20.0 },
-		{ "Level4",   20.0 },
-		{ "Level5",   20.0 },
-		{ "Level6",   20.0 },
-		{ "Level7",   20.0 },
+		{ "Level1",   90.0 },
+		{ "Level2",   60.0 },
+		{ "Level3",   60.0 },
+		{ "Level4",   60.0 },
+		{ "Level5",   60.0 },
+		{ "Level6",   60.0 },
+		{ "Level7",   60.0 },
 	};
 
 	// ── Runtime state ───────────────────────────────────────────────────────

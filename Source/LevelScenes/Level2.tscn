@@ -19,8 +19,8 @@ sky = ExtResource("1_etrhc")
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7uwty"]
 height = 3.0
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_xhkal"]
-size = Vector3(100, 1, 50)
+[sub_resource type="BoxShape3D" id="BoxShape3D_42477"]
+size = Vector3(300, 5, 300)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_xhkal"]
 size = Vector2(100, 50)
@@ -149,15 +149,12 @@ _event = 1
 [node name="CollisionShape3D" parent="Events/EndLevel" index="0" unique_id=639539813]
 shape = SubResource("CapsuleShape3D_7uwty")
 
-[node name="MeshInstance3D" parent="Events/EndLevel" index="1" unique_id=733530217]
-visible = false
-
 [node name="OutOfBounds" parent="Events" unique_id=383528875 instance=ExtResource("12_mpnyv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.188936, -8.447094, -4)
 _event = 2
 
 [node name="CollisionShape3D" parent="Events/OutOfBounds" index="0" unique_id=639539813]
-shape = SubResource("BoxShape3D_xhkal")
+shape = SubResource("BoxShape3D_42477")
 
 [node name="MeshInstance3D" parent="Events/OutOfBounds" index="1" unique_id=733530217]
 mesh = SubResource("PlaneMesh_xhkal")
@@ -170,7 +167,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 4, -4)
 curve = SubResource("Curve3D_35dpr")
 
 [node name="PathFollow3D" parent="Preview" unique_id=384614118 instance=ExtResource("11_42477")]
-transform = Transform3D(0.0031998577, 0.0068854033, -0.9999571, 0, 0.9999651, 0.006885419, 0.99998605, -2.2032618e-05, 0.003199765, 0, 0.241, 0.112)
+transform = Transform3D(0.0031998577, 0.006885401, -0.9999567, 0, 0.9999647, 0.006885417, 0.99998605, -2.2032611e-05, 0.0031997638, 0, 0.241, 0.112)
 _speed = 0.09
 
 [editable path="Events/EndLevel"]

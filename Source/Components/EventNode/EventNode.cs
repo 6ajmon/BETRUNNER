@@ -10,7 +10,8 @@ public partial class EventNode : Area3D
 		StartCountdown,
 		StopCountdown,
 		BackToSpawn,
-        SetSpawn
+        SetSpawn,
+        SetCheckpoint,
 	}
 
 	[Export] private Event _event;
@@ -68,5 +69,11 @@ public partial class EventNode : Area3D
 		GameManager.Instance.SpawnPosition = this.GlobalPosition;
 		GameManager.Instance.FaceDirectionAfterRespawn =
 			_rayCast.ToGlobal(_rayCast.TargetPosition) - _rayCast.GlobalPosition;
+	}
+
+	private void SetCheckpoint()
+	{
+		SetSpawn();
+		Visible = false;
 	}
 }
