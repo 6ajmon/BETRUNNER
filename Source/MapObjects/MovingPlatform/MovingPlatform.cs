@@ -6,9 +6,10 @@ public partial class MovingPlatform : Node3D
 	private bool _active = true;
 	[ExportGroup ("Movement")]
 	[Export] private Vector3 _target = Vector3.Zero;
-	[Export] private bool _comeback = true;
 	[Export] private float _speed = 0f;
-	
+	[Export] private Vector3 _rotation = Vector3.Zero;
+	[Export] private float _rotationSpeed = 0f;
+	[Export] private bool _comeback = true;
 	[ExportGroup ("Signal")]
 	[Export] private PressurePlate _pressurePlate;
 	[Export] private bool _waitingRoomObject = false;
@@ -39,6 +40,7 @@ public partial class MovingPlatform : Node3D
 			if(_active)
 			{
 				Move(step);
+				Rotate(delta);
 			}
 		
 		}
@@ -72,8 +74,19 @@ public partial class MovingPlatform : Node3D
 			_reverseDirection = false;
 		}
 		
+		
+		
 	}
 
+	private void Rotate(double delta)
+	{
+		//Rotation
+		if (_rotation != Vector3.Zero)
+		{
+			Rotation += _rotation.Normalized() * (float)delta * _rotationSpeed;
+		}
+	}
+	
 	private void TurnedOn()
 	{
 		_active = true;
