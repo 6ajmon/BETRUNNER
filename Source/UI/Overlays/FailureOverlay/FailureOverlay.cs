@@ -9,7 +9,11 @@ public partial class FailureOverlay : Control
 
 	[Export] private VBoxContainer _levelStatsContainer;
 	[Export] private PanelContainer _curveContainer; // Container for the TimeGraph
+	[Export] private Control _legendContainer;       // Container with a RichTextLabel for the legend
+	[Export] private Control _resultContainer;       // Container with a RichTextLabel for the final result
 
+	private RichTextLabel _legendLabel;
+	private RichTextLabel _resultLabel;
 	private TimeGraph _timeGraph;
 	private float _rowsRevealProgress;
 	private Tween _revealTween;
@@ -22,6 +26,12 @@ public partial class FailureOverlay : Control
 
 		if (_levelStatsContainer == null)
 			GD.PrintErr("FailureOverlay: LevelStatsContainer not found in scene!");
+
+		// Find RichTextLabel children in the exported containers
+		if (_legendContainer != null)
+			_legendLabel = _legendContainer.GetChild<RichTextLabel>(0);
+		if (_resultContainer != null)
+			_resultLabel = _resultContainer.GetChild<RichTextLabel>(0);
 
 		// Create the TimeGraph and add it to the CurveContainer
 		SetupTimeGraph();
@@ -109,29 +119,13 @@ public partial class FailureOverlay : Control
 				child.QueueFree();
 		}
 
-		// ── Legend row ────────────────────────────────────────────────────
-		var legendHbox = new HBoxContainer();
-		legendHbox.SizeFlagsHorizontal = Control.SizeFlags.Expand | Control.SizeFlags.Fill;
-		legendHbox.AddThemeConstantOverride("separation", 8);
-
-		var legendLevelLabel = new Label();
-		legendLevelLabel.Text = "";
-		legendLevelLabel.SizeFlagsHorizontal = Control.SizeFlags.Expand | Control.SizeFlags.Fill;
-		legendLevelLabel.SizeFlagsStretchRatio = 1.0f;
-
-		var legendCalcLabel = new RichTextLabel();
-		legendCalcLabel.SizeFlagsHorizontal = Control.SizeFlags.Expand | Control.SizeFlags.Fill;
-		legendCalcLabel.SizeFlagsStretchRatio = 4.2f;
-		legendCalcLabel.BbcodeEnabled = true;
-		legendCalcLabel.FitContent = true;
-		legendCalcLabel.ScrollActive = false;
-		legendCalcLabel.MouseFilter = Control.MouseFilterEnum.Ignore;
-		legendCalcLabel.Text = $"[color=#{UIColors.Bonus.ToHtml()}]+ bonus[/color]  [color=#{UIColors.Bet.ToHtml()}]- bet[/color]  [color=#{UIColors.Penalty.ToHtml()}]- penalty[/color]";
-
-		legendHbox.AddChild(legendLevelLabel);
-		legendHbox.AddChild(legendCalcLabel);
-		_levelStatsContainer.AddChild(legendHbox);
-		_animatedRows.Add(legendHbox);
+		// ── Legend ────────────────────────────────────────────────────────
+		if (_legendLabel != null)
+		{
+			_legendLabel.BbcodeEnabled = true;
+			_legendLabel.MouseFilter = Control.MouseFilterEnum.Ignore;
+			_legendLabel.Text = $"[color=#{UIColors.Bonus.ToHtml()}]+ bonus[/color]  [color=#{UIColors.Bet.ToHtml()}]- bet[/color]  [color=#{UIColors.Penalty.ToHtml()}]- penalty[/color]";
+		}
 
 		var history = CountdownManager.Instance.LevelHistory;
 		var cm = CountdownManager.Instance;
@@ -175,7 +169,7 @@ public partial class FailureOverlay : Control
 
 			// Build colored formula (no running total, no separate penalty carry-over)
 			var calc = new StringBuilder();
-			string prefix = i > 0 ? "+ " : "";
+			string prefix = i > 0 ? "+ " : "  ";
 			calc.Append($"[color=#{UIColors.Bonus.ToHtml()}]{prefix}{effectiveBase:F1}[/color]");
 			calc.Append($"[color=#{UIColors.Bet.ToHtml()}] - {stat.BetTime:F1}[/color]");
 
@@ -199,33 +193,13 @@ public partial class FailureOverlay : Control
 			prevOvershoot = stat.Overshoot;
 		}
 
-		// ── Summary row: final = 0 (bigger text) ─────────────────────
-		var summaryHbox = new HBoxContainer();
-		summaryHbox.SizeFlagsHorizontal = Control.SizeFlags.Expand | Control.SizeFlags.Fill;
-		summaryHbox.SizeFlagsVertical = Control.SizeFlags.Expand | Control.SizeFlags.Fill;
-		summaryHbox.AddThemeConstantOverride("separation", 8);
-
-		var summaryLevelLabel = new Label();
-		summaryLevelLabel.Text = "";
-		summaryLevelLabel.SizeFlagsHorizontal = Control.SizeFlags.Expand | Control.SizeFlags.Fill;
-		summaryLevelLabel.SizeFlagsStretchRatio = 1.0f;
-		summaryLevelLabel.VerticalAlignment = VerticalAlignment.Top;
-
-		var summaryCalcLabel = new RichTextLabel();
-		summaryCalcLabel.SizeFlagsHorizontal = Control.SizeFlags.Expand | Control.SizeFlags.Fill;
-		summaryCalcLabel.SizeFlagsStretchRatio = 3.0f;
-		summaryCalcLabel.BbcodeEnabled = true;
-		summaryCalcLabel.FitContent = true;
-		summaryCalcLabel.ScrollActive = false;
-		summaryCalcLabel.MouseFilter = Control.MouseFilterEnum.Ignore;
-		summaryCalcLabel.Text = $"[b][font_size=24][color=#{UIColors.Penalty.ToHtml()}]= 0.0s[/color][/font_size][/b]  ";
-		summaryCalcLabel.HorizontalAlignment = HorizontalAlignment.Right;
-		summaryCalcLabel.VerticalAlignment = VerticalAlignment.Center;
-
-		summaryHbox.AddChild(summaryLevelLabel);
-		summaryHbox.AddChild(summaryCalcLabel);
-		_levelStatsContainer.AddChild(summaryHbox);
-		_animatedRows.Add(summaryHbox);
+		// ── Result: final = 0 (bigger text) ───────────────────────────
+		if (_resultLabel != null)
+		{
+			_resultLabel.BbcodeEnabled = true;
+			_resultLabel.MouseFilter = Control.MouseFilterEnum.Ignore;
+			_resultLabel.Text = $"[b][font_size=24][color=#{UIColors.Penalty.ToHtml()}]= 0.0s[/color][/font_size][/b]";
+		}
 
 		// ── Hide all rows initially, then animate in ──────────────────
 		foreach (var row in _animatedRows)

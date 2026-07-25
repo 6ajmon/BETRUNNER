@@ -14,7 +14,7 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 5
 
-[node name="FailureOverlay" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_menuButton", "_levelStatsContainer", "_curveContainer")]
+[node name="FailureOverlay" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_menuButton", "_levelStatsContainer", "_curveContainer", "_legendContainer", "_resultContainer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,8 +23,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_igm8x")
 _menuButton = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/Button")
-_levelStatsContainer = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/ScrollContainer/LevelStatsContainer")
+_levelStatsContainer = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/MarginContainer2/MarginContainer/ScrollContainer/LevelStatsContainer")
 _curveContainer = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/CurveContainer")
+_legendContainer = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/MarginContainer2/MarginContainer/LegendContainer")
+_resultContainer = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/MarginContainer2/MarginContainer/ResultContainer")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1695877596]
 layout_mode = 1
@@ -83,14 +85,50 @@ text = "GAME OVER"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2" unique_id=909064324]
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2" unique_id=2125525791]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="MarginContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/MarginContainer2" unique_id=1499164687]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="LevelStatsContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/ScrollContainer" unique_id=31567625]
+[node name="LegendContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/MarginContainer2/MarginContainer" unique_id=1741516929]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/MarginContainer2/MarginContainer/LegendContainer" unique_id=1483688052]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "  + bonus  - bet  - penalty"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/MarginContainer2/MarginContainer" unique_id=909064324]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.0
+
+[node name="LevelStatsContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/MarginContainer2/MarginContainer/ScrollContainer" unique_id=31567625]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="ResultContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/MarginContainer2/MarginContainer" unique_id=527006555]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/MarginContainer2/MarginContainer/ResultContainer" unique_id=1900657177]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "= 0.0 s"
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2" unique_id=1267317859]
 layout_mode = 2

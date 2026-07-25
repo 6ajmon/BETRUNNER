@@ -132,7 +132,8 @@ public partial class GameManager : Node
 	{
 		// Timer został zatrzymany — weź rzeczywisty czas spędzony na poziomie
 		double actualTime = CountdownManager.Instance.ActualTimeUsed;
-		bool hasTimeLeft = CountdownManager.Instance.OnLevelFinished(actualTime);
+		double overshoot = Math.Max(0.0, actualTime - CountdownManager.Instance.CurrentBetTime);
+		CountdownManager.Instance.OnLevelFinished(actualTime);
 
 		CurrentState = gameState.Loading;
 
@@ -140,8 +141,8 @@ public partial class GameManager : Node
 		Input.MouseMode = Input.MouseModeEnum.Visible;
 		CameraManager.Instance.EmitSignal(nameof(CameraManager.SwitchToPreviewCamera));
 
-		// Pokaż odpowiedni ekran podsumowania
-		if (!hasTimeLeft || CountdownManager.Instance.IsEffectivelyBankrupt)
+		// Pokaż odpowiedni ekran podsumowania — przegrana tylko gdy przekroczono zakład i pula jest pusta
+		if (overshoot > 0.0 && CountdownManager.Instance.IsEffectivelyBankrupt)
 		{
 			SceneManager.Instance.ShowFailureOverlay();
 			var fail = SceneManager.Instance.GetFailureOverlay();

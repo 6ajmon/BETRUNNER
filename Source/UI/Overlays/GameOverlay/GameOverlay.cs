@@ -77,7 +77,7 @@ public partial class GameOverlay : Control
 			_limitLabel.AddThemeColorOverride("font_color", UIColors.Limit);
 		}
 
-		if (currentLimit <= 0.0 && !_failureTriggered)
+		if (currentLimit <= 0.0 && _remainingTime < 0.0 && !_failureTriggered)
 		{
 			_failureTriggered = true;
 			_isRunning = false;
