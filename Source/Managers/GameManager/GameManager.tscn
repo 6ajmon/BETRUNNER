@@ -1,14 +1,15 @@
 [gd_scene format=3 uid="uid://b7cr6skqn6wyy"]
 
 [ext_resource type="Script" uid="uid://b7h4jr40bxcgs" path="res://Source/Managers/GameManager/GameManager.cs" id="1_1glgr"]
-[ext_resource type="PackedScene" uid="uid://cm1jyk22x5flq" path="res://Source/LevelScenes/Level3.tscn" id="2_a6t34"]
-[ext_resource type="PackedScene" uid="uid://bg8yffk6aux02" path="res://Source/LevelScenes/Tutorial.tscn" id="2_haxnl"]
-[ext_resource type="PackedScene" uid="uid://bdho08khidsli" path="res://Source/LevelScenes/Level0.tscn" id="2_o4ph7"]
-[ext_resource type="PackedScene" uid="uid://bya1w335wfbrl" path="res://Source/LevelScenes/Level1.tscn" id="3_eeq83"]
-[ext_resource type="PackedScene" uid="uid://d158t0uae1uij" path="res://Source/LevelScenes/Level2.tscn" id="4_a6t34"]
+[ext_resource type="PackedScene" uid="uid://cm1jyk22x5flq" path="res://Source/LevelScenes/Level4.tscn" id="2_a6t34"]
+[ext_resource type="PackedScene" uid="uid://bg8yffk6aux02" path="res://Source/LevelScenes/Level0.tscn" id="2_haxnl"]
+[ext_resource type="PackedScene" uid="uid://bdho08khidsli" path="res://Source/LevelScenes/Level1.tscn" id="2_o4ph7"]
+[ext_resource type="PackedScene" uid="uid://x8nqykovpi33" path="res://Source/LevelScenes/Level5.tscn" id="2_qgayx"]
+[ext_resource type="PackedScene" uid="uid://bya1w335wfbrl" path="res://Source/LevelScenes/Level2.tscn" id="3_eeq83"]
+[ext_resource type="PackedScene" uid="uid://d158t0uae1uij" path="res://Source/LevelScenes/Level3.tscn" id="4_a6t34"]
 [ext_resource type="PackedScene" uid="uid://johld78kk08" path="res://Source/UI/Screens/MainMenu/MainMenu.tscn" id="5_eeq83"]
 
 [node name="GameManager" type="Node" unique_id=1535941187]
 script = ExtResource("1_1glgr")
-_levelScenes = Array[PackedScene]([ExtResource("2_haxnl"), ExtResource("2_o4ph7"), ExtResource("3_eeq83"), ExtResource("4_a6t34"), ExtResource("2_a6t34")])
+_levelScenes = Array[PackedScene]([ExtResource("2_haxnl"), ExtResource("2_o4ph7"), ExtResource("3_eeq83"), ExtResource("4_a6t34"), ExtResource("2_a6t34"), ExtResource("2_qgayx")])
 _mainMenuScene = ExtResource("5_eeq83")

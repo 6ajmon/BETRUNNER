@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cx8mg5moh6k3y"]
 
 [ext_resource type="Script" uid="uid://u4gco1pgre3a" path="res://Source/Components/EventNode/EventNode.cs" id="1_30710"]
-[ext_resource type="Sky" uid="uid://d4ngfxc1qga1l" path="res://Assets/Textures + Materials/Skybox/Skybox.tres" id="2_pkprw"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_126ht"]
 
@@ -20,10 +19,6 @@ emission_texture = SubResource("ImageTexture_3gdwy")
 material = SubResource("StandardMaterial3D_rr6tj")
 height = 100.0
 
-[sub_resource type="Environment" id="Environment_k5nt2"]
-background_mode = 2
-sky = ExtResource("2_pkprw")
-
 [node name="EventNode" type="Area3D" unique_id=1389099546]
 collision_layer = 4
 script = ExtResource("1_30710")
@@ -36,8 +31,5 @@ mesh = SubResource("CylinderMesh_pkprw")
 
 [node name="Direction" type="RayCast3D" parent="." unique_id=1820536039]
 target_position = Vector3(2, 0, 0)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1001334241]
-environment = SubResource("Environment_k5nt2")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
