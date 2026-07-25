@@ -3,15 +3,19 @@
 [ext_resource type="Script" uid="uid://c8q6sh8g5mows" path="res://Source/Managers/SceneManager/SceneManager.cs" id="1_f70il"]
 [ext_resource type="PackedScene" uid="uid://bg4brd8hew2uc" path="res://Source/UI/Overlays/GameOverlay/GameOverlay.tscn" id="2_8h0h3"]
 [ext_resource type="PackedScene" uid="uid://b0vre76lrmauc" path="res://Source/UI/Overlays/BettingOverlay/BettingOverlay.tscn" id="3_8yohe"]
-[ext_resource type="PackedScene" uid="uid://dswf70upb16sn" path="res://Source/UI/Overlays/FailureOverlay/FailureOverlay.tscn" id="4_eyt81"]
+[ext_resource type="PackedScene" uid="uid://dswf70upb16sn" path="res://Source/UI/Overlays/FailureOverlay/FinishOverlay.tscn" id="4_eyt81"]
 [ext_resource type="PackedScene" uid="uid://mse67hi2gqw0" path="res://Source/UI/Overlays/SummaryOverlay/SummaryOverlay.tscn" id="5_lnkby"]
+[ext_resource type="PackedScene" uid="uid://cyckpnpoh1sh7" path="res://Source/UI/Overlays/MainMenuOverlay/MainMenuOverlay.tscn" id="6_lnkby"]
+[ext_resource type="PackedScene" uid="uid://dwoq5dwy3g7jc" path="res://Source/UI/Overlays/SettingsOverlay/SettingsOverlay.tscn" id="7_vq8d4"]
 
-[node name="SceneManager" type="Node" unique_id=1743745418 node_paths=PackedStringArray("_bettingOverlay", "_gameOverlay", "_summaryOverlay", "_failureOverlay")]
+[node name="SceneManager" type="Node" unique_id=1743745418 node_paths=PackedStringArray("_bettingOverlay", "_gameOverlay", "_summaryOverlay", "_finishOverlay", "_mainMenuOverlay", "_settingsOverlay")]
 script = ExtResource("1_f70il")
 _bettingOverlay = NodePath("CanvasLayer/BettingOverlay")
 _gameOverlay = NodePath("CanvasLayer/GameOverlay")
 _summaryOverlay = NodePath("CanvasLayer/SummaryOverlay")
-_failureOverlay = NodePath("CanvasLayer/FailureOverlay")
+_finishOverlay = NodePath("CanvasLayer/FinishOverlay")
+_mainMenuOverlay = NodePath("CanvasLayer/MainMenuOverlay")
+_settingsOverlay = NodePath("CanvasLayer/SettingsOverlay")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=59557020]
 
@@ -24,5 +28,11 @@ visible = false
 [node name="SummaryOverlay" parent="CanvasLayer" unique_id=1310264764 instance=ExtResource("5_lnkby")]
 visible = false
 
-[node name="FailureOverlay" parent="CanvasLayer" unique_id=1021833891 instance=ExtResource("4_eyt81")]
+[node name="FinishOverlay" parent="CanvasLayer" unique_id=1021833891 instance=ExtResource("4_eyt81")]
+visible = false
+
+[node name="MainMenuOverlay" parent="CanvasLayer" unique_id=412714136 instance=ExtResource("6_lnkby")]
+visible = false
+
+[node name="SettingsOverlay" parent="CanvasLayer" unique_id=125325198 instance=ExtResource("7_vq8d4")]
 visible = false

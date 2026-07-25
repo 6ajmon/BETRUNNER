@@ -26,6 +26,7 @@ _movement = NodePath("Movement")
 _animation = NodePath("Animation")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=468608099]
+cast_shadow = 0
 mesh = SubResource("CapsuleMesh_sdrnp")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=544643710]
@@ -39,6 +40,12 @@ shape = SubResource("CapsuleShape3D_sdrnp")
 [node name="Arms" parent="." unique_id=343274322 instance=ExtResource("3_joxjj")]
 transform = Transform3D(-1.5, 0, 2.2649371e-07, 0, 1.5, 0, -2.2649371e-07, 0, -1.5, 0, -1.4132289, -0.020630836)
 
+[node name="Alpha_Joints" parent="Arms/Armature/Skeleton3D" parent_id_path=PackedInt32Array(343274322, 2109686170) index="0" unique_id=2128856442]
+cast_shadow = 0
+
+[node name="Alpha_Surface" parent="Arms/Armature/Skeleton3D" parent_id_path=PackedInt32Array(343274322, 2109686170) index="1" unique_id=936859998]
+cast_shadow = 0
+
 [node name="Animation" type="Node" parent="." unique_id=1867457033]
 script = ExtResource("4_kk0v3")
 
@@ -48,3 +55,5 @@ script = ExtResource("2_joxjj")
 [node name="MotionShaderController" type="CanvasLayer" parent="." unique_id=557268850]
 script = ExtResource("5_r002u")
 _material = SubResource("ShaderMaterial_oywqr")
+
+[editable path="Arms"]

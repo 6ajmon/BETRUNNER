@@ -1,23 +1,30 @@
 [gd_scene format=3 uid="uid://cx8mg5moh6k3y"]
 
 [ext_resource type="Script" uid="uid://u4gco1pgre3a" path="res://Source/Components/EventNode/EventNode.cs" id="1_30710"]
+[ext_resource type="Shader" uid="uid://lodspbe51j2j" path="res://Assets/Shaders/beacon_fade.gdshader" id="2_pkprw"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_126ht"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_3gdwy"]
+[sub_resource type="ImageTexture" id="ImageTexture_k5nt2"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rr6tj"]
-transparency = 1
-blend_mode = 1
-metallic_specular = 0.0
-emission_enabled = true
-emission = Color(1.1346822, 0.81628394, 0.36964175, 1)
-emission_energy_multiplier = 0.35
-emission_texture = SubResource("ImageTexture_3gdwy")
+[sub_resource type="ImageTexture" id="ImageTexture_pkprw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pkprw"]
+render_priority = 0
+shader = ExtResource("2_pkprw")
+shader_parameter/texture_albedo = SubResource("ImageTexture_k5nt2")
+shader_parameter/texture_emission = SubResource("ImageTexture_pkprw")
+shader_parameter/emission_energy = 1.0
+shader_parameter/emission_color = Color(1, 0, 0, 1)
+shader_parameter/bottom_fade = 0.6000000285
+shader_parameter/top_fade = 0.6000000285
+shader_parameter/softness = 0.1
+shader_parameter/use_vertex_y = true
+shader_parameter/mesh_height = 20.00000094674012
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_pkprw"]
-material = SubResource("StandardMaterial3D_rr6tj")
-height = 100.0
+material = SubResource("ShaderMaterial_pkprw")
+height = 20.0
 
 [node name="EventNode" type="Area3D" unique_id=1389099546]
 collision_layer = 4

@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using NewGameProject;
 
 public partial class CountdownManager : Node
 {
@@ -39,17 +40,23 @@ public partial class CountdownManager : Node
 	private List<LevelStat> _levelHistory = new();
 	public IReadOnlyList<LevelStat> LevelHistory => _levelHistory.AsReadOnly();
 
-	// ── Level time configuration (level ID → base time in seconds) ──────────
-	private Dictionary<string, double> _levelBaseTimes = new()
+	// ── Difficulty ─────────────────────────────────────────────────────────
+	public enum Difficulty
 	{
-		{ "Level1",   300.0 },
-		{ "Level2",   20.0 },
-		{ "Level3",   20.0 },
-		{ "Level4",   20.0 },
-		{ "Level5",   20.0 },
-		{ "Level6",   20.0 },
-		{ "Level7",   20.0 },
-	};
+		Noob = 0,
+		Pro  = 1,
+		Dev  = 2,
+	}
+
+	/// <summary>
+	/// Current difficulty setting. Updated by SettingsOverlay slider.
+	/// </summary>
+	public Difficulty CurrentDifficulty { get; set; } = Difficulty.Pro;
+
+	// ── Level time configuration (per difficulty, by level index 0..N) ─────
+	private static readonly double[] _baseTimesNoob  = { 60.0, 40.0, 40.0, 40.0, 60.0, 40.0, 40.0 };
+	private static readonly double[] _baseTimesPro   = { 30.0, 20.0, 20.0, 20.0, 30.0, 20.0, 20.0 };
+	private static readonly double[] _baseTimesDev   = { 13.0, 10.0, 8.0, 10.0, 20.0, 10.0, 12.0 };
 
 	// ── Runtime state ───────────────────────────────────────────────────────
 	private string _currentLevelId = "";
@@ -118,7 +125,8 @@ public partial class CountdownManager : Node
 		_betPlaced = false;
 		_totalBeforeLevelAllocation = _totalAvailableTime;
 
-		if (!_levelBaseTimes.ContainsKey(levelId))
+		double baseTime = GetLevelBaseTime(levelId);
+		if (baseTime < 0.0)
 		{
 			GD.PrintErr($"CountdownManager: Unknown level '{levelId}'");
 			_currentLevelBaseTime = 0.0;
@@ -126,13 +134,12 @@ public partial class CountdownManager : Node
 			return;
 		}
 
-		double baseTime = _levelBaseTimes[levelId];
 		double adjustedTime = Math.Max(0.0, baseTime - _penaltyForNextLevel);
 
 		_currentLevelBaseTime = adjustedTime;
-		_penaltyAppliedToCurrentLevel = baseTime - adjustedTime; // how much was deducted by previous overshoot
+		_penaltyAppliedToCurrentLevel = baseTime - adjustedTime;
 		_totalAvailableTime += adjustedTime;
-		_penaltyForNextLevel = 0.0; // consumed
+		_penaltyForNextLevel = 0.0;
 
 		EmitSignal(nameof(LevelTimeAllocated), _currentLevelBaseTime, _totalAvailableTime);
 	}
@@ -254,16 +261,167 @@ public partial class CountdownManager : Node
 	public double GetMaxBet() => _totalAvailableTime;
 
 	/// <summary>
-	/// Look up a level's configured base time (ignoring penalties).
+	/// Look up a level's configured base time (ignoring penalties),
+	/// based on the current difficulty. Returns -1 if the level index is out of range.
 	/// </summary>
-	public double GetLevelBaseTime(string levelId) =>
-		_levelBaseTimes.TryGetValue(levelId, out double time) ? time : 0.0;
+	public double GetLevelBaseTime(string levelId)
+	{
+		int index = ParseLevelIndex(levelId);
+		if (index < 0) return -1.0;
+
+		double[] table = CurrentDifficulty switch
+		{
+			Difficulty.Noob => _baseTimesNoob,
+			Difficulty.Dev  => _baseTimesDev,
+			_               => _baseTimesPro,
+		};
+
+		return index < table.Length ? table[index] : -1.0;
+	}
 
 	/// <summary>
 	/// Override the base time for a given level at runtime.
+	/// Modifies the current difficulty's array (only if index is in range).
 	/// </summary>
 	public void SetLevelBaseTime(string levelId, double seconds)
 	{
-		_levelBaseTimes[levelId] = Math.Max(0.0, seconds);
+		int index = ParseLevelIndex(levelId);
+		if (index < 0) return;
+
+		double[] table = CurrentDifficulty switch
+		{
+			Difficulty.Noob => _baseTimesNoob,
+			Difficulty.Dev  => _baseTimesDev,
+			_               => _baseTimesPro,
+		};
+
+		if (index < table.Length)
+			table[index] = Math.Max(0.0, seconds);
+	}
+
+	/// <summary>Extract the zero-based level index from "Level1", "Level2" …</summary>
+	private static int ParseLevelIndex(string levelId)
+	{
+		if (string.IsNullOrEmpty(levelId)) return -1;
+		string numStr = levelId.Replace("Level", "");
+		if (int.TryParse(numStr, out int num))
+			return num - 1; // zero-based
+		return -1;
+	}
+
+	// ── Time graph data ─────────────────────────────────────────────────────
+
+	/// <summary>
+	/// A single segment of the time graph with its intended draw color.
+	/// </summary>
+	public struct GraphSegment
+	{
+		public Vector2 Start;
+		public Vector2 End;
+		public Color Color;
+	}
+
+	/// <summary>
+	/// Build colored segments for the remaining-time-over-game-time graph.
+	/// Segments are colored by type:
+	///   Bonus (amber)  — level allocation jump
+	///   Bet (green)    — bet consumption during normal play
+	///   Limit (orange) — flat / no-change
+	///   Penalty (red)  — overtime 2× drain
+	/// </summary>
+	public (GraphSegment[] Segments, (float X, string Label)[] Markers) BuildTimeGraphData(bool isVictory = false)
+	{
+		if (_levelHistory.Count == 0)
+			return (Array.Empty<GraphSegment>(), Array.Empty<(float, string)>());
+
+		var segs = new List<GraphSegment>();
+		var markers = new List<(float, string)>();
+
+		double gameTime = 0.0;
+		double pool = 0.0;
+		double prevOvershoot = 0.0;
+
+		bool lastLevel = false;
+
+		for (int i = 0; i < _levelHistory.Count; i++)
+		{
+			var stat = _levelHistory[i];
+			double baseTime = GetLevelBaseTime(stat.LevelId);
+			double effectiveBase = Math.Max(0.0, baseTime - prevOvershoot);
+
+			lastLevel = (i == _levelHistory.Count - 1);
+
+			// ── Level allocation (amber) ─────────────────────────────────
+			double poolBeforeLevel = pool;
+			pool += effectiveBase;
+			segs.Add(new GraphSegment
+			{
+				Start = new Vector2((float)gameTime, (float)poolBeforeLevel),
+				End   = new Vector2((float)gameTime, (float)pool),
+				Color = UIColors.Bonus,
+			});
+
+			// Level marker on x-axis
+			markers.Add(((float)gameTime, $"L{i + 1}"));
+
+			// ── Bet / time consumption ────────────────────────────────────
+			double actualTime = stat.ActualTime;
+			double betTime = stat.BetTime;
+			double overshoot = stat.Overshoot;
+			double poolAfterAllocation = pool;
+
+			// W trybie victory ostatni poziom odejmuje tylko faktyczny czas (biały)
+			bool useActualConsumption = isVictory && lastLevel;
+			double consumption = useActualConsumption ? actualTime : betTime;
+			Color consumptionColor = useActualConsumption
+				? Colors.White
+				: UIColors.Bet;
+
+			double poolAfterConsumption = poolAfterAllocation - consumption;
+			double normalPlayTime = Math.Min(consumption, actualTime);
+			double normalEnd = gameTime + normalPlayTime;
+
+			segs.Add(new GraphSegment
+			{
+				Start = new Vector2((float)gameTime, (float)poolAfterAllocation),
+				End   = new Vector2((float)normalEnd, (float)poolAfterConsumption),
+				Color = consumptionColor,
+			});
+
+			if (overshoot > 0.001)
+			{
+				// Overtime 2× drain (red)
+				double penaltyDrain = Math.Min(overshoot * 2.0, poolAfterConsumption);
+				double poolAfterPenalty = poolAfterConsumption - penaltyDrain;
+				double overtimeEnd = gameTime + actualTime;
+				segs.Add(new GraphSegment
+				{
+					Start = new Vector2((float)normalEnd, (float)poolAfterConsumption),
+					End   = new Vector2((float)overtimeEnd, (float)poolAfterPenalty),
+					Color = UIColors.Penalty,
+				});
+				pool = poolAfterPenalty;
+			}
+			else
+			{
+				// No overshoot: flat (orange)
+				double levelEnd = gameTime + actualTime;
+				if (actualTime > normalPlayTime)
+				{
+					segs.Add(new GraphSegment
+					{
+						Start = new Vector2((float)normalEnd, (float)poolAfterConsumption),
+						End   = new Vector2((float)levelEnd, (float)poolAfterConsumption),
+						Color = UIColors.Limit,
+					});
+				}
+				pool = poolAfterConsumption;
+			}
+
+			gameTime += actualTime;
+			prevOvershoot = stat.Overshoot;
+		}
+
+		return (segs.ToArray(), markers.ToArray());
 	}
 }
