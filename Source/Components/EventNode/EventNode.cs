@@ -60,11 +60,13 @@ public partial class EventNode : Area3D
 
 	private void BackToSpawn()
 	{
-		GameManager.Instance.MovePlayerToSpawn(_rayCast.ToGlobal(_rayCast.TargetPosition) - _rayCast.GlobalPosition);
+		GameManager.Instance.Respawn();
 	}
 
 	private void SetSpawn()
 	{
 		GameManager.Instance.SpawnPosition = this.GlobalPosition;
+		GameManager.Instance.FaceDirectionAfterRespawn =
+			_rayCast.ToGlobal(_rayCast.TargetPosition) - _rayCast.GlobalPosition;
 	}
 }

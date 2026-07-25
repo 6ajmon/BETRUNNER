@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://cwv82spjqiho0"]
+
+[ext_resource type="Script" uid="uid://d31ogfavqrkg" path="res://Source/MapObjects/Laser.cs" id="1_em1eu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d2rsb"]
+transparency = 1
+albedo_color = Color(3.3975437, 0, 0.19424002, 0.95686275)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_126ht"]
+lightmap_size_hint = Vector2i(6, 10)
+material = SubResource("StandardMaterial3D_d2rsb")
+top_radius = 0.15
+bottom_radius = 0.15
+height = 1.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_126ht"]
+height = 1.0
+radius = 0.15
+
+[node name="Laser" type="Area3D" unique_id=1662867146]
+collision_layer = 16
+script = ExtResource("1_em1eu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1739462243]
+mesh = SubResource("CylinderMesh_126ht")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=202659481]
+shape = SubResource("CylinderShape3D_126ht")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

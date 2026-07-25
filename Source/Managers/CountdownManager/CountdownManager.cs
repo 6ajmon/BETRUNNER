@@ -48,14 +48,15 @@ public partial class CountdownManager : Node
 		{ "Level3",   20.0 },
 		{ "Level4",   20.0 },
 		{ "Level5",   20.0 },
-		{ "Level6", 20.0 },
+		{ "Level6",   20.0 },
+		{ "Level7",   20.0 },
 	};
 
 	// ── Runtime state ───────────────────────────────────────────────────────
 	private string _currentLevelId = "";
 	private double _totalAvailableTime = 0.0;   // player's total time pool
 	private double _currentLevelBaseTime = 0.0; // this level's allocation (after penalty)
-	private double _currentBetTime = 0.0;       // time the player bet
+	private double _currentBetTime = 0.0;       // time the player betd
 	private double _penaltyForNextLevel = 0.0;  // excess to subtract from next level
 	private double _penaltyAppliedToCurrentLevel = 0.0; // penalty deducted when allocating this level
 	private double _totalBeforeLevelAllocation = 0.0;   // total available before this level's base time was added

@@ -20,6 +20,9 @@
 background_mode = 2
 sky = ExtResource("1_dscqw")
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7uwty"]
+height = 3.0
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_nypq0"]
 size = Vector3(200, 5, 200)
 
@@ -161,7 +164,7 @@ transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 11.4
 [node name="Glass" parent="MapContainer/SecondBridge/Glass2" unique_id=1241807905 instance=ExtResource("6_o8g5b")]
 
 [node name="Glass3" parent="MapContainer/SecondBridge" unique_id=1349803281 instance=ExtResource("5_74x7x")]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 14, 2, 2)
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 15.5, 2, 2)
 
 [node name="Glass" parent="MapContainer/SecondBridge/Glass3" unique_id=86231461 instance=ExtResource("6_o8g5b")]
 
@@ -708,6 +711,9 @@ _event = 3
 [node name="EndLevel" parent="Events" unique_id=736168622 instance=ExtResource("12_nwub4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.146397, 3.333445, 65.75797)
 _event = 1
+
+[node name="CollisionShape3D" parent="Events/EndLevel" index="0" unique_id=639539813]
+shape = SubResource("CapsuleShape3D_7uwty")
 
 [node name="OutOfBounds" type="Area3D" parent="Events" unique_id=1013580359]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.62362, -5.9066305, 8.6232395)

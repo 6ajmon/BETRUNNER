@@ -168,4 +168,9 @@ public partial class Player : CharacterBody3D
 		_currentFov = Mathf.Lerp(_currentFov, targetFov, FovLerpSpeed * dt);
 		_camera.Fov = _currentFov;
 	}
+
+	public Vector3 GetFacingDirection()
+	{
+		return _camera.GlobalTransform.Basis.Z.Normalized();
+	}
 }
