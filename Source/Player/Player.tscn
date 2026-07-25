@@ -4,10 +4,19 @@
 [ext_resource type="Script" uid="uid://gfj1pwclmwfm" path="res://Source/Player/PlayerMovement.cs" id="2_joxjj"]
 [ext_resource type="PackedScene" uid="uid://dw73236w7at7a" path="res://Assets/Arms/Arms.glb" id="3_joxjj"]
 [ext_resource type="Script" uid="uid://de3vwri21x2mj" path="res://Source/Player/PlayerAnimation.cs" id="4_kk0v3"]
+[ext_resource type="Script" uid="uid://6jw3pofnqeal" path="res://Source/Player/MotionShaderController.cs" id="5_r002u"]
+[ext_resource type="Shader" uid="uid://2a2mgavmeqbu" path="res://Source/Player/MotionEffects.gdshader" id="6_twi4h"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sdrnp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sdrnp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oywqr"]
+shader = ExtResource("6_twi4h")
+shader_parameter/effect_power = 0.0
+shader_parameter/barrel_strength = 0.35
+shader_parameter/blur_intensity = 0.5
+shader_parameter/vignette_strength = 0.4
 
 [node name="Player" type="CharacterBody3D" unique_id=839987394 node_paths=PackedStringArray("_camera", "_movement", "_animation")]
 collision_mask = 11
@@ -35,3 +44,7 @@ script = ExtResource("4_kk0v3")
 
 [node name="Movement" type="Node" parent="." unique_id=108750409]
 script = ExtResource("2_joxjj")
+
+[node name="MotionShaderController" type="CanvasLayer" parent="." unique_id=557268850]
+script = ExtResource("5_r002u")
+_material = SubResource("ShaderMaterial_oywqr")

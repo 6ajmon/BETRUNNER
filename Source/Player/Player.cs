@@ -111,6 +111,10 @@ public partial class Player : CharacterBody3D
 
 		var arms = GetNodeOrNull<Node3D>("Arms");
 		if (arms != null) arms.Visible = visible;
+
+		// Speed lines overlay — hide during preview
+		var speedLines = GetNodeOrNull<ColorRect>("Camera3D/SpeedLines");
+		if (speedLines != null) speedLines.Visible = visible;
 	}
 
 	public override void _PhysicsProcess(double delta)
