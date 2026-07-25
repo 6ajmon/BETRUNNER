@@ -628,10 +628,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 28)
 
 [node name="LaserContainer" type="Node3D" parent="." unique_id=1346296788]
 
-[node name="LaserGroup" type="Node3D" parent="LaserContainer" unique_id=1239160916 node_paths=PackedStringArray("_pressurePlate")]
-script = ExtResource("12_j2ajd")
-_speed = 2.0
-_pressurePlate = NodePath("../../MapContainer/PressurePlate")
+[node name="LaserGroup" type="Node3D" parent="LaserContainer" unique_id=1239160916]
 
 [node name="Laser" parent="LaserContainer/LaserGroup" unique_id=1892364028 instance=ExtResource("11_dsrrf")]
 transform = Transform3D(1, 0, 0, 0, 7.999499, -0.70710677, 0, 7.999499, 0.70710677, 12, 4, -4)
@@ -681,11 +678,8 @@ transform = Transform3D(0.707, 0, 0, 0, 8, 0, 0, 0, 0.707, 12, 4, -5)
 [node name="Laser10" parent="LaserContainer/LaserGroup2" unique_id=1340087693 instance=ExtResource("11_dsrrf")]
 transform = Transform3D(0.707, 0, 0, 0, 8, 0, 0, 0, 0.707, 12, 4, -6)
 
-[node name="LaserGroup3" type="Node3D" parent="LaserContainer" unique_id=1556175108 node_paths=PackedStringArray("_pressurePlate")]
+[node name="LaserGroup3" type="Node3D" parent="LaserContainer" unique_id=1556175108]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
-script = ExtResource("12_j2ajd")
-_speed = 2.0
-_pressurePlate = NodePath("../../MapContainer/PressurePlate")
 
 [node name="Laser" parent="LaserContainer/LaserGroup3" unique_id=1283817806 instance=ExtResource("11_dsrrf")]
 transform = Transform3D(1, 0, 0, 0, 7.999499, -0.70710677, 0, 7.999499, 0.70710677, 12, 4, -4)
@@ -716,6 +710,30 @@ transform = Transform3D(0.707, 0, 0, 0, 80, 0, 0, 0, 0.707, 20, 4, 14)
 
 [node name="Laser7" parent="LaserContainer" unique_id=802360476 instance=ExtResource("11_dsrrf")]
 transform = Transform3D(0.707, 0, 0, 0, 80, 0, 0, 0, 0.707, 20, 4, 20)
+
+[node name="LaserGroup4" type="Node3D" parent="LaserContainer" unique_id=105375421]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 0)
+
+[node name="Laser" parent="LaserContainer/LaserGroup4" unique_id=1651254451 instance=ExtResource("11_dsrrf")]
+transform = Transform3D(1, 0, 0, 0, 7.999499, -0.70710677, 0, 7.999499, 0.70710677, 12, 4, -4)
+
+[node name="Laser2" parent="LaserContainer/LaserGroup4" unique_id=1446977198 instance=ExtResource("11_dsrrf")]
+transform = Transform3D(1, 0, 0, 0, 7.999499, 0.7071067, 0, -7.999499, 0.7071067, 12, 4, -4)
+
+[node name="Laser5" parent="LaserContainer/LaserGroup4" unique_id=199236233 instance=ExtResource("11_dsrrf")]
+transform = Transform3D(0.707, 0, 0, 0, 8, 0, 0, 0, 0.707, 12, 4, -4)
+
+[node name="Laser7" parent="LaserContainer/LaserGroup4" unique_id=37140066 instance=ExtResource("11_dsrrf")]
+transform = Transform3D(0.707, 0, 0, 0, 8, 0, 0, 0, 0.707, 12, 4, -7)
+
+[node name="Laser8" parent="LaserContainer/LaserGroup4" unique_id=411734996 instance=ExtResource("11_dsrrf")]
+transform = Transform3D(0.707, 0, 0, 0, 8, 0, 0, 0, 0.707, 12, 4, -3)
+
+[node name="Laser9" parent="LaserContainer/LaserGroup4" unique_id=2054363875 instance=ExtResource("11_dsrrf")]
+transform = Transform3D(0.707, 0, 0, 0, 8, 0, 0, 0, 0.707, 12, 4, -5)
+
+[node name="Laser10" parent="LaserContainer/LaserGroup4" unique_id=871997721 instance=ExtResource("11_dsrrf")]
+transform = Transform3D(0.707, 0, 0, 0, 8, 0, 0, 0, 0.707, 12, 4, -6)
 
 [connection signal="body_entered" from="Events/OutOfBounds" to="Events/OutOfBounds" method="_on_body_entered"]
 
