@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://oxit13svdw34" path="res://Source/UI/Overlays/SettingsOverlay/SettingsOverlay.cs" id="1_8t2t5"]
 
-[node name="SettingsOverlay" type="Control" unique_id=125325198 node_paths=PackedStringArray("_backButton", "DifficultySlider", "DifficultyNameLabel")]
+[node name="SettingsOverlay" type="Control" unique_id=125325198 node_paths=PackedStringArray("_backButton", "_difficultySlider", "_difficultyNameLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,9 +10,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8t2t5")
-_backButton = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer3/VBoxContainer3/SaveButton")
-DifficultySlider = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/DifficultyContainer/DifficultySlider")
-DifficultyNameLabel = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/DifficultyContainer/DifficultyNameLabel")
+_backButton = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer3/VBoxContainer3/ReturnButton")
+_difficultySlider = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/DifficultyContainer/DifficultySlider")
+_difficultyNameLabel = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/DifficultyContainer/DifficultyNameLabel")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=63540643]
 layout_mode = 1

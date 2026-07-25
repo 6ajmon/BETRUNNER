@@ -23,6 +23,8 @@ public partial class SceneManager : Node
 		if (_gameOverlay != null)    _gameOverlay.Visible = false;
 		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
 		if (_finishOverlay != null) _finishOverlay.Visible = false;
+		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
+		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
 	}
 
 	public void ShowGameOverlay()
@@ -31,6 +33,8 @@ public partial class SceneManager : Node
 		if (_gameOverlay != null)    _gameOverlay.Visible = true;
 		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
 		if (_finishOverlay != null) _finishOverlay.Visible = false;
+		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
+		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
 	}
 
 	public void ShowSummaryOverlay()
@@ -39,6 +43,8 @@ public partial class SceneManager : Node
 		if (_gameOverlay != null)    _gameOverlay.Visible = false;
 		if (_summaryOverlay != null) _summaryOverlay.Visible = true;
 		if (_finishOverlay != null) _finishOverlay.Visible = false;
+		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
+		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
 	}
 
 	public void ShowFinishOverlay()
@@ -47,6 +53,8 @@ public partial class SceneManager : Node
 		if (_gameOverlay != null)    _gameOverlay.Visible = false;
 		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
 		if (_finishOverlay != null) _finishOverlay.Visible = true;
+		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
+		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
 	}
 
 	public void ShowMainMenuOverlay()
