@@ -287,7 +287,7 @@ public partial class CountdownManager : Node
 	///   Limit (orange) — flat / no-change
 	///   Penalty (red)  — overtime 2× drain
 	/// </summary>
-	public (GraphSegment[] Segments, (float X, string Label)[] Markers) BuildTimeGraphData()
+	public (GraphSegment[] Segments, (float X, string Label)[] Markers) BuildTimeGraphData(bool isVictory = false)
 	{
 		if (_levelHistory.Count == 0)
 			return (Array.Empty<GraphSegment>(), Array.Empty<(float, string)>());
@@ -299,11 +299,15 @@ public partial class CountdownManager : Node
 		double pool = 0.0;
 		double prevOvershoot = 0.0;
 
+		bool lastLevel = false;
+
 		for (int i = 0; i < _levelHistory.Count; i++)
 		{
 			var stat = _levelHistory[i];
 			double baseTime = GetLevelBaseTime(stat.LevelId);
 			double effectiveBase = Math.Max(0.0, baseTime - prevOvershoot);
+
+			lastLevel = (i == _levelHistory.Count - 1);
 
 			// ── Level allocation (amber) ─────────────────────────────────
 			double poolBeforeLevel = pool;
@@ -318,31 +322,39 @@ public partial class CountdownManager : Node
 			// Level marker on x-axis
 			markers.Add(((float)gameTime, $"L{i + 1}"));
 
-			// ── Bet consumption (green) ──────────────────────────────────
+			// ── Bet / time consumption ────────────────────────────────────
 			double actualTime = stat.ActualTime;
 			double betTime = stat.BetTime;
 			double overshoot = stat.Overshoot;
 			double poolAfterAllocation = pool;
-			double poolAfterBet = poolAfterAllocation - betTime;
-			double normalPlayTime = Math.Min(betTime, actualTime);
+
+			// W trybie victory ostatni poziom odejmuje tylko faktyczny czas (biały)
+			bool useActualConsumption = isVictory && lastLevel;
+			double consumption = useActualConsumption ? actualTime : betTime;
+			Color consumptionColor = useActualConsumption
+				? Colors.White
+				: UIColors.Bet;
+
+			double poolAfterConsumption = poolAfterAllocation - consumption;
+			double normalPlayTime = Math.Min(consumption, actualTime);
 			double normalEnd = gameTime + normalPlayTime;
 
 			segs.Add(new GraphSegment
 			{
 				Start = new Vector2((float)gameTime, (float)poolAfterAllocation),
-				End   = new Vector2((float)normalEnd, (float)poolAfterBet),
-				Color = UIColors.Bet,
+				End   = new Vector2((float)normalEnd, (float)poolAfterConsumption),
+				Color = consumptionColor,
 			});
 
 			if (overshoot > 0.001)
 			{
 				// Overtime 2× drain (red)
-				double penaltyDrain = Math.Min(overshoot * 2.0, poolAfterBet);
-				double poolAfterPenalty = poolAfterBet - penaltyDrain;
+				double penaltyDrain = Math.Min(overshoot * 2.0, poolAfterConsumption);
+				double poolAfterPenalty = poolAfterConsumption - penaltyDrain;
 				double overtimeEnd = gameTime + actualTime;
 				segs.Add(new GraphSegment
 				{
-					Start = new Vector2((float)normalEnd, (float)poolAfterBet),
+					Start = new Vector2((float)normalEnd, (float)poolAfterConsumption),
 					End   = new Vector2((float)overtimeEnd, (float)poolAfterPenalty),
 					Color = UIColors.Penalty,
 				});
@@ -356,12 +368,12 @@ public partial class CountdownManager : Node
 				{
 					segs.Add(new GraphSegment
 					{
-						Start = new Vector2((float)normalEnd, (float)poolAfterBet),
-						End   = new Vector2((float)levelEnd, (float)poolAfterBet),
+						Start = new Vector2((float)normalEnd, (float)poolAfterConsumption),
+						End   = new Vector2((float)levelEnd, (float)poolAfterConsumption),
 						Color = UIColors.Limit,
 					});
 				}
-				pool = poolAfterBet;
+				pool = poolAfterConsumption;
 			}
 
 			gameTime += actualTime;

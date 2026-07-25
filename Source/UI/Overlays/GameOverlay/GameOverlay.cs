@@ -11,7 +11,7 @@ public partial class GameOverlay : Control
 	private double _remainingTime;
 	private double _initialLimit;
 	private bool _isRunning;
-	private bool _failureTriggered;
+	private bool _finishTriggered;
 
 	public override void _Ready()
 	{
@@ -77,9 +77,9 @@ public partial class GameOverlay : Control
 			_limitLabel.AddThemeColorOverride("font_color", UIColors.Limit);
 		}
 
-		if (currentLimit <= 0.0 && _remainingTime < 0.0 && !_failureTriggered)
+		if (currentLimit <= 0.0 && _remainingTime < 0.0 && !_finishTriggered)
 		{
-			_failureTriggered = true;
+			_finishTriggered = true;
 			_isRunning = false;
 
 			double actualTime = CountdownManager.Instance.CurrentBetTime - _remainingTime;
@@ -97,7 +97,7 @@ public partial class GameOverlay : Control
 
 		_remainingTime = betTime;
 		_isRunning = false;
-		_failureTriggered = false;
+		_finishTriggered = false;
 		_countdownLabel.Text = $"{betTime:F1}s";
 		_countdownLabel.AddThemeColorOverride("font_color", UIColors.Bet);
 
@@ -133,7 +133,7 @@ public partial class GameOverlay : Control
 
 	private void StopCountdown()
 	{
-		if (_failureTriggered) return;
+		if (_finishTriggered) return;
 
 		_isRunning = false;
 

@@ -11,7 +11,7 @@ public partial class SceneManager : Node
 	[Export] private Control _bettingOverlay;
 	[Export] private Control _gameOverlay;
 	[Export] private Control _summaryOverlay;
-	[Export] private Control _failureOverlay;
+	[Export] private Control _finishOverlay;
 
 	// ── Overlay visibility control ─────────────────────────────────────────
 
@@ -20,7 +20,7 @@ public partial class SceneManager : Node
 		if (_bettingOverlay != null) _bettingOverlay.Visible = true;
 		if (_gameOverlay != null)    _gameOverlay.Visible = false;
 		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
-		if (_failureOverlay != null) _failureOverlay.Visible = false;
+		if (_finishOverlay != null) _finishOverlay.Visible = false;
 	}
 
 	public void ShowGameOverlay()
@@ -28,7 +28,7 @@ public partial class SceneManager : Node
 		if (_bettingOverlay != null) _bettingOverlay.Visible = false;
 		if (_gameOverlay != null)    _gameOverlay.Visible = true;
 		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
-		if (_failureOverlay != null) _failureOverlay.Visible = false;
+		if (_finishOverlay != null) _finishOverlay.Visible = false;
 	}
 
 	public void ShowSummaryOverlay()
@@ -36,15 +36,15 @@ public partial class SceneManager : Node
 		if (_bettingOverlay != null) _bettingOverlay.Visible = false;
 		if (_gameOverlay != null)    _gameOverlay.Visible = false;
 		if (_summaryOverlay != null) _summaryOverlay.Visible = true;
-		if (_failureOverlay != null) _failureOverlay.Visible = false;
+		if (_finishOverlay != null) _finishOverlay.Visible = false;
 	}
 
-	public void ShowFailureOverlay()
+	public void ShowFinishOverlay()
 	{
 		if (_bettingOverlay != null) _bettingOverlay.Visible = false;
 		if (_gameOverlay != null)    _gameOverlay.Visible = false;
 		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
-		if (_failureOverlay != null) _failureOverlay.Visible = true;
+		if (_finishOverlay != null) _finishOverlay.Visible = true;
 	}
 
 	public void HideAllOverlays()
@@ -52,12 +52,12 @@ public partial class SceneManager : Node
 		if (_bettingOverlay != null) _bettingOverlay.Visible = false;
 		if (_gameOverlay != null)    _gameOverlay.Visible = false;
 		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
-		if (_failureOverlay != null) _failureOverlay.Visible = false;
+		if (_finishOverlay != null) _finishOverlay.Visible = false;
 	}
 
 	// ── Overlay accessors for code-behind ──────────────────────────────────
 	public SummaryOverlay GetSummaryOverlay() => _summaryOverlay as SummaryOverlay;
-	public FailureOverlay GetFailureOverlay() => _failureOverlay as FailureOverlay;
+	public FinishOverlay GetFailureOverlay() => _finishOverlay as FinishOverlay;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

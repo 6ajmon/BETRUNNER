@@ -144,15 +144,16 @@ public partial class GameManager : Node
 		// Pokaż odpowiedni ekran podsumowania — przegrana tylko gdy przekroczono zakład i pula jest pusta
 		if (overshoot > 0.0 && CountdownManager.Instance.IsEffectivelyBankrupt)
 		{
-			SceneManager.Instance.ShowFailureOverlay();
+			SceneManager.Instance.ShowFinishOverlay();
 			var fail = SceneManager.Instance.GetFailureOverlay();
 			if (fail != null) fail.ShowStats();
 		}
 		else if (_currentLevelIndex >= _levelScenes.Length - 1)
 		{
-			SceneManager.Instance.ShowSummaryOverlay();
-			var summary = SceneManager.Instance.GetSummaryOverlay();
-			if (summary != null) summary.ShowStats();
+			// Ostatni poziom ukończony — finish overlay z podsumowaniem całej gry
+			SceneManager.Instance.ShowFinishOverlay();
+			var finish = SceneManager.Instance.GetFailureOverlay();
+			if (finish != null) finish.ShowVictoryStats();
 		}
 		else
 		{
@@ -180,7 +181,7 @@ public partial class GameManager : Node
 	}
 
 	/// <summary>
-	/// Called by FailureOverlay's Menu button (or from summary on last level).
+	/// Called by FinishOverlay's Menu button (or from summary on last level).
 	/// </summary>
 	public void ReturnToMainMenu()
 	{
@@ -204,7 +205,7 @@ public partial class GameManager : Node
 	{
 		CurrentState = gameState.Loading;
 		Input.MouseMode = Input.MouseModeEnum.Visible;
-		SceneManager.Instance.ShowFailureOverlay();
+		SceneManager.Instance.ShowFinishOverlay();
 		var fail = SceneManager.Instance.GetFailureOverlay();
 		if (fail != null) fail.ShowStats();
 	}

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dswf70upb16sn"]
 
-[ext_resource type="Script" uid="uid://cdn1wvdseyujp" path="res://Source/UI/Overlays/FailureOverlay/FailureOverlay.cs" id="1_igm8x"]
+[ext_resource type="Script" uid="uid://cdn1wvdseyujp" path="res://Source/UI/Overlays/FailureOverlay/FinishOverlay.cs" id="1_r6e7e"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8i2ax"]
 content_margin_left = 16.0
@@ -14,19 +14,20 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 5
 
-[node name="FailureOverlay" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_menuButton", "_levelStatsContainer", "_curveContainer", "_legendContainer", "_resultContainer")]
+[node name="FinishOverlay" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_menuButton", "_levelStatsContainer", "_curveContainer", "_legendContainer", "_resultContainer", "_titleLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_igm8x")
+script = ExtResource("1_r6e7e")
 _menuButton = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/Button")
 _levelStatsContainer = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/MarginContainer2/MarginContainer/ScrollContainer/LevelStatsContainer")
 _curveContainer = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/CurveContainer")
 _legendContainer = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/MarginContainer2/MarginContainer/LegendContainer")
 _resultContainer = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/MarginContainer2/MarginContainer/ResultContainer")
+_titleLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/Label")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1695877596]
 layout_mode = 1
