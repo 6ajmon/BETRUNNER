@@ -14,7 +14,7 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 5
 
-[node name="FailureOverlay" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_statsLabel", "_menuButton")]
+[node name="FailureOverlay" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_menuButton", "_levelStatsContainer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,8 +22,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_igm8x")
-_statsLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/StatsLabel")
 _menuButton = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/Button")
+_levelStatsContainer = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/ScrollContainer/LevelStatsContainer")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1695877596]
 layout_mode = 1
@@ -64,6 +64,7 @@ size_flags_horizontal = 3
 [node name="VBoxContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=665736661]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_8i2ax")
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=1417215869]
@@ -75,14 +76,38 @@ text = "GAME OVER"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="StatsLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2" unique_id=1521240429]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2" unique_id=909064324]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 3.5
+
+[node name="LevelStatsContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/ScrollContainer" unique_id=31567625]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/ScrollContainer/LevelStatsContainer" unique_id=1802527865]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/ScrollContainer/LevelStatsContainer/HBoxContainer" unique_id=1173120021]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "hgfhgf"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/ScrollContainer/LevelStatsContainer/HBoxContainer" unique_id=424239183]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2" unique_id=1267317859]
 layout_mode = 2
 text = "MAIN MENU"
+
+[node name="CurveContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=320027364]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8i2ax")
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=786997430]
 layout_mode = 2
