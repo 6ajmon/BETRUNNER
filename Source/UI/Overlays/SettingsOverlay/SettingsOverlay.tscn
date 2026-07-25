@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://oxit13svdw34" path="res://Source/UI/Overlays/SettingsOverlay/SettingsOverlay.cs" id="1_8t2t5"]
 
-[node name="SettingsOverlay" type="Control" unique_id=125325198 node_paths=PackedStringArray("_backButton")]
+[node name="SettingsOverlay" type="Control" unique_id=125325198 node_paths=PackedStringArray("_backButton", "DifficultySlider", "DifficultyNameLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,10 +10,136 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8t2t5")
-_backButton = NodePath("Button")
+_backButton = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer3/VBoxContainer3/SaveButton")
+DifficultySlider = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/DifficultyContainer/DifficultySlider")
+DifficultyNameLabel = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/DifficultyContainer/DifficultyNameLabel")
 
-[node name="Button" type="Button" parent="." unique_id=498724219]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
-text = "back"
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=63540643]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer" unique_id=765334095]
+layout_mode = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer2" unique_id=1618585443]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer2/VBoxContainer" unique_id=1349247596]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/MarginContainer2/VBoxContainer" unique_id=512943426]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2" unique_id=26344872]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2" unique_id=1305787379]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer2" unique_id=1705905760]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer4" unique_id=793725741]
+layout_mode = 2
+text = "Audio"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer4" unique_id=1682203927]
+layout_mode = 2
+text = "Music"
+
+[node name="MusicSlider" type="HSlider" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer4" unique_id=691810078]
+layout_mode = 2
+tick_count = 10
+ticks_on_borders = true
+ticks_position = 3
+
+[node name="Label3" type="Label" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer4" unique_id=2110080602]
+layout_mode = 2
+text = "SFX"
+
+[node name="SFXSlider" type="HSlider" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer4" unique_id=129828510]
+layout_mode = 2
+tick_count = 10
+ticks_on_borders = true
+ticks_position = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2" unique_id=865062593]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="DifficultyContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer" unique_id=143126057]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DifficultyLabel" type="Label" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/DifficultyContainer" unique_id=558538499]
+layout_mode = 2
+text = "Difficulty"
+
+[node name="DifficultySlider" type="HSlider" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/DifficultyContainer" unique_id=142477952]
+layout_mode = 2
+max_value = 2.0
+value = 1.0
+tick_count = 3
+ticks_on_borders = true
+ticks_position = 3
+
+[node name="DifficultyNameLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/DifficultyContainer" unique_id=905093767]
+layout_mode = 2
+text = "Pro"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2" unique_id=1872208046]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/MarginContainer2/VBoxContainer" unique_id=108657954]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer3" unique_id=449816906]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer3" unique_id=1568814208]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SaveButton" type="Button" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer3/VBoxContainer3" unique_id=498724219]
+layout_mode = 2
+text = "Save changes"
+
+[node name="ReturnButton" type="Button" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer3/VBoxContainer3" unique_id=2100126839]
+layout_mode = 2
+text = "Go back to main menu"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer3" unique_id=729505767]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer3/VBoxContainer2" unique_id=233968656]
+layout_mode = 2
+size_flags_vertical = 3

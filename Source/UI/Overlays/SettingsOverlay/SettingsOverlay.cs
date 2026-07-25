@@ -5,6 +5,9 @@ public partial class SettingsOverlay : Control
 {
 	[Export] private Button _backButton;
 
+    [Export] private HSlider DifficultySlider;
+    [Export] private RichTextLabel DifficultyNameLabel;
+
 	/// <summary>
 	/// Invoked when the Back button is pressed. MainMenuOverlay hooks into this
 	/// to show itself and hide SettingsOverlay.
