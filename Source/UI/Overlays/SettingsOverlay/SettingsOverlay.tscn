@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://dwoq5dwy3g7jc"]
 
 [ext_resource type="Script" uid="uid://oxit13svdw34" path="res://Source/UI/Overlays/SettingsOverlay/SettingsOverlay.cs" id="1_8t2t5"]
+[ext_resource type="PackedScene" uid="uid://di7233qfcyqbu" path="res://Source/UI/Controls/DifficultyContainer/DifficultyContainer.tscn" id="2_h7ipl"]
 
-[node name="SettingsOverlay" type="Control" unique_id=125325198 node_paths=PackedStringArray("_backButton", "_saveButton", "_difficultySlider", "_difficultyNameLabel")]
+[node name="SettingsOverlay" type="Control" unique_id=125325198 node_paths=PackedStringArray("_backButton", "_saveButton", "_difficultyContainer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,8 +13,7 @@ grow_vertical = 2
 script = ExtResource("1_8t2t5")
 _backButton = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer3/VBoxContainer3/ReturnButton")
 _saveButton = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer3/VBoxContainer3/SaveButton")
-_difficultySlider = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/DifficultyContainer/DifficultySlider")
-_difficultyNameLabel = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/DifficultyContainer/DifficultyNameLabel")
+_difficultyContainer = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/DifficultyContainer")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=63540643]
 layout_mode = 1
@@ -91,27 +91,8 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="DifficultyContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer" unique_id=143126057]
+[node name="DifficultyContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer" unique_id=1812824873 instance=ExtResource("2_h7ipl")]
 layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="DifficultyLabel" type="Label" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/DifficultyContainer" unique_id=558538499]
-layout_mode = 2
-text = "Difficulty"
-
-[node name="DifficultySlider" type="HSlider" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/DifficultyContainer" unique_id=142477952]
-layout_mode = 2
-max_value = 2.0
-value = 1.0
-tick_count = 3
-ticks_on_borders = true
-ticks_position = 3
-
-[node name="DifficultyNameLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/DifficultyContainer" unique_id=905093767]
-layout_mode = 2
-text = "Pro"
-fit_content = true
-horizontal_alignment = 1
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2" unique_id=1872208046]
 layout_mode = 2

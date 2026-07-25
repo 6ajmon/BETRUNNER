@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://di7233qfcyqbu"]
+
+[ext_resource type="Script" uid="uid://sdpxksxhof0j" path="res://Source/UI/Controls/DifficultyContainer/DifficultyContainer.cs" id="1_vherd"]
+
+[node name="DifficultyContainer" type="VBoxContainer" unique_id=1812824873 node_paths=PackedStringArray("_difficultyLabel", "_difficultySlider")]
+size_flags_horizontal = 3
+script = ExtResource("1_vherd")
+_difficultyLabel = NodePath("DifficultyNameLabel")
+_difficultySlider = NodePath("DifficultySlider")
+
+[node name="DifficultyLabel" type="Label" parent="." unique_id=849678735]
+layout_mode = 2
+text = "Difficulty"
+
+[node name="DifficultySlider" type="HSlider" parent="." unique_id=1287545400]
+layout_mode = 2
+max_value = 2.0
+value = 1.0
+tick_count = 3
+ticks_on_borders = true
+ticks_position = 3
+
+[node name="DifficultyNameLabel" type="RichTextLabel" parent="." unique_id=1962839206]
+layout_mode = 2
+text = "Pro"
+fit_content = true
+horizontal_alignment = 1

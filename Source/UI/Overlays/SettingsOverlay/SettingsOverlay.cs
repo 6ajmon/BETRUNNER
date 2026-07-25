@@ -5,10 +5,7 @@ public partial class SettingsOverlay : Control
 {
 	[Export] private Button _backButton;
 	[Export] private Button _saveButton;
-	[Export] private HSlider _difficultySlider;
-	[Export] private RichTextLabel _difficultyNameLabel;
-
-	private static readonly string[] _difficultyNames = { "Noob", "Pro", "Dev" };
+	[Export] private DifficultyContainer _difficultyContainer;
 
 	// ── Pending / saved state ─────────────────────────────────────────────
 	private int _savedDifficulty;
@@ -24,29 +21,20 @@ public partial class SettingsOverlay : Control
 
 	public override void _Ready()
 	{
-		// ── Snapshot current values ──────────────────────────────────
-		_savedDifficulty = (int)CountdownManager.Instance.CurrentDifficulty;
-		_pendingDifficulty = _savedDifficulty;
-		_hasUnsavedChanges = false;
-
-		// ── Slider ───────────────────────────────────────────────────
-		if (_difficultySlider != null)
-		{
-			_difficultySlider.Value = _savedDifficulty;
-			_difficultySlider.ValueChanged += OnDifficultyChanged;
-		}
-		UpdateDifficultyLabel(_savedDifficulty);
+		// ── Difficulty container ─────────────────────────────────────
+		if (_difficultyContainer != null)
+			_difficultyContainer.DifficultyChanged += OnDifficultyChanged;
 
 		// ── Save button ──────────────────────────────────────────────
 		if (_saveButton != null)
-		{
-			_saveButton.Disabled = true;
 			_saveButton.Pressed += OnSavePressed;
-		}
 
 		// ── Back button ──────────────────────────────────────────────
 		if (_backButton != null)
 			_backButton.Pressed += OnBackPressed;
+
+		// ── Reload whenever we become visible ────────────────────────
+		VisibilityChanged += ReloadSavedState;
 
 		// ── Unsaved-changes confirmation dialog ──────────────────────
 		_unsavedDialog = new ConfirmationDialog();
@@ -56,14 +44,32 @@ public partial class SettingsOverlay : Control
 		_unsavedDialog.GetCancelButton().Text = "No";
 		_unsavedDialog.Confirmed += SaveAndGoBack;
 		_unsavedDialog.Canceled += DiscardAndGoBack;
-		_unsavedDialog.AddThemeIconOverride("close", new ImageTexture()); // Remove the default "X"
+		_unsavedDialog.AddThemeIconOverride("close", new ImageTexture());
 		AddChild(_unsavedDialog);
+
+		// Initial load
+		ReloadSavedState();
+	}
+
+	private void ReloadSavedState()
+	{
+		if (!Visible) return;
+
+		_savedDifficulty = (int)CountdownManager.Instance.CurrentDifficulty;
+		_pendingDifficulty = _savedDifficulty;
+		_hasUnsavedChanges = false;
+
+		if (_difficultyContainer != null)
+			_difficultyContainer.Value = _savedDifficulty;
+
+		if (_saveButton != null)
+			_saveButton.Disabled = true;
 	}
 
 	public override void _ExitTree()
 	{
-		if (_difficultySlider != null)
-			_difficultySlider.ValueChanged -= OnDifficultyChanged;
+		if (_difficultyContainer != null)
+			_difficultyContainer.DifficultyChanged -= OnDifficultyChanged;
 
 		if (_saveButton != null)
 			_saveButton.Pressed -= OnSavePressed;
@@ -72,23 +78,12 @@ public partial class SettingsOverlay : Control
 			_backButton.Pressed -= OnBackPressed;
 	}
 
-	// ── Slider ─────────────────────────────────────────────────────────────
+	// ── Difficulty ─────────────────────────────────────────────────────────
 
-	private void OnDifficultyChanged(double value)
+	private void OnDifficultyChanged(int diff)
 	{
-		int diff = Math.Clamp((int)Math.Round(value), 0, 2);
 		_pendingDifficulty = diff;
-		UpdateDifficultyLabel(diff);
 		MarkChanged();
-
-		if (_difficultySlider != null)
-			_difficultySlider.Value = diff; // snap
-	}
-
-	private void UpdateDifficultyLabel(int diff)
-	{
-		if (_difficultyNameLabel != null)
-			_difficultyNameLabel.Text = _difficultyNames[diff];
 	}
 
 	// ── Dirty tracking ────────────────────────────────────────────────────
@@ -143,11 +138,9 @@ public partial class SettingsOverlay : Control
 
 	private void DiscardAndGoBack()
 	{
-		// Reset slider back to the saved value
 		_pendingDifficulty = _savedDifficulty;
-		if (_difficultySlider != null)
-			_difficultySlider.Value = _savedDifficulty;
-		UpdateDifficultyLabel(_savedDifficulty);
+		if (_difficultyContainer != null)
+			_difficultyContainer.Value = _savedDifficulty;
 		_hasUnsavedChanges = false;
 		if (_saveButton != null)
 			_saveButton.Disabled = true;
