@@ -14,6 +14,7 @@ public partial class SceneManager : Node
 	[Export] private Control _finishOverlay;
 	[Export] private Control _mainMenuOverlay;
 	[Export] private Control _settingsOverlay;
+	[Export] private Control _pauseOverlay;
 
 	// ── Overlay visibility control ─────────────────────────────────────────
 
@@ -25,6 +26,7 @@ public partial class SceneManager : Node
 		if (_finishOverlay != null) _finishOverlay.Visible = false;
 		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
 		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
+		if (_pauseOverlay != null)    _pauseOverlay.Visible = false;
 	}
 
 	public void ShowGameOverlay()
@@ -35,6 +37,7 @@ public partial class SceneManager : Node
 		if (_finishOverlay != null) _finishOverlay.Visible = false;
 		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
 		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
+		if (_pauseOverlay != null)    _pauseOverlay.Visible = false;
 	}
 
 	public void ShowSummaryOverlay()
@@ -45,6 +48,7 @@ public partial class SceneManager : Node
 		if (_finishOverlay != null) _finishOverlay.Visible = false;
 		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
 		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
+		if (_pauseOverlay != null)    _pauseOverlay.Visible = false;
 	}
 
 	public void ShowFinishOverlay()
@@ -55,6 +59,7 @@ public partial class SceneManager : Node
 		if (_finishOverlay != null) _finishOverlay.Visible = true;
 		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
 		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
+		if (_pauseOverlay != null)    _pauseOverlay.Visible = false;
 	}
 
 	public void ShowMainMenuOverlay()
@@ -65,12 +70,29 @@ public partial class SceneManager : Node
 		if (_finishOverlay != null) _finishOverlay.Visible = false;
 		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = true;
 		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
+		if (_pauseOverlay != null)    _pauseOverlay.Visible = false;
 	}
 
 	public void ShowSettingsOverlay()
 	{
 		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
+		if (_pauseOverlay != null)    _pauseOverlay.Visible = false;
 		if (_settingsOverlay != null) _settingsOverlay.Visible = true;
+	}
+
+	public void ShowPauseOverlay()
+	{
+		if (_bettingOverlay != null) _bettingOverlay.Visible = false;
+		if (_gameOverlay != null)    _gameOverlay.Visible = false;
+		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
+		if (_finishOverlay != null) _finishOverlay.Visible = false;
+		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
+		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
+		if (_pauseOverlay != null)
+		{
+			var pause = _pauseOverlay as PauseOverlay;
+			pause?.ShowPause();
+		}
 	}
 
 	public void HideAllOverlays()
@@ -81,6 +103,7 @@ public partial class SceneManager : Node
 		if (_finishOverlay != null) _finishOverlay.Visible = false;
 		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
 		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
+		if (_pauseOverlay != null)    _pauseOverlay.Visible = false;
 	}
 
 	// ── Overlay accessors ──────────────────────────────────────────────────
@@ -89,6 +112,7 @@ public partial class SceneManager : Node
 	// ── Overlay accessors for code-behind ──────────────────────────────────
 	public SummaryOverlay GetSummaryOverlay() => _summaryOverlay as SummaryOverlay;
 	public FinishOverlay GetFailureOverlay() => _finishOverlay as FinishOverlay;
+	public PauseOverlay GetPauseOverlay() => _pauseOverlay as PauseOverlay;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

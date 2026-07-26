@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://by8ywoncr8kvi"]
+
+[ext_resource type="Script" uid="uid://d1hl2dryntirp" path="res://Source/Managers/AudioManager/AudioManager.cs" id="1_royfh"]
+[ext_resource type="AudioStream" uid="uid://ctsdl2ujkxy14" path="res://Assets/Audio/2 - Galactic Odyssey (Loop).wav" id="2_up5hi"]
+[ext_resource type="AudioStream" uid="uid://kh74ul7y636u" path="res://Assets/Audio/Nowhere_160 BPM_Full_Loop.wav" id="3_m7whi"]
+
+[node name="AudioManager" type="Node" unique_id=1341197374]
+script = ExtResource("1_royfh")
+_mainMenuMusic = ExtResource("2_up5hi")
+_gameplayMusic = ExtResource("3_m7whi")
+_countdownMusic = ExtResource("3_m7whi")
+_previewMusic = ExtResource("3_m7whi")
+_victoryMusic = ExtResource("3_m7whi")
+_gameOverMusic = ExtResource("3_m7whi")

@@ -129,6 +129,10 @@ horizontal_alignment = 2
 [node name="BetAmountSlider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=978186477]
 layout_mode = 2
 size_flags_vertical = 3
+value = 50.0
+tick_count = 2
+ticks_on_borders = true
+ticks_position = 3
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2" unique_id=1517190049]
 layout_mode = 2
