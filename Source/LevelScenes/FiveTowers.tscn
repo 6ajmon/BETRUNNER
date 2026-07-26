@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://bxid5qktyabkv" path="res://Source/MapObjects/Ramp.tscn" id="12_oidvl"]
 [ext_resource type="Texture2D" uid="uid://cr15mjetijl8m" path="res://Assets/gtlf/Hazard_Floor_1_Gradient Texture Atlas by Imphenzia.png" id="13_4rse4"]
 [ext_resource type="PackedScene" uid="uid://c3sg4vp604qt6" path="res://Assets/gtlf/Wall_Glass_Clear.glb" id="13_su6bs"]
-[ext_resource type="PackedScene" uid="uid://bywuidtihbx5j" path="res://Source/button_beam.tscn" id="14_jx1r4"]
+[ext_resource type="PackedScene" uid="uid://bywuidtihbx5j" path="res://Source/Components/ButtonBeam/button_beam.tscn" id="14_jx1r4"]
 [ext_resource type="PackedScene" uid="uid://b3ogk047evk56" path="res://Source/MapObjects/Glass.tscn" id="14_urlsg"]
 [ext_resource type="PackedScene" uid="uid://c0laht47k7bck" path="res://Source/MapObjects/pressure_plate.tscn" id="16_7kfu4"]
 [ext_resource type="PackedScene" uid="uid://dbmadnw5ouylj" path="res://Assets/gtlf/Ramp_Wall_Grey_L.glb" id="19_kelp2"]

@@ -5,8 +5,6 @@ public partial class ButtonBeam : Node3D
     [Export] public Node3D ButtonNode { get; set; }
     [Export] public float BeamRadius { get; set; } = 0.12f;
     [Export] public Color BeamColor { get; set; } = new Color(0.75f, 0.61f, 0.0f, 0.63f);
-
-    // Przesunięcie w dół (w metrach). Możesz to dostosować w Inspectorze!
     [Export] public float VerticalOffset { get; set; } = 0.15f;
 
     private Node3D _pivot;
@@ -46,7 +44,6 @@ public partial class ButtonBeam : Node3D
     {
         if (GodotObject.IsInstanceValid(ButtonNode))
         {
-            // Odejmujemy przesunięcie w dół od obu pozycji
             Vector3 offsetVector = new Vector3(0, VerticalOffset, 0);
             Vector3 startPos = ButtonNode.GlobalPosition - offsetVector;
             Vector3 endPos = GlobalPosition - offsetVector;
@@ -56,10 +53,8 @@ public partial class ButtonBeam : Node3D
 
             if (distance > 0.001f)
             {
-                // 1. Pivot na przycisku (obniżony)
                 _pivot.GlobalPosition = startPos;
 
-                // 2. Kierujemy oś Y w stronę celu
                 Vector3 yAxis = dir.Normalized();
                 Vector3 xAxis = Mathf.Abs(yAxis.Dot(Vector3.Up)) < 0.99f 
                     ? Vector3.Up.Cross(yAxis).Normalized() 
@@ -67,14 +62,11 @@ public partial class ButtonBeam : Node3D
                 Vector3 zAxis = xAxis.Cross(yAxis).Normalized();
 
                 _pivot.GlobalBasis = new Basis(xAxis, yAxis, zAxis);
-
-                // 3. Ustawiamy wysokość siatki
+                
                 if (_meshInstance.Mesh is CylinderMesh cylinder)
                 {
                     cylinder.Height = distance;
                 }
-
-                // 4. Przesuwamy środkowy punkt walca o połowę długości
                 _meshInstance.Position = new Vector3(0, distance * 0.5f, 0);
             }
         }

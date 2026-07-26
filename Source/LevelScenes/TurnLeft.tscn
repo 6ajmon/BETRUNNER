@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://c3sg4vp604qt6" path="res://Assets/gtlf/Wall_Glass_Clear.glb" id="9_2cced"]
 [ext_resource type="PackedScene" uid="uid://b3ogk047evk56" path="res://Source/MapObjects/Glass.tscn" id="10_nwy88"]
 [ext_resource type="PackedScene" uid="uid://d38pigd56rdna" path="res://Assets/gtlf/Hazard_Floor_1.glb" id="11_csfd2"]
-[ext_resource type="PackedScene" uid="uid://bywuidtihbx5j" path="res://Source/button_beam.tscn" id="12_ihedd"]
+[ext_resource type="PackedScene" uid="uid://bywuidtihbx5j" path="res://Source/Components/ButtonBeam/button_beam.tscn" id="12_ihedd"]
 [ext_resource type="Script" uid="uid://d3o83ikxfnant" path="res://Source/MapObjects/MovingPlatform/MovingPlatform.cs" id="12_y6gru"]
 [ext_resource type="Texture2D" uid="uid://cr15mjetijl8m" path="res://Assets/gtlf/Hazard_Floor_1_Gradient Texture Atlas by Imphenzia.png" id="13_2cced"]
 [ext_resource type="PackedScene" uid="uid://qurbeehr7tu1" path="res://Assets/gtlf/Wall_Red.glb" id="14_nwy88"]
