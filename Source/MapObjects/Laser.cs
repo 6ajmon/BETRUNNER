@@ -20,8 +20,7 @@ public partial class Laser : Area3D
 	{
 		GameManager.Instance.Respawn();
 		// LaserEnter z SfxLibrary, fallback do pliku
-		var enterStream = AudioManager.Instance.Sfx.LaserEnter
-		               ?? ResourceLoader.Load<AudioStream>("res://Assets/Audio/SFX/electronic-zap.mp3");
+		var enterStream = AudioManager.Instance.Sfx.LaserEnter;
 		if (enterStream != null)
 			AudioManager.Instance.PlaySFX(enterStream);
 	}
