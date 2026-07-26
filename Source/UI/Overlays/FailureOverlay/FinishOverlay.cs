@@ -12,6 +12,8 @@ public partial class FinishOverlay : Control
 	[Export] private Control _legendContainer;       // Container with a RichTextLabel for the legend
 	[Export] private Control _resultContainer;       // Container with a RichTextLabel for the final result
 	[Export] private Label _titleLabel;              // "GAME OVER" — zmieniane na "VICTORY" przy wygranej
+	[Export] private RichTextLabel _difficultyLabel; // Shows the difficulty level
+	[Export] private Button _shareButton; // Button to share the score on social media
 
 	private RichTextLabel _legendLabel;
 	private RichTextLabel _resultLabel;
@@ -26,6 +28,12 @@ public partial class FinishOverlay : Control
 		{
 			_menuButton.Pressed += OnMenuPressed;
 			ButtonSoundHelper.Wire(_menuButton);
+		}
+
+		if (_shareButton != null)
+		{
+			_shareButton.Pressed += OnShareButtonPressed;
+			ButtonSoundHelper.Wire(_shareButton);
 		}
 
 		if (_levelStatsContainer == null)
@@ -45,6 +53,8 @@ public partial class FinishOverlay : Control
 	{
 		if (_menuButton != null)
 			_menuButton.Pressed -= OnMenuPressed;
+		if (_shareButton != null)
+			_shareButton.Pressed -= OnShareButtonPressed;
 	}
 
 	/// <summary>
@@ -121,6 +131,20 @@ public partial class FinishOverlay : Control
 		{
 			if (child is HBoxContainer)
 				child.QueueFree();
+		}
+
+		// ── Legend ────────────────────────────────────────────────────────
+		// ── Difficulty ──────────────────────────────────────────────────
+		if (_difficultyLabel != null)
+		{
+			var diff = CountdownManager.Instance.CurrentDifficulty;
+			_difficultyLabel.Text = diff switch
+			{
+				CountdownManager.Difficulty.Noob => "Noob",
+				CountdownManager.Difficulty.Pro  => "Pro",
+				CountdownManager.Difficulty.Dev  => "Dev",
+				_ => diff.ToString()
+			};
 		}
 
 		// ── Legend ────────────────────────────────────────────────────────
@@ -249,6 +273,19 @@ public partial class FinishOverlay : Control
 				child.QueueFree();
 		}
 
+		// ── Difficulty ──────────────────────────────────────────────────
+		if (_difficultyLabel != null)
+		{
+			var diff = CountdownManager.Instance.CurrentDifficulty;
+			_difficultyLabel.Text = diff switch
+			{
+				CountdownManager.Difficulty.Noob => "Noob",
+				CountdownManager.Difficulty.Pro  => "Pro",
+				CountdownManager.Difficulty.Dev  => "Dev",
+				_ => diff.ToString()
+			};
+		}
+
 		// ── Legend ────────────────────────────────────────────────────────
 		if (_legendLabel != null)
 		{
@@ -355,5 +392,10 @@ public partial class FinishOverlay : Control
 	private void OnMenuPressed()
 	{
 		GameManager.Instance.ReturnToMainMenu();
+	}
+
+	private void OnShareButtonPressed()
+	{
+		OS.ShellOpen("https://6ajmon.itch.io/betrunner");
 	}
 }
