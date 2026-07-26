@@ -53,6 +53,12 @@ public partial class CountdownManager : Node
 	/// </summary>
 	public Difficulty CurrentDifficulty { get; set; } = Difficulty.Pro;
 
+	/// <summary>
+	/// Run key behaviour. false (default) = pressing Run makes you sprint,
+	/// true = pressing Run makes you walk. Toggled via SettingsOverlay.
+	/// </summary>
+	public bool RunMakesYouWalk { get; set; } = true;
+
 	// ── Level time configuration (per difficulty, by level index 0..N) ─────
 	private static readonly double[] _baseTimesNoob  = { 60.0, 40.0, 40.0, 40.0, 60.0, 40.0, 40.0, 60.0};
 	private static readonly double[] _baseTimesPro   = { 30.0, 20.0, 20.0, 20.0, 30.0, 20.0, 20.0, 30.0 };

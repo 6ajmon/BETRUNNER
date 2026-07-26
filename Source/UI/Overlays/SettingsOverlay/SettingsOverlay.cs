@@ -8,12 +8,15 @@ public partial class SettingsOverlay : Control
 	[Export] private DifficultyContainer _difficultyContainer;
 	[Export] private HSlider _musicSlider;
 	[Export] private HSlider _sfxSlider;
+	[Export] private CheckButton _runToggle;
 
 	// ── Pending / saved state ─────────────────────────────────────────────
 	private int _savedDifficulty;
 	private int _pendingDifficulty;
 	private float _savedMusicVolume = -1f;   // -1 = uninitialised sentinel
 	private float _savedSfxVolume = -1f;      // -1 = uninitialised sentinel
+	private bool _savedRunToggle;
+	private bool _pendingRunToggle;
 	private bool _hasUnsavedChanges;
 
 	private ConfirmationDialog _unsavedDialog;
@@ -73,6 +76,13 @@ public partial class SettingsOverlay : Control
 			ButtonSoundHelper.WireSlider(_sfxSlider);
 		}
 
+		// ── Run toggle ──────────────────────────────────────────────
+		if (_runToggle != null)
+		{
+			_runToggle.Toggled += OnRunToggleChanged;
+			ButtonSoundHelper.Wire(_runToggle);
+		}
+
 		// ── Reload whenever we become visible ────────────────────────
 		VisibilityChanged += ReloadSavedState;
 
@@ -105,10 +115,15 @@ public partial class SettingsOverlay : Control
 
 		_savedDifficulty = (int)CountdownManager.Instance.CurrentDifficulty;
 		_pendingDifficulty = _savedDifficulty;
+		_savedRunToggle = CountdownManager.Instance.RunMakesYouWalk;
+		_pendingRunToggle = _savedRunToggle;
 		_hasUnsavedChanges = false;
 
 		if (_difficultyContainer != null)
 			_difficultyContainer.Value = _savedDifficulty;
+
+		if (_runToggle != null)
+			_runToggle.ButtonPressed = _savedRunToggle;
 
 		if (_saveButton != null)
 			_saveButton.Disabled = !_difficultyEnabled;
@@ -143,6 +158,9 @@ public partial class SettingsOverlay : Control
 			_musicSlider.ValueChanged -= OnMusicVolumeChanged;
 		if (_sfxSlider != null)
 			_sfxSlider.ValueChanged -= OnSfxVolumeChanged;
+
+		if (_runToggle != null)
+			_runToggle.Toggled -= OnRunToggleChanged;
 	}
 
 	// ── Difficulty ─────────────────────────────────────────────────────────
@@ -153,11 +171,18 @@ public partial class SettingsOverlay : Control
 		MarkChanged();
 	}
 
+	private void OnRunToggleChanged(bool toggledOn)
+	{
+		_pendingRunToggle = toggledOn;
+		MarkChanged();
+	}
+
 	// ── Dirty tracking ────────────────────────────────────────────────────
 
 	private void MarkChanged()
 	{
 		bool changed = _pendingDifficulty != _savedDifficulty
+			|| _pendingRunToggle != _savedRunToggle
 			|| (_musicSlider != null && (float)_musicSlider.Value != _savedMusicVolume)
 			|| (_sfxSlider != null && (float)_sfxSlider.Value != _savedSfxVolume);
 
@@ -180,6 +205,9 @@ public partial class SettingsOverlay : Control
 	{
 		CountdownManager.Instance.CurrentDifficulty = (CountdownManager.Difficulty)_pendingDifficulty;
 		_savedDifficulty = _pendingDifficulty;
+
+		CountdownManager.Instance.RunMakesYouWalk = _pendingRunToggle;
+		_savedRunToggle = _pendingRunToggle;
 
 		// Commit current slider values as saved
 		if (_musicSlider != null)
@@ -262,6 +290,11 @@ public partial class SettingsOverlay : Control
 		_pendingDifficulty = _savedDifficulty;
 		if (_difficultyContainer != null)
 			_difficultyContainer.Value = _savedDifficulty;
+
+		// Revert run toggle
+		_pendingRunToggle = _savedRunToggle;
+		if (_runToggle != null)
+			_runToggle.ButtonPressed = _savedRunToggle;
 
 		// Revert volume sliders + buses to saved values
 		if (_musicSlider != null)

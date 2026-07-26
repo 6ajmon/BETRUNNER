@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://oxit13svdw34" path="res://Source/UI/Overlays/SettingsOverlay/SettingsOverlay.cs" id="1_8t2t5"]
 [ext_resource type="PackedScene" uid="uid://di7233qfcyqbu" path="res://Source/UI/Controls/DifficultyContainer/DifficultyContainer.tscn" id="2_h7ipl"]
 
-[node name="SettingsOverlay" type="Control" unique_id=125325198 node_paths=PackedStringArray("_backButton", "_saveButton", "_difficultyContainer", "_musicSlider", "_sfxSlider")]
+[node name="SettingsOverlay" type="Control" unique_id=125325198 node_paths=PackedStringArray("_backButton", "_saveButton", "_difficultyContainer", "_musicSlider", "_sfxSlider", "_runToggle")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -14,9 +14,10 @@ grow_vertical = 2
 script = ExtResource("1_8t2t5")
 _backButton = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer3/VBoxContainer3/ReturnButton")
 _saveButton = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer3/VBoxContainer3/SaveButton")
-_difficultyContainer = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/DifficultyContainer")
+_difficultyContainer = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/DifficultyContainer")
 _musicSlider = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer4/MusicSlider")
 _sfxSlider = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer4/SFXSlider")
+_runToggle = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/HBoxContainer/RunToggleButton")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=63540643]
 layout_mode = 1
@@ -96,8 +97,42 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="DifficultyContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer" unique_id=1812824873 instance=ExtResource("2_h7ipl")]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer" unique_id=1956750447]
 layout_mode = 2
+
+[node name="DifficultyContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer" unique_id=1812824873 instance=ExtResource("2_h7ipl")]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer" unique_id=386384920]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer" unique_id=414075253]
+layout_mode = 2
+text = "Movement"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer" unique_id=1224087373]
+layout_mode = 2
+text = "Shift to:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer" unique_id=456763679]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/HBoxContainer" unique_id=172776206]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Run"
+
+[node name="RunToggleButton" type="CheckButton" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/HBoxContainer" unique_id=537497552]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="Label2" type="Label" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1976510993]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Walk"
+horizontal_alignment = 2
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2" unique_id=1872208046]
 layout_mode = 2

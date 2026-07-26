@@ -294,7 +294,8 @@ public partial class PlayerMovement : Node
 	private void ApplyGroundMovement(float delta)
 	{
 		Vector3 inputDir = GetInputDirection();
-		IsSprinting = Input.IsActionPressed("Run");
+		bool runMakesYouWalk = CountdownManager.Instance.RunMakesYouWalk;
+		IsSprinting = runMakesYouWalk ? !Input.IsActionPressed("Run") : Input.IsActionPressed("Run");
 		float targetSpeed = IsSprinting ? SprintSpeed : WalkSpeed;
 
 		if (inputDir != Vector3.Zero)
