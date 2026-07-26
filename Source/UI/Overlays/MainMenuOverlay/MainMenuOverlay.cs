@@ -163,7 +163,7 @@ public partial class MainMenuOverlay : Control
 
 	private void OnCreditsButtonPressed()
 	{
-		OS.ShellOpen("https://github.com/6ajmon/gmtk2026");
+		OS.ShellOpen("https://6ajmon.itch.io/betrunner");
 	}
 
 	private void OnExitButtonPressed()

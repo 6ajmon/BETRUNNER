@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using NewGameProject;
+using BETRUNNER;
 
 public partial class GameOverlay : Control
 {

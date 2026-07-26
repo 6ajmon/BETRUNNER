@@ -15,7 +15,7 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 5
 
-[node name="FinishOverlay" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_menuButton", "_levelStatsContainer", "_curveContainer", "_legendContainer", "_resultContainer", "_titleLabel")]
+[node name="FinishOverlay" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_menuButton", "_levelStatsContainer", "_curveContainer", "_legendContainer", "_resultContainer", "_titleLabel", "_difficultyLabel", "_shareButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,12 +24,14 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_dng2x")
 script = ExtResource("1_r6e7e")
-_menuButton = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/Button")
+_menuButton = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/HBoxContainer2/Button")
 _levelStatsContainer = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/MarginContainer2/MarginContainer/ScrollContainer/LevelStatsContainer")
 _curveContainer = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/CurveContainer")
 _legendContainer = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/MarginContainer2/MarginContainer/LegendContainer")
 _resultContainer = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/MarginContainer2/MarginContainer/ResultContainer")
-_titleLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/Label")
+_titleLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/HBoxContainer/Label")
+_difficultyLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/HBoxContainer/DifficultyLabel")
+_shareButton = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/HBoxContainer2/ShareButton")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1695877596]
 layout_mode = 1
@@ -66,6 +68,7 @@ size_flags_stretch_ratio = 3.0
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1741513553]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
 
 [node name="CurveContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=320027364]
 layout_mode = 2
@@ -82,10 +85,22 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_8i2ax")
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=1417215869]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2" unique_id=478754719]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2" unique_id=1816417873]
 layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/HBoxContainer" unique_id=478754719]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "GAME OVER"
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DifficultyLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/HBoxContainer" unique_id=153941334]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Difficulty"
+fit_content = true
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2" unique_id=2125525791]
@@ -133,13 +148,23 @@ text = "= 0.0 s"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2" unique_id=1267317859]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2" unique_id=397976775]
 layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/HBoxContainer2" unique_id=1267317859]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "MAIN MENU"
+
+[node name="ShareButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/HBoxContainer2" unique_id=1933476600]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Share your score!"
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=786997430]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=642652331]
 layout_mode = 2
