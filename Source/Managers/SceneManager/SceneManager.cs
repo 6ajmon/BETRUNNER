@@ -15,6 +15,7 @@ public partial class SceneManager : Node
 	[Export] private Control _mainMenuOverlay;
 	[Export] private Control _settingsOverlay;
 	[Export] private Control _pauseOverlay;
+	[Export] private Control _levelSelectOverlay;
 
 	// ── Overlay visibility control ─────────────────────────────────────────
 
@@ -27,6 +28,7 @@ public partial class SceneManager : Node
 		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
 		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
 		if (_pauseOverlay != null)    _pauseOverlay.Visible = false;
+		if (_levelSelectOverlay != null) _levelSelectOverlay.Visible = false;
 	}
 
 	public void ShowGameOverlay()
@@ -38,6 +40,7 @@ public partial class SceneManager : Node
 		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
 		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
 		if (_pauseOverlay != null)    _pauseOverlay.Visible = false;
+		if (_levelSelectOverlay != null) _levelSelectOverlay.Visible = false;
 	}
 
 	public void ShowSummaryOverlay()
@@ -49,6 +52,7 @@ public partial class SceneManager : Node
 		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
 		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
 		if (_pauseOverlay != null)    _pauseOverlay.Visible = false;
+		if (_levelSelectOverlay != null) _levelSelectOverlay.Visible = false;
 	}
 
 	public void ShowFinishOverlay()
@@ -60,6 +64,7 @@ public partial class SceneManager : Node
 		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
 		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
 		if (_pauseOverlay != null)    _pauseOverlay.Visible = false;
+		if (_levelSelectOverlay != null) _levelSelectOverlay.Visible = false;
 	}
 
 	public void ShowMainMenuOverlay()
@@ -71,6 +76,7 @@ public partial class SceneManager : Node
 		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = true;
 		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
 		if (_pauseOverlay != null)    _pauseOverlay.Visible = false;
+		if (_levelSelectOverlay != null) _levelSelectOverlay.Visible = false;
 	}
 
 	public void ShowSettingsOverlay()
@@ -78,6 +84,7 @@ public partial class SceneManager : Node
 		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
 		if (_pauseOverlay != null)    _pauseOverlay.Visible = false;
 		if (_settingsOverlay != null) _settingsOverlay.Visible = true;
+		if (_levelSelectOverlay != null) _levelSelectOverlay.Visible = false;
 	}
 
 	public void ShowPauseOverlay()
@@ -93,6 +100,20 @@ public partial class SceneManager : Node
 			var pause = _pauseOverlay as PauseOverlay;
 			pause?.ShowPause();
 		}
+		if (_levelSelectOverlay != null) _levelSelectOverlay.Visible = false;
+	}
+
+	public void ShowLevelSelectOverlay()
+	{
+		if (_bettingOverlay != null) _bettingOverlay.Visible = false;
+		if (_gameOverlay != null)    _gameOverlay.Visible = false;
+		if (_summaryOverlay != null) _summaryOverlay.Visible = false;
+		if (_finishOverlay != null) _finishOverlay.Visible = false;
+		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
+		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
+		if (_pauseOverlay != null)    _pauseOverlay.Visible = false;
+		if (_levelSelectOverlay != null) _levelSelectOverlay.Visible = false;
+		if (_levelSelectOverlay != null) _levelSelectOverlay.Visible = true;
 	}
 
 	public void HideAllOverlays()
@@ -104,6 +125,7 @@ public partial class SceneManager : Node
 		if (_mainMenuOverlay != null) _mainMenuOverlay.Visible = false;
 		if (_settingsOverlay != null) _settingsOverlay.Visible = false;
 		if (_pauseOverlay != null)    _pauseOverlay.Visible = false;
+		if (_levelSelectOverlay != null) _levelSelectOverlay.Visible = false;
 	}
 
 	// ── Overlay accessors ──────────────────────────────────────────────────
@@ -114,6 +136,7 @@ public partial class SceneManager : Node
 	public FinishOverlay GetFailureOverlay() => _finishOverlay as FinishOverlay;
 	public PauseOverlay GetPauseOverlay() => _pauseOverlay as PauseOverlay;
 	public GameOverlay GetGameOverlay() => _gameOverlay as GameOverlay;
+	public SelectLevelOverlay GetLevelSelectionOverlay() => _levelSelectOverlay as SelectLevelOverlay;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

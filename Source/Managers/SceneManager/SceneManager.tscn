@@ -8,8 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://cyckpnpoh1sh7" path="res://Source/UI/Overlays/MainMenuOverlay/MainMenuOverlay.tscn" id="6_lnkby"]
 [ext_resource type="PackedScene" uid="uid://dwoq5dwy3g7jc" path="res://Source/UI/Overlays/SettingsOverlay/SettingsOverlay.tscn" id="7_vq8d4"]
 [ext_resource type="PackedScene" uid="uid://dpqckp5vnmcjx" path="res://Source/UI/Overlays/PauseOverlay/PauseOverlay.tscn" id="8_va0po"]
+[ext_resource type="PackedScene" uid="uid://qw6mu20h8b5h" path="res://Source/UI/Overlays/SelectLevelOverlay/SelectLevelOverlay.tscn" id="9_w1412"]
+[ext_resource type="Script" uid="uid://d2osjr4jprqx6" path="res://Source/UI/Overlays/SelectLevelOverlay/SelectLevelOverlay.cs" id="10_ogy6n"]
 
-[node name="SceneManager" type="Node" unique_id=1743745418 node_paths=PackedStringArray("_bettingOverlay", "_gameOverlay", "_summaryOverlay", "_finishOverlay", "_mainMenuOverlay", "_settingsOverlay", "_pauseOverlay")]
+[node name="SceneManager" type="Node" unique_id=1743745418 node_paths=PackedStringArray("_bettingOverlay", "_gameOverlay", "_summaryOverlay", "_finishOverlay", "_mainMenuOverlay", "_settingsOverlay", "_pauseOverlay", "_levelSelectOverlay")]
 script = ExtResource("1_f70il")
 _bettingOverlay = NodePath("CanvasLayer/BettingOverlay")
 _gameOverlay = NodePath("CanvasLayer/GameOverlay")
@@ -18,6 +20,7 @@ _finishOverlay = NodePath("CanvasLayer/FinishOverlay")
 _mainMenuOverlay = NodePath("CanvasLayer/MainMenuOverlay")
 _settingsOverlay = NodePath("CanvasLayer/SettingsOverlay")
 _pauseOverlay = NodePath("CanvasLayer/PauseOverlay")
+_levelSelectOverlay = NodePath("CanvasLayer/SelectLevelOverlay")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=59557020]
 
@@ -41,3 +44,7 @@ visible = false
 
 [node name="PauseOverlay" parent="CanvasLayer" unique_id=817509756 instance=ExtResource("8_va0po")]
 visible = false
+
+[node name="SelectLevelOverlay" parent="CanvasLayer" unique_id=1403941758 instance=ExtResource("9_w1412")]
+visible = false
+script = ExtResource("10_ogy6n")
