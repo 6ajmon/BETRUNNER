@@ -7,22 +7,29 @@ public partial class PauseOverlay : Control
 	[Export] private Button _settingsButton;
 	[Export] private Button _mainMenuButton;
 
-	/// <summary>Invoked when Settings is pressed.</summary>
-	public Action OnSettingsClicked { get; set; }
-
-	/// <summary>Invoked when Main Menu is pressed.</summary>
-	public Action OnMainMenuClicked { get; set; }
-
 	public override void _Ready()
 	{
 		if (_resumeButton != null)
 			_resumeButton.Pressed += ResumeGame;
 
 		if (_settingsButton != null)
-			_settingsButton.Pressed += () => OnSettingsClicked?.Invoke();
+			_settingsButton.Pressed += () =>
+			{
+				var settings = SceneManager.Instance.GetSettingsOverlay();
+				if (settings != null)
+				{
+					settings.DifficultyEnabled = false;
+					settings.OnBackClicked = () => SceneManager.Instance.ShowPauseOverlay();
+				}
+				SceneManager.Instance.ShowSettingsOverlay();
+			};
 
 		if (_mainMenuButton != null)
-			_mainMenuButton.Pressed += () => OnMainMenuClicked?.Invoke();
+			_mainMenuButton.Pressed += () =>
+			{
+				GetTree().Paused = false;
+				GameManager.Instance.ReturnToMainMenu();
+			};
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -36,12 +43,23 @@ public partial class PauseOverlay : Control
 			}
 			else
 			{
-				// Only allow pausing during active gameplay
-				var state = GameManager.Instance.CurrentState;
-				if (state == GameManager.gameState.Waiting
-				    || state == GameManager.gameState.Countdown)
+				// Jeśli settings overlay jest otwarte (przyszliśmy z pauzy),
+				// wróć do pause overlaya zamiast przełączać
+				var settings = SceneManager.Instance.GetSettingsOverlay();
+				if (settings != null && settings.Visible)
 				{
-					ShowPause();
+					// Settings back powinien wrócić do pauzy — symulujemy back
+					settings.GoBack();
+				}
+				else
+				{
+					// Only allow pausing during active gameplay
+					var state = GameManager.Instance.CurrentState;
+					if (state == GameManager.gameState.Waiting
+					    || state == GameManager.gameState.Countdown)
+					{
+						ShowPause();
+					}
 				}
 			}
 			GetViewport().SetInputAsHandled();
@@ -56,6 +74,7 @@ public partial class PauseOverlay : Control
 		Visible = true;
 		GetTree().Paused = true;
 		Input.MouseMode = Input.MouseModeEnum.Visible;
+		AudioManager.Instance.ApplyPauseEffect();
 	}
 
 	/// <summary>
@@ -66,6 +85,10 @@ public partial class PauseOverlay : Control
 		Visible = false;
 		GetTree().Paused = false;
 		Input.MouseMode = Input.MouseModeEnum.Captured;
+		AudioManager.Instance.RemovePauseEffect();
+
+		// Restore game overlay (SceneManager.ShowPauseOverlay() hides it)
+		SceneManager.Instance.ShowGameOverlay();
 	}
 
 	private void ResumeGame()

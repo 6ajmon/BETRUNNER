@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://di7233qfcyqbu" path="res://Source/UI/Controls/DifficultyContainer/DifficultyContainer.tscn" id="2_h7ipl"]
 
 [node name="SettingsOverlay" type="Control" unique_id=125325198 node_paths=PackedStringArray("_backButton", "_saveButton", "_difficultyContainer", "_musicSlider", "_sfxSlider")]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

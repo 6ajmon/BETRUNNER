@@ -23,6 +23,24 @@ public partial class SettingsOverlay : Control
 	/// </summary>
 	public Action OnBackClicked { get; set; }
 
+	/// <summary>
+	/// Whether the difficulty slider is interactive.
+	/// Set to false when opening settings from the pause overlay (in-game).
+	/// </summary>
+	public bool DifficultyEnabled
+	{
+		get => _difficultyEnabled;
+		set
+		{
+			_difficultyEnabled = value;
+			if (_difficultyContainer != null)
+				_difficultyContainer.SetDifficultyInteractive(value);
+			if (_saveButton != null)
+				_saveButton.Disabled = !value;
+		}
+	}
+	private bool _difficultyEnabled = true;
+
 	public override void _Ready()
 	{
 		// ── Difficulty container ─────────────────────────────────────
@@ -79,7 +97,7 @@ public partial class SettingsOverlay : Control
 			_difficultyContainer.Value = _savedDifficulty;
 
 		if (_saveButton != null)
-			_saveButton.Disabled = true;
+			_saveButton.Disabled = !_difficultyEnabled;
 
 		// Reset sliders + buses to the last saved values
 		if (_musicSlider != null)
@@ -195,6 +213,16 @@ public partial class SettingsOverlay : Control
 	}
 
 	// ── Back ────────────────────────────────────────────────────────────────
+
+	/// <summary>
+	/// Programmatically trigger the Back action.
+	/// Public so PauseOverlay can call it when PauseToggle is pressed
+	/// while the settings overlay is open.
+	/// </summary>
+	public void GoBack()
+	{
+		OnBackPressed();
+	}
 
 	private void OnBackPressed()
 	{

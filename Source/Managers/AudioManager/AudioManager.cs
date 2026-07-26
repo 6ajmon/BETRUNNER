@@ -78,6 +78,7 @@ public partial class AudioManager : Node
 		_musicPlayer = new AudioStreamPlayer();
 		_musicPlayer.Bus = MusicBus;
 		_musicPlayer.Name = "MusicPlayer";
+		_musicPlayer.ProcessMode = ProcessModeEnum.Always;
 		AddChild(_musicPlayer);
 
 		// ── SFX pool containers (for scene tree organization) ────────
@@ -282,6 +283,31 @@ public partial class AudioManager : Node
 			_musicPlayer.StreamPaused = false;
 			_musicPaused = false;
 		}
+	}
+
+	/// <summary>
+	/// Store the bus the music player was on before pause, so we can restore it.
+	/// </summary>
+	private string _busBeforePause;
+
+	/// <summary>
+	/// Switch the music to the muffled bus (low-pass + reverb) during pause.
+	/// </summary>
+	public void ApplyPauseEffect()
+	{
+		if (!_musicPlayer.Playing) return;
+		_busBeforePause = _musicPlayer.Bus;
+		_musicPlayer.Bus = MusicMuffledBus;
+	}
+
+	/// <summary>
+	/// Restore the music to its pre-pause bus when unpausing.
+	/// </summary>
+	public void RemovePauseEffect()
+	{
+		if (!_musicPlayer.Playing) return;
+		if (_busBeforePause != null)
+			_musicPlayer.Bus = _busBeforePause;
 	}
 
 	// ══════════════════════════════════════════════════════════════════════

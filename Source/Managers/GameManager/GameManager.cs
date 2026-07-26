@@ -203,6 +203,11 @@ public partial class GameManager : Node
 		CountdownManager.Instance.Reset();
 		SceneManager.Instance.HideAllOverlays();
 
+		// Reset settings overlay state (in case it was disabled from pause)
+		var settings = SceneManager.Instance.GetSettingsOverlay();
+		if (settings != null)
+			settings.DifficultyEnabled = true;
+
 		if (_mainMenuScene != null)
 		{
 			string path = _mainMenuScene.ResourcePath;

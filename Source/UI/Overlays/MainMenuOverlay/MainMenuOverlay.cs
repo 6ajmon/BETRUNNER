@@ -38,6 +38,9 @@ public partial class MainMenuOverlay : Control
 		var settings = SceneManager.Instance.GetSettingsOverlay();
 		if (settings != null)
 			settings.OnBackClicked += OnSettingsBackPressed;
+
+		// Re-wire when becoming visible (in case pause overwrote it)
+		VisibilityChanged += OnVisibilityChanged;
 	}
 
 	public override void _ExitTree()
@@ -49,7 +52,19 @@ public partial class MainMenuOverlay : Control
 
 		var settings = SceneManager.Instance?.GetSettingsOverlay();
 		if (settings != null)
+		{
 			settings.OnBackClicked -= OnSettingsBackPressed;
+			VisibilityChanged -= OnVisibilityChanged;
+		}
+	}
+
+	private void OnVisibilityChanged()
+	{
+		if (!Visible) return;
+
+		var settings = SceneManager.Instance.GetSettingsOverlay();
+		if (settings != null)
+			settings.OnBackClicked = OnSettingsBackPressed;
 	}
 
 	// ── First-play dialog ─────────────────────────────────────────────────

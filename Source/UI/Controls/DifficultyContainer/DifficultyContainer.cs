@@ -48,4 +48,13 @@ public partial class DifficultyContainer : VBoxContainer
 		if (_difficultyLabel != null)
 			_difficultyLabel.Text = _difficultyNames[diff];
 	}
+
+	/// <summary>
+	/// Enable or disable the slider interactivity.
+	/// </summary>
+	public void SetDifficultyInteractive(bool enabled)
+	{
+		if (_difficultySlider != null)
+			_difficultySlider.Editable = enabled;
+	}
 }
