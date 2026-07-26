@@ -199,6 +199,7 @@ public partial class GameManager : Node
 	{
 		CurrentState = gameState.MainMenu;
 		AudioManager.Instance.UpdateMusicForGameState();
+		AudioManager.Instance.StopLoopingSFX(); // zatrzymaj tykanie stopera
 		_currentLevelIndex = -1;
 		CountdownManager.Instance.Reset();
 		SceneManager.Instance.HideAllOverlays();

@@ -49,6 +49,13 @@ public partial class StoperProgressBar : Control
 	private Tween _pulseTween;
 	private ActiveTimerEnum _lastActiveTimer = ActiveTimerEnum.Bet;
 
+	// ── Timer sound state ──────────────────────────────────────────────────
+	/// <summary>Ustaw na true gdy stoper faktycznie odlicza (czas leci).</summary>
+	public bool TimerFlowing { get; set; } = false;
+	private ActiveTimerEnum _lastActiveTimerForSound = ActiveTimerEnum.Bet;
+	private float _lastLimitRatioForSound = 1f;
+	private bool _limitEndPlayedAtHalf;
+
 	/// <summary>Mnożnik jasności dla pulsującego limitu (0..1).</summary>
 	public float LimitPulseFactor { get; set; } = 1f;
 	/// <summary>Wartość 0..1 sterująca pulsacją (animowana przez tween).</summary>
@@ -212,6 +219,9 @@ public partial class StoperProgressBar : Control
 		bool warning = ActiveTimer == ActiveTimerEnum.Limit && LimitRatio < 0.5f;
 		SetLimitWarning(warning);
 		ApplyPulse();
+
+		// Dźwięki stopera
+		UpdateTimerSound();
 	}
 
 	// ── Pulsacja limitu ─────────────────────────────────────────────────────
@@ -268,6 +278,48 @@ public partial class StoperProgressBar : Control
 		}
 
 		QueueRedraw();
+	}
+
+	// ── Timer sounds ────────────────────────────────────────────────────────
+
+	/// <summary>
+	/// Zarządza ciągłymi dźwiękami stopera (ticking).
+	/// Dźwięk leci TYLKO gdy <see cref="TimerFlowing"/> jest true
+	/// (czyli czas faktycznie odlicza — nie na pauzie, nie przed startem).
+	/// </summary>
+	private void UpdateTimerSound()
+	{
+		var audio = AudioManager.Instance;
+		if (audio?.Sfx == null) return;
+
+		if (!TimerFlowing)
+		{
+			// Czas nie leci — zatrzymaj tykanie (pauza, menu, przed startem)
+			audio.StopLoopingSFX();
+			return;
+		}
+
+		// Reset flagi przy powrocie do betu
+		if (ActiveTimer == ActiveTimerEnum.Bet)
+			_limitEndPlayedAtHalf = false;
+
+		// Zmiana trybu → przełącz dźwięk ciągły przez AudioManager
+		if (ActiveTimer == ActiveTimerEnum.Bet)
+			audio.StartLoopingSFX(audio.Sfx.TimerBetTick, 1f);
+		else // Limit
+			audio.StartLoopingSFX(audio.Sfx.TimerLimitWarning, 2f);
+
+		// Gdy limit spadnie poniżej połowy → dodatkowo one-shot TimerLimitEnd
+		if (ActiveTimer == ActiveTimerEnum.Limit
+			&& _lastLimitRatioForSound >= 0.5f && LimitRatio < 0.5f
+			&& !_limitEndPlayedAtHalf)
+		{
+			audio.PlayTimerLimitEnd();
+			_limitEndPlayedAtHalf = true;
+		}
+
+		_lastActiveTimerForSound = ActiveTimer;
+		_lastLimitRatioForSound = LimitRatio;
 	}
 
 	// ── Layout ──────────────────────────────────────────────────────────────

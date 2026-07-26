@@ -75,6 +75,7 @@ public partial class PauseOverlay : Control
 		GetTree().Paused = true;
 		Input.MouseMode = Input.MouseModeEnum.Visible;
 		AudioManager.Instance.ApplyPauseEffect();
+		AudioManager.Instance.StopLoopingSFX(); // zatrzymaj tykanie stopera
 	}
 
 	/// <summary>

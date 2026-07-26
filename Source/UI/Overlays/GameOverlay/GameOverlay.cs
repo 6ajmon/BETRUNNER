@@ -34,6 +34,10 @@ public partial class GameOverlay : Control
 
 		if (CountdownManager.Instance != null)
 			CountdownManager.Instance.BetPlaced -= OnBetPlaced;
+
+		// Safety: zatrzymaj tykanie gdy overlay opuszcza drzewo (zmiana sceny itp.)
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.StopLoopingSFX();
 	}
 
 	public override void _Process(double delta)
@@ -53,6 +57,8 @@ public partial class GameOverlay : Control
 		// Aktualizuj stoper (okrągłe progress bary + tekst w środku)
 		if (_stoperBar != null)
 		{
+			_stoperBar.TimerFlowing = true; // czas leci → dźwięki grają
+
 			double betRemaining = Math.Max(0.0, _remainingTime);
 			double limitRemaining = Math.Max(0.0, currentLimit);
 			double betRatio = CountdownManager.Instance.CurrentBetTime > 0.0
@@ -82,6 +88,10 @@ public partial class GameOverlay : Control
 			_finishTriggered = true;
 			_isRunning = false;
 
+			// Zatrzymaj ciągły dźwięk stopera
+			if (AudioManager.Instance != null)
+				AudioManager.Instance.StopLoopingSFX();
+
 			double actualTime = CountdownManager.Instance.CurrentBetTime - _remainingTime;
 			CountdownManager.Instance.SetActualTimeUsed(actualTime);
 			CountdownManager.Instance.OnLevelFinished(actualTime);
@@ -104,9 +114,10 @@ public partial class GameOverlay : Control
 		// Zapamiętaj początkowy limit — będzie stały aż do wejścia w ujemne wartości
 		_initialLimit = CountdownManager.Instance.GetEffectiveLimit(betTime);
 
-		// Stoper startuje z pełnymi wartościami
+		// Stoper startuje z pełnymi wartościami (dźwięk NIE gra — TimerFlowing = false)
 		if (_stoperBar != null)
 		{
+			_stoperBar.TimerFlowing = false;
 			_stoperBar.BetRatio = 1f;
 			_stoperBar.LimitRatio = 1f;
 			_stoperBar.BetTimerText = $"{betTime:F1}s";
@@ -136,6 +147,10 @@ public partial class GameOverlay : Control
 		if (_finishTriggered) return;
 
 		_isRunning = false;
+
+		// Zatrzymaj ciągły dźwięk stopera
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.StopLoopingSFX();
 
 		double actualTime = CountdownManager.Instance.CurrentBetTime - _remainingTime;
 		CountdownManager.Instance.SetActualTimeUsed(actualTime);
