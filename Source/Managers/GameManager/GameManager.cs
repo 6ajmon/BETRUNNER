@@ -204,6 +204,11 @@ public partial class GameManager : Node
 		CountdownManager.Instance.Reset();
 		SceneManager.Instance.HideAllOverlays();
 
+		// Zatrzymaj GameOverlay — inaczej _Process odpali TriggerDynamicFailure()
+		// w następnej klatce, zanim zmiana sceny wejdzie w życie
+		var gameOverlay = SceneManager.Instance.GetGameOverlay();
+		gameOverlay?.Stop();
+
 		// Reset settings overlay state (in case it was disabled from pause)
 		var settings = SceneManager.Instance.GetSettingsOverlay();
 		if (settings != null)

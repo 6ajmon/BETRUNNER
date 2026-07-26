@@ -24,6 +24,14 @@ public partial class GameOverlay : Control
 		CountdownManager.Instance.BetPlaced += OnBetPlaced;
 	}
 
+	public void Stop()
+	{
+		_isRunning = false;
+		_finishTriggered = true;
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.StopLoopingSFX();
+	}
+
 	public override void _ExitTree()
 	{
 		if (GameManager.Instance != null)
