@@ -146,7 +146,7 @@ public partial class GameManager : Node
 		CountdownManager.Instance.OnLevelFinished(actualTime);
 
 		CurrentState = gameState.Loading;
-		AudioManager.Instance.StopLoopingSFX(); // zatrzymaj tykanie stopera
+		AudioManager.Instance.StopAllSFX(); // zatrzymaj wszystkie dźwięki (tykanie + limit end)
 
 		// Zwolnij myszkę i włącz kamerę podglądu
 		Input.MouseMode = Input.MouseModeEnum.Visible;
@@ -202,7 +202,7 @@ public partial class GameManager : Node
 	{
 		CurrentState = gameState.MainMenu;
 		AudioManager.Instance.UpdateMusicForGameState();
-		AudioManager.Instance.StopLoopingSFX(); // zatrzymaj tykanie stopera
+		AudioManager.Instance.StopAllSFX(); // zatrzymaj wszystkie dźwięki
 		_currentLevelIndex = -1;
 		CountdownManager.Instance.Reset();
 		SceneManager.Instance.HideAllOverlays();
@@ -231,7 +231,7 @@ public partial class GameManager : Node
 	public void TriggerDynamicFailure()
 	{
 		CurrentState = gameState.Loading;
-		AudioManager.Instance.StopLoopingSFX(); // zatrzymaj tykanie stopera
+		AudioManager.Instance.StopAllSFX(); // zatrzymaj wszystkie dźwięki (tykanie + limit end)
 		AudioManager.Instance.PlayFinishLine();
 		AudioManager.Instance.PlayGameOverMusic();
 		Input.MouseMode = Input.MouseModeEnum.Visible;

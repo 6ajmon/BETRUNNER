@@ -31,7 +31,7 @@ public partial class GameOverlay : Control
 		if (_stoperBar != null)
 			_stoperBar.TimerFlowing = false;
 		if (AudioManager.Instance != null)
-			AudioManager.Instance.StopLoopingSFX();
+			AudioManager.Instance.StopAllSFX();
 	}
 
 	public override void _ExitTree()
@@ -45,9 +45,9 @@ public partial class GameOverlay : Control
 		if (CountdownManager.Instance != null)
 			CountdownManager.Instance.BetPlaced -= OnBetPlaced;
 
-		// Safety: zatrzymaj tykanie gdy overlay opuszcza drzewo (zmiana sceny itp.)
+		// Safety: zatrzymaj wszystkie dźwięki gdy overlay opuszcza drzewo
 		if (AudioManager.Instance != null)
-			AudioManager.Instance.StopLoopingSFX();
+			AudioManager.Instance.StopAllSFX();
 	}
 
 	public override void _Process(double delta)
@@ -98,9 +98,9 @@ public partial class GameOverlay : Control
 			_finishTriggered = true;
 			_isRunning = false;
 
-			// Zatrzymaj ciągły dźwięk stopera
+			// Zatrzymaj wszystkie dźwięki
 			if (AudioManager.Instance != null)
-				AudioManager.Instance.StopLoopingSFX();
+				AudioManager.Instance.StopAllSFX();
 
 			double actualTime = CountdownManager.Instance.CurrentBetTime - _remainingTime;
 			CountdownManager.Instance.SetActualTimeUsed(actualTime);
@@ -157,12 +157,13 @@ public partial class GameOverlay : Control
 		if (_finishTriggered) return;
 
 		_isRunning = false;
+		_finishTriggered = true;
 
-		// Zatrzymaj ciągły dźwięk stopera i zresetuj stan stoper-bara
+		// Zatrzymaj wszystkie dźwięki stopera i zresetuj stan stoper-bara
 		if (_stoperBar != null)
 			_stoperBar.TimerFlowing = false;
 		if (AudioManager.Instance != null)
-			AudioManager.Instance.StopLoopingSFX();
+			AudioManager.Instance.StopAllSFX();
 
 		double actualTime = CountdownManager.Instance.CurrentBetTime - _remainingTime;
 		CountdownManager.Instance.SetActualTimeUsed(actualTime);

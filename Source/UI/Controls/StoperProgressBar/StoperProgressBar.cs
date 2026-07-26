@@ -294,8 +294,8 @@ public partial class StoperProgressBar : Control
 
 		if (!TimerFlowing)
 		{
-			// Czas nie leci — zatrzymaj tykanie (pauza, menu, przed startem)
-			audio.StopLoopingSFX();
+			// Czas nie leci — zatrzymaj wszystkie dźwięki stopera (tykanie + limit end)
+			audio.StopAllSFX();
 			return;
 		}
 

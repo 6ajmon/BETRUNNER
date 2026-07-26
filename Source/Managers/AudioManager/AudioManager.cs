@@ -613,48 +613,10 @@ public partial class AudioManager : Node
 		PlaySFX(_sfxLibrary?.TimerLimitWarning);
 
 	/// <summary>
-	/// Play the limit-time ended sound (one-shot — nie zapętla się,
-	/// nawet jeśli plik audio ma loop=true w imporcie).
+	/// Play the limit-time ended sound (one-shot via pooled player).
 	/// </summary>
-	public void PlayTimerLimitEnd()
-	{
-		var sound = _sfxLibrary?.TimerLimitEnd;
-		if (sound == null) return;
-
-		// Dedicated player — zatrzymuje się po naturalnej długości streamu
-		var player = new AudioStreamPlayer();
-		player.Bus = SfxBus;
-		player.Stream = sound;
-		AddChild(player);
-		player.Play();
-
-		double length = sound.GetLength();
-		if (length > 0.0)
-		{
-			var timer = GetTree().CreateTimer(length);
-			timer.Timeout += () =>
-			{
-				if (IsInstanceValid(player))
-				{
-					player.Stop();
-					player.QueueFree();
-				}
-			};
-		}
-		else
-		{
-			// Fallback: jeśli długość nieznana, zatrzymaj po 1 sekundzie
-			var timer = GetTree().CreateTimer(1.0);
-			timer.Timeout += () =>
-			{
-				if (IsInstanceValid(player))
-				{
-					player.Stop();
-					player.QueueFree();
-				}
-			};
-		}
-	}
+	public void PlayTimerLimitEnd() =>
+		PlaySFX(_sfxLibrary?.TimerLimitEnd);
 
 	// ══════════════════════════════════════════════════════════════════════
 	//  LOOPING / CONTINUOUS SFX
@@ -700,6 +662,28 @@ public partial class AudioManager : Node
 	{
 		if (_loopingSFXPlayer != null && _loopingSFXPlayer.Playing)
 			_loopingSFXPlayer.Stop();
+	}
+
+	/// <summary>
+	/// Stops all currently playing SFX — both the looping player and all
+	/// pooled 2D/3D players. Useful when a level ends to silence one-shot
+	/// sounds (like <c>TimerLimitEnd</c>) that would otherwise keep playing.
+	/// </summary>
+	public void StopAllSFX()
+	{
+		StopLoopingSFX();
+
+		foreach (var player in _sfxPool)
+		{
+			if (player.Playing)
+				player.Stop();
+		}
+
+		foreach (var player in _sfx3DPool)
+		{
+			if (player.Playing)
+				player.Stop();
+		}
 	}
 
 	// ══════════════════════════════════════════════════════════════════════
