@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b7h4jr40bxcgs" path="res://Source/Managers/GameManager/GameManager.cs" id="1_1glgr"]
 [ext_resource type="PackedScene" uid="uid://cpdgop2rut6dg" path="res://Source/LevelScenes/Lasers.tscn" id="2_2ydua"]
+[ext_resource type="PackedScene" uid="uid://c43qnikn5dspi" path="res://Source/LevelScenes/TheTower.tscn" id="2_7ljgu"]
 [ext_resource type="PackedScene" uid="uid://cm1jyk22x5flq" path="res://Source/LevelScenes/FiveTowers.tscn" id="2_a6t34"]
 [ext_resource type="PackedScene" uid="uid://coqabapy8qyr6" path="res://Source/LevelScenes/RotatingLasers.tscn" id="2_afre2"]
 [ext_resource type="PackedScene" uid="uid://bg8yffk6aux02" path="res://Source/LevelScenes/Tutorial.tscn" id="2_haxnl"]
@@ -13,5 +14,5 @@
 
 [node name="GameManager" type="Node" unique_id=1535941187]
 script = ExtResource("1_1glgr")
-_levelScenes = Array[PackedScene]([ExtResource("2_haxnl"), ExtResource("2_o4ph7"), ExtResource("3_eeq83"), ExtResource("4_a6t34"), ExtResource("2_a6t34"), ExtResource("2_qgayx"), ExtResource("2_2ydua"), ExtResource("2_afre2")])
+_levelScenes = Array[PackedScene]([ExtResource("2_haxnl"), ExtResource("2_o4ph7"), ExtResource("3_eeq83"), ExtResource("4_a6t34"), ExtResource("2_7ljgu"), ExtResource("2_a6t34"), ExtResource("2_qgayx"), ExtResource("2_2ydua"), ExtResource("2_afre2")])
 _mainMenuScene = ExtResource("5_eeq83")
