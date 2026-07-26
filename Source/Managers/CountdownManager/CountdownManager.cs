@@ -1,7 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using NewGameProject;
+using BETRUNNER;
 
 public partial class CountdownManager : Node
 {

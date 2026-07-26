@@ -1,7 +1,7 @@
 using Godot;
 using System;
 using System.Text;
-using NewGameProject;
+using BETRUNNER;
 
 public partial class FinishOverlay : Control
 {

@@ -1,6 +1,6 @@
 using Godot;
 
-namespace NewGameProject;
+namespace BETRUNNER;
 
 /// <summary>
 /// Shared color constants for UI consistency across the game.

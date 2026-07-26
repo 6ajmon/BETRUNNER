@@ -1,7 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using NewGameProject;
+using BETRUNNER;
 
 /// <summary>
 /// A custom Control that draws a colored segmented graph of remaining time (y)
