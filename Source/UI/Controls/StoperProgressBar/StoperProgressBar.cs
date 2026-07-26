@@ -307,7 +307,7 @@ public partial class StoperProgressBar : Control
 		if (ActiveTimer == ActiveTimerEnum.Bet)
 			audio.StartLoopingSFX(audio.Sfx.TimerBetTick, 1f);
 		else // Limit
-			audio.StartLoopingSFX(audio.Sfx.TimerLimitWarning, 2f);
+			audio.StartLoopingSFX(audio.Sfx.TimerLimitWarning, 2f, 6f);
 
 		// Gdy limit spadnie poniżej połowy → dodatkowo one-shot TimerLimitEnd
 		if (ActiveTimer == ActiveTimerEnum.Limit
