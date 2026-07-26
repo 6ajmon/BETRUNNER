@@ -23,7 +23,10 @@ public partial class FinishOverlay : Control
 	public override void _Ready()
 	{
 		if (_menuButton != null)
+		{
 			_menuButton.Pressed += OnMenuPressed;
+			ButtonSoundHelper.Wire(_menuButton);
+		}
 
 		if (_levelStatsContainer == null)
 			GD.PrintErr("FailureOverlay: LevelStatsContainer not found in scene!");
