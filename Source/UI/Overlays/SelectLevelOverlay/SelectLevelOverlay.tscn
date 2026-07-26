@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://qw6mu20h8b5h"]
 
 [ext_resource type="Script" uid="uid://d2osjr4jprqx6" path="res://Source/UI/Overlays/SelectLevelOverlay/SelectLevelOverlay.cs" id="1_56xyf"]
+[ext_resource type="Theme" uid="uid://cw0cqpcgx8o18" path="res://Assets/Themes/MainUITheme.tres" id="1_chrve"]
 [ext_resource type="Script" uid="uid://28blqp03o46n" path="res://Source/UI/Overlays/SelectLevelOverlay/LevelSelectButton.cs" id="1_u06rw"]
 
 [node name="SelectLevel" type="Control" unique_id=1403941758 node_paths=PackedStringArray("_returnButton")]
@@ -10,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_chrve")
 script = ExtResource("1_56xyf")
 _returnButton = NodePath("MarginContainer/ReturnButton")
 
@@ -40,7 +42,7 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-columns = 4
+columns = 5
 
 [node name="Button" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=1877865878]
 custom_minimum_size = Vector2(100, 100)
@@ -48,7 +50,6 @@ layout_mode = 2
 text = "Level 1
 "
 script = ExtResource("1_u06rw")
-LevelId = 1
 
 [node name="Button2" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=1917371565]
 custom_minimum_size = Vector2(100, 100)
@@ -56,7 +57,7 @@ layout_mode = 2
 text = "Level 2
 "
 script = ExtResource("1_u06rw")
-LevelId = 2
+LevelId = 1
 
 [node name="Button3" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=1128147284]
 custom_minimum_size = Vector2(100, 100)
@@ -64,7 +65,7 @@ layout_mode = 2
 text = "Level 3
 "
 script = ExtResource("1_u06rw")
-LevelId = 3
+LevelId = 2
 
 [node name="Button4" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=515215335]
 custom_minimum_size = Vector2(100, 100)
@@ -72,7 +73,7 @@ layout_mode = 2
 text = "Level 4
 "
 script = ExtResource("1_u06rw")
-LevelId = 4
+LevelId = 3
 
 [node name="Button5" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=1386941557]
 custom_minimum_size = Vector2(100, 100)
@@ -80,7 +81,7 @@ layout_mode = 2
 text = "Level 5
 "
 script = ExtResource("1_u06rw")
-LevelId = 5
+LevelId = 4
 
 [node name="Button6" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=666421914]
 custom_minimum_size = Vector2(100, 100)
@@ -88,7 +89,7 @@ layout_mode = 2
 text = "Level 6
 "
 script = ExtResource("1_u06rw")
-LevelId = 6
+LevelId = 5
 
 [node name="Button7" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=1883743088]
 custom_minimum_size = Vector2(100, 100)
@@ -96,12 +97,21 @@ layout_mode = 2
 text = "Level 7
 "
 script = ExtResource("1_u06rw")
-LevelId = 7
+LevelId = 6
 
 [node name="Button8" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=984517829]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 text = "Level 8
+"
+script = ExtResource("1_u06rw")
+LevelId = 7
+
+[node name="Button9" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=1007831227]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+text = "Level 9
+
 "
 script = ExtResource("1_u06rw")
 LevelId = 8
@@ -126,3 +136,4 @@ text = "Go back"
 [connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/GridContainer/Button6" to="MarginContainer/PanelContainer/VBoxContainer/GridContainer/Button6" method="_on_pressed"]
 [connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/GridContainer/Button7" to="MarginContainer/PanelContainer/VBoxContainer/GridContainer/Button7" method="_on_pressed"]
 [connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/GridContainer/Button8" to="MarginContainer/PanelContainer/VBoxContainer/GridContainer/Button8" method="_on_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/GridContainer/Button9" to="MarginContainer/PanelContainer/VBoxContainer/GridContainer/Button9" method="_on_pressed"]
