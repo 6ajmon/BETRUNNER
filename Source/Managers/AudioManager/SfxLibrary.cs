@@ -14,7 +14,7 @@ public partial class SfxLibrary : Node
 	// ── Gameplay ─────────────────────────────────────────────────────────
 	[ExportGroup("Gameplay")]
 	[Export] public AudioStream FinishLine { get; private set; }
-	[Export] public AudioStream LaserFire { get; private set; }
+	[Export] public AudioStream LaserBuzz { get; private set; }
 	[Export] public AudioStream LaserEnter { get; private set; }
 
 	// ── Player Movement ──────────────────────────────────────────────────

@@ -38,7 +38,7 @@ public partial class AudioManager : Node
 	/// <summary>Game-over music bus, heavily muffled (GameOver).</summary>
 	private const string MusicGameOverBus = "Music_GameOver";
 	private const string SfxBus = "SFX";
-	private const string Sfx3DBus = "SFX3D";
+	private const string Sfx3DBus = "SFX 3D";
 
 	// ── Music state ──────────────────────────────────────────────────────
 	private AudioStreamPlayer _musicPlayer;
@@ -582,7 +582,7 @@ public partial class AudioManager : Node
 
 	/// <summary>Play a laser-fire sound.</summary>
 	public void PlayLaserFire() =>
-		PlaySFX(_sfxLibrary?.LaserFire);
+		PlaySFX(_sfxLibrary?.LaserBuzz);
 
 	/// <summary>Play the sound of the player entering / touching a laser.</summary>
 	public void PlayLaserEnter() =>
