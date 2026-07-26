@@ -86,11 +86,8 @@ public partial class Player : CharacterBody3D
 			_pitch = Mathf.Clamp(_pitch, Mathf.DegToRad(-90.0f), Mathf.DegToRad(90.0f));
 		}
 
-		if (@event is InputEventKey key && key.Keycode == Key.Escape && key.Pressed)
-		{
-			Input.MouseMode = Input.MouseModeEnum.Visible;
-		}
 	}
+	// Escape / PauseToggle is now handled by PauseOverlay._UnhandledInput
 
 	/// <summary>
 	/// Called when betting ends — enables mouse look and movement.
