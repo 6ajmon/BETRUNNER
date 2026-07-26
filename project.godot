@@ -13,7 +13,7 @@ config_version=5
 config/name="BETRUNNER"
 run/main_scene="uid://johld78kk08"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://dpw6otbmyccsk"
 
 [audio]
 
