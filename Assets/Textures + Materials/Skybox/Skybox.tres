@@ -1,9 +1,40 @@
 [gd_resource type="Sky" format=3 uid="uid://d4ngfxc1qga1l"]
 
-[ext_resource type="Texture2D" uid="uid://3jyl0pq0ygdh" path="res://Assets/Textures + Materials/Skybox/JPG_3810_(3119)_(16k)_360_space_panorama.jpg" id="1_2wkvo"]
+[ext_resource type="Shader" uid="uid://ul5hbiea2tv4" path="res://Assets/Shaders/Skybox.gdshader" id="1_2wkvo"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ukwg8"]
-panorama = ExtResource("1_2wkvo")
+[sub_resource type="Gradient" id="Gradient_soowc"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qoxpm"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2wkvo"]
+noise = SubResource("FastNoiseLite_qoxpm")
+color_ramp = SubResource("Gradient_soowc")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ryvs4"]
+shader = ExtResource("1_2wkvo")
+shader_parameter/sky_day = Color(0.02745098, 0.36862746, 0.34509805, 1)
+shader_parameter/horizon_day = Color(0.5803922, 0.1764706, 0.36078432, 1)
+shader_parameter/horizon_sunset = Color(0.9, 0.4, 0.1, 1)
+shader_parameter/sky_sunset = Color(0.15, 0.2, 0.4, 1)
+shader_parameter/horizon_night = Color(0.1, 0.15, 0.2, 1)
+shader_parameter/sky_night = Color(0.05, 0.1, 0.15, 1)
+shader_parameter/day_night_mix = 0.8
+shader_parameter/use_directional_light = true
+shader_parameter/horizon_exponent = 2.0
+shader_parameter/sunset_amount_exponent = 0.7
+shader_parameter/night_amount_exponent = 4.0
+shader_parameter/cloud_color = Color(0.02745098, 0.36862746, 0.34509805, 0.64705884)
+shader_parameter/cloud_tiling = Vector2(1, 1)
+shader_parameter/wind_speed = Vector2(0.5, 0.5)
+shader_parameter/cloud_density = 0.7
+shader_parameter/cloud_depth = 2.0
+shader_parameter/cloud_shape_exponent = 2.0
+shader_parameter/cloud_occlude_exponent = 1.0
+shader_parameter/night_noise_01 = SubResource("NoiseTexture2D_2wkvo")
+shader_parameter/night_noise_02 = SubResource("NoiseTexture2D_2wkvo")
+shader_parameter/sun_scale = 0.05
+shader_parameter/sun_strength = 15.0
+shader_parameter/sun_color = Color(0.7575995, 0.5018132, 0.15257242, 1)
 
 [resource]
-sky_material = SubResource("PanoramaSkyMaterial_ukwg8")
+sky_material = SubResource("ShaderMaterial_ryvs4")

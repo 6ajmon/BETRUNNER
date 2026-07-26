@@ -1,11 +1,11 @@
 [gd_scene format=4 uid="uid://cm1jyk22x5flq"]
 
 [ext_resource type="PackedScene" uid="uid://bb8t61o8gjj5l" path="res://Source/LevelScenes/WaitingRoom.tscn" id="1_xg5b2"]
+[ext_resource type="Environment" uid="uid://bno88ob44ljoe" path="res://Assets/Environments/BaseEnvironment.tres" id="2_jx1r4"]
 [ext_resource type="PackedScene" uid="uid://qurbeehr7tu1" path="res://Assets/gtlf/Wall_Red.glb" id="3_su6bs"]
 [ext_resource type="PackedScene" uid="uid://bh2u0crmw0n4c" path="res://Source/MapObjects/wall.tscn" id="4_urlsg"]
 [ext_resource type="PackedScene" uid="uid://6wccyr8pnnbw" path="res://Assets/gtlf/Floor_Metal_Square.glb" id="5_o68w0"]
 [ext_resource type="PackedScene" uid="uid://dv8e5e5yflpig" path="res://Source/MapObjects/FloorPanel.tscn" id="6_i0400"]
-[ext_resource type="Sky" uid="uid://d4ngfxc1qga1l" path="res://Assets/Textures + Materials/Skybox/Skybox.tres" id="8_gtnek"]
 [ext_resource type="PackedScene" uid="uid://b50je4svyhxt6" path="res://Source/Player/Player.tscn" id="9_e87dg"]
 [ext_resource type="PackedScene" uid="uid://cx8mg5moh6k3y" path="res://Source/Components/EventNode/EventNode.tscn" id="10_fmpw1"]
 [ext_resource type="Script" uid="uid://u4gco1pgre3a" path="res://Source/Components/EventNode/EventNode.cs" id="11_4rse4"]
@@ -18,48 +18,12 @@
 [ext_resource type="PackedScene" uid="uid://c3sg4vp604qt6" path="res://Assets/gtlf/Wall_Glass_Clear.glb" id="13_su6bs"]
 [ext_resource type="PackedScene" uid="uid://bywuidtihbx5j" path="res://Source/Components/ButtonBeam/button_beam.tscn" id="14_jx1r4"]
 [ext_resource type="PackedScene" uid="uid://b3ogk047evk56" path="res://Source/MapObjects/Glass.tscn" id="14_urlsg"]
-[ext_resource type="Script" uid="uid://dadumhfb7i7o" path="res://Source/Components/ButtonBeam/ButtonBeam.cs" id="15_ryvs4"]
 [ext_resource type="PackedScene" uid="uid://c0laht47k7bck" path="res://Source/MapObjects/pressure_plate.tscn" id="16_7kfu4"]
 [ext_resource type="PackedScene" uid="uid://dbmadnw5ouylj" path="res://Assets/gtlf/Ramp_Wall_Grey_L.glb" id="19_kelp2"]
 [ext_resource type="PackedScene" uid="uid://daae6cjtmdfvj" path="res://Assets/gtlf/Ramp_Wall_Grey_R.glb" id="20_yrf7t"]
 
-[sub_resource type="Environment" id="Environment_24axl"]
-background_mode = 2
-sky = ExtResource("8_gtnek")
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7uwty"]
 height = 3.0
-
-[sub_resource type="ImageTexture" id="ImageTexture_e87dg"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fmpw1"]
-transparency = 1
-blend_mode = 1
-metallic_specular = 0.0
-emission_enabled = true
-emission = Color(1.1346822, 0.81628394, 0.36964175, 1)
-emission_energy_multiplier = 0.35
-emission_texture = SubResource("ImageTexture_e87dg")
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_4rse4"]
-material = SubResource("StandardMaterial3D_fmpw1")
-height = 4.5
-
-[sub_resource type="ImageTexture" id="ImageTexture_7kfu4"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kelp2"]
-transparency = 1
-blend_mode = 1
-albedo_color = Color(1, 1, 1, 0.27058825)
-metallic_specular = 0.0
-emission_enabled = true
-emission = Color(1.1346822, 0.81628394, 0.36964175, 1)
-emission_energy_multiplier = 0.1
-emission_texture = SubResource("ImageTexture_7kfu4")
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_yrf7t"]
-material = SubResource("StandardMaterial3D_kelp2")
-height = 45.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e87dg"]
 size = Vector3(300, 5, 300)
@@ -129,7 +93,7 @@ shadow_mesh = SubResource("ArrayMesh_6uihe")
 [node name="WaitingRoom" parent="." unique_id=1226178956 instance=ExtResource("1_xg5b2")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1350472948]
-environment = SubResource("Environment_24axl")
+environment = ExtResource("2_jx1r4")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1844547797]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
@@ -152,13 +116,6 @@ _event = 1
 
 [node name="CollisionShape3D" parent="Events/EndLevel" index="0" unique_id=639539813]
 shape = SubResource("CapsuleShape3D_7uwty")
-
-[node name="MeshInstance3D" parent="Events/EndLevel" index="1" unique_id=733530217]
-mesh = SubResource("CylinderMesh_4rse4")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Events/EndLevel" unique_id=1718061111]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25.0597, 0)
-mesh = SubResource("CylinderMesh_yrf7t")
 
 [node name="OutOfBounds" type="Area3D" parent="Events" unique_id=1790446927]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.62362, -5.9066305, 8.6232395)
@@ -500,7 +457,6 @@ transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, -
 mesh = SubResource("ArrayMesh_xmiu8")
 
 [node name="ButtonBeam" parent="MapContainer/EndPlatforms/MovingPlatform5" unique_id=376831290 node_paths=PackedStringArray("ButtonNode") instance=ExtResource("14_jx1r4")]
-script = ExtResource("15_ryvs4")
 ButtonNode = NodePath("../../../Tower3/Tower3Plate")
 
 [node name="MovingPlatform6" parent="MapContainer/EndPlatforms" unique_id=483229066 node_paths=PackedStringArray("_pressurePlate") instance=ExtResource("11_e87dg")]
@@ -518,7 +474,6 @@ transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, -
 mesh = SubResource("ArrayMesh_xmiu8")
 
 [node name="ButtonBeam" parent="MapContainer/EndPlatforms/MovingPlatform6" unique_id=568851492 node_paths=PackedStringArray("ButtonNode") instance=ExtResource("14_jx1r4")]
-script = ExtResource("15_ryvs4")
 ButtonNode = NodePath("../../../Tower4/Tower4Plate")
 
 [node name="MovingPlatform7" parent="MapContainer/EndPlatforms" unique_id=1138076243 node_paths=PackedStringArray("_pressurePlate") instance=ExtResource("11_e87dg")]
@@ -536,7 +491,6 @@ transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, -
 mesh = SubResource("ArrayMesh_xmiu8")
 
 [node name="ButtonBeam" parent="MapContainer/EndPlatforms/MovingPlatform7" unique_id=604293682 node_paths=PackedStringArray("ButtonNode") instance=ExtResource("14_jx1r4")]
-script = ExtResource("15_ryvs4")
 ButtonNode = NodePath("../../../Tower5/TowerPlate")
 
 [node name="MovingPlatform8" parent="MapContainer/EndPlatforms" unique_id=1931249642 node_paths=PackedStringArray("_pressurePlate") instance=ExtResource("11_e87dg")]
@@ -554,7 +508,6 @@ transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, -
 mesh = SubResource("ArrayMesh_xmiu8")
 
 [node name="ButtonBeam" parent="MapContainer/EndPlatforms/MovingPlatform8" unique_id=1490725429 node_paths=PackedStringArray("ButtonNode") instance=ExtResource("14_jx1r4")]
-script = ExtResource("15_ryvs4")
 ButtonNode = NodePath("../../../Tower2/Tower2Plate")
 
 [node name="MovingPlatform9" parent="MapContainer/EndPlatforms" unique_id=173400282 node_paths=PackedStringArray("_pressurePlate") instance=ExtResource("11_e87dg")]
@@ -572,7 +525,6 @@ transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, -
 mesh = SubResource("ArrayMesh_xmiu8")
 
 [node name="ButtonBeam" parent="MapContainer/EndPlatforms/MovingPlatform9" unique_id=1550836608 node_paths=PackedStringArray("ButtonNode") instance=ExtResource("14_jx1r4")]
-script = ExtResource("15_ryvs4")
 ButtonNode = NodePath("../../../Tower/TowerPlate")
 
 [node name="Tower" type="Node3D" parent="MapContainer" unique_id=799066947]
@@ -685,7 +637,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 8.25, 6)
 [node name="Ramp2" parent="MapContainer/Ramp" unique_id=838154036 instance=ExtResource("11_xg5b2")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 16, 4, 8)
 
-[node name="Ramp Grey" parent="MapContainer/Ramp/Ramp2" index="0" unique_id=844652703]
+[node name="Ramp Grey" parent="MapContainer/Ramp/Ramp2" index="0" unique_id=783208531]
 visible = false
 
 [node name="Node3D" parent="MapContainer/Ramp/Ramp2" unique_id=350788820 instance=ExtResource("12_oidvl")]
@@ -973,7 +925,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24)
 [node name="Ramp2" parent="MapContainer/Ramp2" unique_id=1248512115 instance=ExtResource("11_xg5b2")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 16, 4, 8)
 
-[node name="Ramp Grey" parent="MapContainer/Ramp2/Ramp2" index="0" unique_id=844652703]
+[node name="Ramp Grey" parent="MapContainer/Ramp2/Ramp2" index="0" unique_id=783208531]
 visible = false
 
 [node name="Node3D" parent="MapContainer/Ramp2/Ramp2" unique_id=436158175 instance=ExtResource("12_oidvl")]
