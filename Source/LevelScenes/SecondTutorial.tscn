@@ -37,6 +37,25 @@ material = SubResource("StandardMaterial3D_rr6tj")
 radius = 0.45
 height = 0.9
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_8kwvf"]
+size = Vector3(11.5, 3, 0.5)
+
+[sub_resource type="ImageTexture" id="ImageTexture_0p13e"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g7b5x"]
+transparency = 1
+blend_mode = 1
+albedo_color = Color(0.16470589, 0.7176471, 0, 0.2901961)
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(1.1346822, 0.81628394, 0.36964175, 1)
+emission_energy_multiplier = 0.35
+emission_texture = SubResource("ImageTexture_0p13e")
+
+[sub_resource type="BoxMesh" id="BoxMesh_8v1go"]
+material = SubResource("StandardMaterial3D_g7b5x")
+size = Vector3(11.5, 3, 0.1)
+
 [sub_resource type="Curve3D" id="Curve3D_poj3h"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6.83, 0, 0.64, 46, 0, 0, 0, 0, 0, 0, 0, 0, 53, 0, 7, 0, 0, 0, -1, 0, 6, 53, 0, 21, 0, 0, 0, 0, 0, 0, 46, 0, 28, 0, 0, 0, 0, 0, 0, 40, 0, 28),
@@ -407,6 +426,19 @@ mesh = SubResource("SphereMesh_126ht")
 [node name="Direction" type="RayCast3D" parent="Events/OutOfBounds" unique_id=1820536039]
 target_position = Vector3(2, 0, 0)
 
+[node name="Checkpoint2" parent="Events" unique_id=401874235 instance=ExtResource("9_xhkal")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 36.541595, 1.2942078, -4.2717323)
+_event = 4
+
+[node name="CollisionShape3D" parent="Events/Checkpoint2" index="0" unique_id=639539813]
+shape = SubResource("BoxShape3D_8kwvf")
+
+[node name="MeshInstance3D" parent="Events/Checkpoint2" index="1" unique_id=733530217]
+mesh = SubResource("BoxMesh_8v1go")
+
+[node name="Direction" parent="Events/Checkpoint2" index="2" unique_id=1820536039]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+
 [node name="Preview" type="Path3D" parent="." unique_id=1937417307]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.053154, 2.641975, -4)
 curve = SubResource("Curve3D_poj3h")
@@ -418,3 +450,4 @@ _speed = 0.1
 
 [editable path="MapContainer/WaitingRoom"]
 [editable path="Events/EndLevel"]
+[editable path="Events/Checkpoint2"]

@@ -12,7 +12,6 @@
 [ext_resource type="Script" uid="uid://d3o83ikxfnant" path="res://Source/MapObjects/MovingPlatform/MovingPlatform.cs" id="10_l3tf0"]
 [ext_resource type="PackedScene" uid="uid://bywuidtihbx5j" path="res://Source/Components/ButtonBeam/button_beam.tscn" id="11_c4esg"]
 [ext_resource type="PackedScene" uid="uid://b50je4svyhxt6" path="res://Source/Player/Player.tscn" id="11_jegd7"]
-[ext_resource type="Script" uid="uid://dadumhfb7i7o" path="res://Source/Components/ButtonBeam/ButtonBeam.cs" id="12_67f6t"]
 [ext_resource type="PackedScene" uid="uid://cx8mg5moh6k3y" path="res://Source/Components/EventNode/EventNode.tscn" id="12_nwub4"]
 [ext_resource type="PackedScene" uid="uid://bjckh1vja8nig" path="res://Source/Components/CameraPathFollow/CameraPathFollow.tscn" id="13_nwub4"]
 [ext_resource type="Script" uid="uid://u4gco1pgre3a" path="res://Source/Components/EventNode/EventNode.cs" id="13_poj3h"]
@@ -44,7 +43,7 @@ size = Vector3(11.5, 3, 0.5)
 
 [sub_resource type="ImageTexture" id="ImageTexture_3nuwx"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g7b5x"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c4esg"]
 transparency = 1
 blend_mode = 1
 albedo_color = Color(0.16470589, 0.7176471, 0, 0.2901961)
@@ -55,6 +54,25 @@ emission_energy_multiplier = 0.35
 emission_texture = SubResource("ImageTexture_3nuwx")
 
 [sub_resource type="BoxMesh" id="BoxMesh_m0frt"]
+material = SubResource("StandardMaterial3D_c4esg")
+size = Vector3(11.5, 3, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_67f6t"]
+size = Vector3(11.5, 3, 0.5)
+
+[sub_resource type="ImageTexture" id="ImageTexture_nypq0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g7b5x"]
+transparency = 1
+blend_mode = 1
+albedo_color = Color(0.16470589, 0.7176471, 0, 0.2901961)
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(1.1346822, 0.81628394, 0.36964175, 1)
+emission_energy_multiplier = 0.35
+emission_texture = SubResource("ImageTexture_nypq0")
+
+[sub_resource type="BoxMesh" id="BoxMesh_e51as"]
 material = SubResource("StandardMaterial3D_g7b5x")
 size = Vector3(11.5, 3, 0.1)
 
@@ -602,7 +620,6 @@ _pressurePlate = NodePath("../../../PressurePlate")
 [node name="FloorPanel" parent="MapContainer/Fifth Bridge/MovingPlatform4" unique_id=1987877331 instance=ExtResource("4_poj3h")]
 
 [node name="ButtonBeam" parent="MapContainer/Fifth Bridge/MovingPlatform4" unique_id=376831290 node_paths=PackedStringArray("ButtonNode") instance=ExtResource("11_c4esg")]
-script = ExtResource("12_67f6t")
 ButtonNode = NodePath("../../../../PressurePlate")
 
 [node name="SixthBridge" type="Node3D" parent="MapContainer" unique_id=1241705341]
@@ -770,6 +787,20 @@ mesh = SubResource("BoxMesh_m0frt")
 [node name="Direction" parent="Events/Checkpoint" index="2" unique_id=1820536039]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 
+[node name="Checkpoint2" parent="Events" unique_id=1850964451 instance=ExtResource("12_nwub4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40, 1.301, -4)
+_event = 4
+
+[node name="CollisionShape3D" parent="Events/Checkpoint2" index="0" unique_id=639539813]
+shape = SubResource("BoxShape3D_67f6t")
+
+[node name="MeshInstance3D" parent="Events/Checkpoint2" index="1" unique_id=733530217]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2848482, 0)
+mesh = SubResource("BoxMesh_e51as")
+
+[node name="Direction" parent="Events/Checkpoint2" index="2" unique_id=1820536039]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+
 [node name="PressurePlate" parent="." unique_id=158581914 instance=ExtResource("14_5a36w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60.146, -1.65, 53.822)
 
@@ -785,4 +816,5 @@ _speed = 0.1
 
 [editable path="Events/EndLevel"]
 [editable path="Events/Checkpoint"]
+[editable path="Events/Checkpoint2"]
 [editable path="Preview/PathFollow3D"]
