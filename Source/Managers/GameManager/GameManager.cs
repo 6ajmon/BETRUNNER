@@ -51,6 +51,9 @@ public partial class GameManager : Node
 		PreviewCameraLoaded += OnPreviewCameraLoaded;
 		EndBettingPhase += OnEndBettingPhase;
 		PlayButtonPressed += OnPlayButton_Pressed;
+
+		// Start main-menu music after all autoloads are initialised
+		Callable.From(() => AudioManager.Instance.UpdateMusicForGameState()).CallDeferred();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -95,6 +98,7 @@ public partial class GameManager : Node
 	private async void OnPlayButton_Pressed()
 	{
 		CurrentState = gameState.Loading;
+		AudioManager.Instance.UpdateMusicForGameState();
 
 		// Initialise the first level's time allocation
 		if (_currentLevelIndex < 0)
@@ -106,6 +110,7 @@ public partial class GameManager : Node
 	private void OnPreviewCameraLoaded()
 	{
 		CurrentState = gameState.Preview;
+		AudioManager.Instance.UpdateMusicForGameState();
 		SceneManager.Instance.ShowBettingOverlay();
 		CameraManager.Instance.EmitSignal(nameof(CameraManager.SwitchToPreviewCamera));
 
@@ -120,6 +125,7 @@ public partial class GameManager : Node
 		// 2. Switch to first-person view and enable controls
 		//    (countdown starts later when player walks into EventNode)
 		CurrentState = gameState.Waiting;
+		AudioManager.Instance.UpdateMusicForGameState();
 		SceneManager.Instance.ShowGameOverlay();
 		CameraManager.Instance.EmitSignal(nameof(CameraManager.SwitchToFirstPersonCamera));
 		if (PlayerCharacter != null)
@@ -129,6 +135,7 @@ public partial class GameManager : Node
 	private void OnStartCountdown(double time)
 	{
 		CurrentState = gameState.Countdown;
+		AudioManager.Instance.UpdateMusicForGameState();
 	}
 
 	private void OnCountdownPaused()
@@ -147,6 +154,7 @@ public partial class GameManager : Node
 		// Pokaż odpowiedni ekran podsumowania — przegrana tylko gdy przekroczono zakład i pula jest pusta
 		if (overshoot > 0.0 && CountdownManager.Instance.IsEffectivelyBankrupt)
 		{
+			AudioManager.Instance.PlayGameOverMusic();
 			SceneManager.Instance.ShowFinishOverlay();
 			var fail = SceneManager.Instance.GetFailureOverlay();
 			if (fail != null) fail.ShowStats();
@@ -154,6 +162,7 @@ public partial class GameManager : Node
 		else if (_currentLevelIndex >= _levelScenes.Length - 1)
 		{
 			// Ostatni poziom ukończony — finish overlay z podsumowaniem całej gry
+			AudioManager.Instance.PlayVictoryMusic();
 			SceneManager.Instance.ShowFinishOverlay();
 			var finish = SceneManager.Instance.GetFailureOverlay();
 			if (finish != null) finish.ShowVictoryStats();
@@ -189,6 +198,7 @@ public partial class GameManager : Node
 	public void ReturnToMainMenu()
 	{
 		CurrentState = gameState.MainMenu;
+		AudioManager.Instance.UpdateMusicForGameState();
 		_currentLevelIndex = -1;
 		CountdownManager.Instance.Reset();
 		SceneManager.Instance.HideAllOverlays();
@@ -207,6 +217,7 @@ public partial class GameManager : Node
 	public void TriggerDynamicFailure()
 	{
 		CurrentState = gameState.Loading;
+		AudioManager.Instance.PlayGameOverMusic();
 		Input.MouseMode = Input.MouseModeEnum.Visible;
 		SceneManager.Instance.ShowFinishOverlay();
 		var fail = SceneManager.Instance.GetFailureOverlay();

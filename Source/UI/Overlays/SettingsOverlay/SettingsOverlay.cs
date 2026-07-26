@@ -6,10 +6,14 @@ public partial class SettingsOverlay : Control
 	[Export] private Button _backButton;
 	[Export] private Button _saveButton;
 	[Export] private DifficultyContainer _difficultyContainer;
+	[Export] private HSlider _musicSlider;
+	[Export] private HSlider _sfxSlider;
 
 	// ── Pending / saved state ─────────────────────────────────────────────
 	private int _savedDifficulty;
 	private int _pendingDifficulty;
+	private float _savedMusicVolume = -1f;   // -1 = uninitialised sentinel
+	private float _savedSfxVolume = -1f;      // -1 = uninitialised sentinel
 	private bool _hasUnsavedChanges;
 
 	private ConfirmationDialog _unsavedDialog;
@@ -33,6 +37,12 @@ public partial class SettingsOverlay : Control
 		if (_backButton != null)
 			_backButton.Pressed += OnBackPressed;
 
+		// ── Volume sliders ───────────────────────────────────────────
+		if (_musicSlider != null)
+			_musicSlider.ValueChanged += OnMusicVolumeChanged;
+		if (_sfxSlider != null)
+			_sfxSlider.ValueChanged += OnSfxVolumeChanged;
+
 		// ── Reload whenever we become visible ────────────────────────
 		VisibilityChanged += ReloadSavedState;
 
@@ -55,6 +65,12 @@ public partial class SettingsOverlay : Control
 	{
 		if (!Visible) return;
 
+		// Initialise saved volumes from current bus state (first time only)
+		if (_savedMusicVolume < 0f)
+			_savedMusicVolume = DbToSlider(AudioManager.Instance.GetMusicVolumeDb());
+		if (_savedSfxVolume < 0f)
+			_savedSfxVolume = DbToSlider(AudioManager.Instance.GetSFXVolumeDb());
+
 		_savedDifficulty = (int)CountdownManager.Instance.CurrentDifficulty;
 		_pendingDifficulty = _savedDifficulty;
 		_hasUnsavedChanges = false;
@@ -64,6 +80,20 @@ public partial class SettingsOverlay : Control
 
 		if (_saveButton != null)
 			_saveButton.Disabled = true;
+
+		// Reset sliders + buses to the last saved values
+		if (_musicSlider != null)
+		{
+			AudioManager.Instance.SetAllMusicVolumeDb(SliderToDb(_savedMusicVolume));
+			_musicSlider.Value = _savedMusicVolume;
+		}
+		if (_sfxSlider != null)
+		{
+			float db = SliderToDb(_savedSfxVolume);
+			AudioManager.Instance.SetSFXVolumeDb(db);
+			AudioManager.Instance.SetSFX3DVolumeDb(db);
+			_sfxSlider.Value = _savedSfxVolume;
+		}
 	}
 
 	public override void _ExitTree()
@@ -76,6 +106,11 @@ public partial class SettingsOverlay : Control
 
 		if (_backButton != null)
 			_backButton.Pressed -= OnBackPressed;
+
+		if (_musicSlider != null)
+			_musicSlider.ValueChanged -= OnMusicVolumeChanged;
+		if (_sfxSlider != null)
+			_sfxSlider.ValueChanged -= OnSfxVolumeChanged;
 	}
 
 	// ── Difficulty ─────────────────────────────────────────────────────────
@@ -90,7 +125,10 @@ public partial class SettingsOverlay : Control
 
 	private void MarkChanged()
 	{
-		bool changed = _pendingDifficulty != _savedDifficulty;
+		bool changed = _pendingDifficulty != _savedDifficulty
+			|| (_musicSlider != null && (float)_musicSlider.Value != _savedMusicVolume)
+			|| (_sfxSlider != null && (float)_sfxSlider.Value != _savedSfxVolume);
+
 		if (changed != _hasUnsavedChanges)
 		{
 			_hasUnsavedChanges = changed;
@@ -110,10 +148,50 @@ public partial class SettingsOverlay : Control
 	{
 		CountdownManager.Instance.CurrentDifficulty = (CountdownManager.Difficulty)_pendingDifficulty;
 		_savedDifficulty = _pendingDifficulty;
-		_hasUnsavedChanges = false;
 
+		// Commit current slider values as saved
+		if (_musicSlider != null)
+			_savedMusicVolume = (float)_musicSlider.Value;
+		if (_sfxSlider != null)
+			_savedSfxVolume = (float)_sfxSlider.Value;
+
+		_hasUnsavedChanges = false;
 		if (_saveButton != null)
 			_saveButton.Disabled = true;
+	}
+
+	// ── Volume sliders (immediate feedback, committed only on Save) ───────
+
+	private void OnMusicVolumeChanged(double value)
+	{
+		AudioManager.Instance.SetAllMusicVolumeDb(SliderToDb((float)value));
+		MarkChanged();
+	}
+
+	private void OnSfxVolumeChanged(double value)
+	{
+		float db = SliderToDb((float)value);
+		AudioManager.Instance.SetSFXVolumeDb(db);
+		AudioManager.Instance.SetSFX3DVolumeDb(db);
+		MarkChanged();
+	}
+
+	/// <summary>
+	/// Converts a slider value (0-100) to decibels.
+	/// </summary>
+	private static float SliderToDb(float sliderValue)
+	{
+		if (sliderValue <= 0f) return -80f;
+		return Mathf.LinearToDb(sliderValue / 100f);
+	}
+
+	/// <summary>
+	/// Converts decibels to a slider value (0-100).
+	/// </summary>
+	private static float DbToSlider(float db)
+	{
+		if (db <= -80f) return 0f;
+		return Mathf.DbToLinear(db) * 100f;
 	}
 
 	// ── Back ────────────────────────────────────────────────────────────────
@@ -138,9 +216,25 @@ public partial class SettingsOverlay : Control
 
 	private void DiscardAndGoBack()
 	{
+		// Revert difficulty
 		_pendingDifficulty = _savedDifficulty;
 		if (_difficultyContainer != null)
 			_difficultyContainer.Value = _savedDifficulty;
+
+		// Revert volume sliders + buses to saved values
+		if (_musicSlider != null)
+		{
+			AudioManager.Instance.SetAllMusicVolumeDb(SliderToDb(_savedMusicVolume));
+			_musicSlider.Value = _savedMusicVolume;
+		}
+		if (_sfxSlider != null)
+		{
+			float db = SliderToDb(_savedSfxVolume);
+			AudioManager.Instance.SetSFXVolumeDb(db);
+			AudioManager.Instance.SetSFX3DVolumeDb(db);
+			_sfxSlider.Value = _savedSfxVolume;
+		}
+
 		_hasUnsavedChanges = false;
 		if (_saveButton != null)
 			_saveButton.Disabled = true;
