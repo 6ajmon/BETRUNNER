@@ -49,17 +49,29 @@ public partial class SettingsOverlay : Control
 
 		// ── Save button ──────────────────────────────────────────────
 		if (_saveButton != null)
+		{
 			_saveButton.Pressed += OnSavePressed;
+			ButtonSoundHelper.Wire(_saveButton);
+		}
 
 		// ── Back button ──────────────────────────────────────────────
 		if (_backButton != null)
+		{
 			_backButton.Pressed += OnBackPressed;
+			ButtonSoundHelper.Wire(_backButton);
+		}
 
 		// ── Volume sliders ───────────────────────────────────────────
 		if (_musicSlider != null)
+		{
 			_musicSlider.ValueChanged += OnMusicVolumeChanged;
+			ButtonSoundHelper.WireSlider(_musicSlider);
+		}
 		if (_sfxSlider != null)
+		{
 			_sfxSlider.ValueChanged += OnSfxVolumeChanged;
+			ButtonSoundHelper.WireSlider(_sfxSlider);
+		}
 
 		// ── Reload whenever we become visible ────────────────────────
 		VisibilityChanged += ReloadSavedState;
@@ -72,6 +84,8 @@ public partial class SettingsOverlay : Control
 		_unsavedDialog.GetCancelButton().Text = "No";
 		_unsavedDialog.Confirmed += SaveAndGoBack;
 		_unsavedDialog.Canceled += DiscardAndGoBack;
+		ButtonSoundHelper.Wire(_unsavedDialog.GetOkButton());
+		ButtonSoundHelper.Wire(_unsavedDialog.GetCancelButton());
 		_unsavedDialog.AddThemeIconOverride("close", new ImageTexture());
 		AddChild(_unsavedDialog);
 

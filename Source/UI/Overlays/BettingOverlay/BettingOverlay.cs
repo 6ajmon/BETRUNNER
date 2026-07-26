@@ -19,6 +19,7 @@ public partial class BettingOverlay : Control
 		if (_betSlider != null)
 		{
 			_betSlider.ValueChanged += OnBetSliderValueChanged;
+			ButtonSoundHelper.WireSlider(_betSlider);
 		}
 	}
 
@@ -100,6 +101,8 @@ public partial class BettingOverlay : Control
 		{
 			CountdownManager.Instance.PendingBet = _betSlider.Value;
 		}
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayUIButtonClick();
 		GameManager.Instance.EmitSignal(nameof(GameManager.EndBettingPhase));
 	}
 }

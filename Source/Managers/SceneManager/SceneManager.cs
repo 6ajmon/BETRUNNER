@@ -113,6 +113,7 @@ public partial class SceneManager : Node
 	public SummaryOverlay GetSummaryOverlay() => _summaryOverlay as SummaryOverlay;
 	public FinishOverlay GetFailureOverlay() => _finishOverlay as FinishOverlay;
 	public PauseOverlay GetPauseOverlay() => _pauseOverlay as PauseOverlay;
+	public GameOverlay GetGameOverlay() => _gameOverlay as GameOverlay;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

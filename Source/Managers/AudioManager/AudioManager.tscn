@@ -1,10 +1,18 @@
 [gd_scene format=3 uid="uid://by8ywoncr8kvi"]
 
 [ext_resource type="Script" uid="uid://d1hl2dryntirp" path="res://Source/Managers/AudioManager/AudioManager.cs" id="1_royfh"]
-[ext_resource type="AudioStream" uid="uid://ctsdl2ujkxy14" path="res://Assets/Audio/2 - Galactic Odyssey (Loop).wav" id="2_up5hi"]
-[ext_resource type="AudioStream" uid="uid://kh74ul7y636u" path="res://Assets/Audio/Nowhere_160 BPM_Full_Loop.wav" id="3_m7whi"]
+[ext_resource type="AudioStream" uid="uid://ctsdl2ujkxy14" path="res://Assets/Audio/Music/2 - Galactic Odyssey (Loop).wav" id="2_up5hi"]
+[ext_resource type="AudioStream" uid="uid://kh74ul7y636u" path="res://Assets/Audio/Music/Nowhere_160 BPM_Full_Loop.wav" id="3_m7whi"]
+[ext_resource type="Script" uid="uid://bedhosga6m18f" path="res://Source/Managers/AudioManager/SfxLibrary.cs" id="4_m7whi"]
+[ext_resource type="AudioStream" uid="uid://c1hhlor6bo7m3" path="res://Assets/Audio/SFX/Click_01.wav" id="5_o03gv"]
+[ext_resource type="AudioStream" uid="uid://d3gjqdj65v8e4" path="res://Assets/Audio/SFX/Bleep_03.wav" id="6_tiyef"]
+[ext_resource type="AudioStream" uid="uid://crap2egmq8jsx" path="res://Assets/Audio/SFX/Confirm_07.wav" id="7_8b8i5"]
+[ext_resource type="AudioStream" uid="uid://hicu66hh0k4d" path="res://Assets/Audio/SFX/electronic-buzz.mp3" id="8_2bmqu"]
+[ext_resource type="AudioStream" uid="uid://bbi7gd6vv3pe7" path="res://Assets/Audio/SFX/electronic-zap.mp3" id="9_ldqkf"]
+[ext_resource type="AudioStream" uid="uid://pvvxtcbxkw5y" path="res://Assets/Audio/SFX/bet-countdown.mp3" id="10_d4hxw"]
+[ext_resource type="AudioStream" uid="uid://ckrbor7dqbbd2" path="res://Assets/Audio/SFX/overtime-countdown.mp3" id="11_1eocj"]
 
-[node name="AudioManager" type="Node" unique_id=1341197374]
+[node name="AudioManager" type="Node" unique_id=1341197374 node_paths=PackedStringArray("_sfxLibrary")]
 script = ExtResource("1_royfh")
 _mainMenuMusic = ExtResource("2_up5hi")
 _gameplayMusic = ExtResource("3_m7whi")
@@ -12,3 +20,15 @@ _countdownMusic = ExtResource("3_m7whi")
 _previewMusic = ExtResource("3_m7whi")
 _victoryMusic = ExtResource("3_m7whi")
 _gameOverMusic = ExtResource("3_m7whi")
+_sfxLibrary = NodePath("SFXLibrary")
+
+[node name="SFXLibrary" type="Node" parent="." unique_id=1991694372]
+script = ExtResource("4_m7whi")
+UIFocusChange = ExtResource("5_o03gv")
+UIButtonClick = ExtResource("6_tiyef")
+FinishLine = ExtResource("7_8b8i5")
+LaserBuzz = ExtResource("8_2bmqu")
+LaserEnter = ExtResource("9_ldqkf")
+TimerBetTick = ExtResource("10_d4hxw")
+TimerLimitWarning = ExtResource("10_d4hxw")
+TimerLimitEnd = ExtResource("11_1eocj")

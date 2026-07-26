@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cwv82spjqiho0"]
 
 [ext_resource type="Script" uid="uid://d31ogfavqrkg" path="res://Source/MapObjects/Laser.cs" id="1_em1eu"]
+[ext_resource type="AudioStream" uid="uid://hicu66hh0k4d" path="res://Assets/Audio/SFX/electronic-buzz.mp3" id="2_47lxt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d2rsb"]
 transparency = 1
@@ -29,5 +30,12 @@ mesh = SubResource("CylinderMesh_126ht")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=202659481]
 shape = SubResource("CylinderShape3D_126ht")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1416090165]
+stream = ExtResource("2_47lxt")
+volume_db = -23.0
+autoplay = true
+max_distance = 10.0
+bus = &"SFX 3D"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

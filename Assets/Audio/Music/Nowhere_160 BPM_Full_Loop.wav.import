@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://kh74ul7y636u"
-path="res://.godot/imported/Nowhere_160 BPM_Full_Loop.wav-ad86d1697a3c7adfaa92eaf303e60249.sample"
+path="res://.godot/imported/Nowhere_160 BPM_Full_Loop.wav-c15168bb81b71812867a5d99cf035bb2.sample"
 
 [deps]
 
-source_file="res://Assets/Audio/Nowhere_160 BPM_Full_Loop.wav"
-dest_files=["res://.godot/imported/Nowhere_160 BPM_Full_Loop.wav-ad86d1697a3c7adfaa92eaf303e60249.sample"]
+source_file="res://Assets/Audio/Music/Nowhere_160 BPM_Full_Loop.wav"
+dest_files=["res://.godot/imported/Nowhere_160 BPM_Full_Loop.wav-c15168bb81b71812867a5d99cf035bb2.sample"]
 
 [params]
 

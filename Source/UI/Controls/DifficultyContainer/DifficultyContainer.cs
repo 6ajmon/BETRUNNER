@@ -14,7 +14,10 @@ public partial class DifficultyContainer : VBoxContainer
 	public override void _Ready()
 	{
 		if (_difficultySlider != null)
+		{
 			_difficultySlider.ValueChanged += OnSliderChanged;
+			ButtonSoundHelper.WireSlider(_difficultySlider);
+		}
 	}
 
 	public override void _ExitTree()

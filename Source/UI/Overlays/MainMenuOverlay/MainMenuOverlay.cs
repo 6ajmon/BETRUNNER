@@ -22,6 +22,13 @@ public partial class MainMenuOverlay : Control
 		CreditsButton.Pressed += OnCreditsButtonPressed;
 		ExitButton.Pressed += OnExitButtonPressed;
 
+		// ── Button sounds ──────────────────────────────────────────
+		ButtonSoundHelper.Wire(PlayButton);
+		ButtonSoundHelper.Wire(SettingsButton);
+		ButtonSoundHelper.Wire(LevelSelectButton);
+		ButtonSoundHelper.Wire(CreditsButton);
+		ButtonSoundHelper.Wire(ExitButton);
+
 		// ── Exit confirmation dialog ────────────────────────────────
 		_exitDialog = new ConfirmationDialog();
 		_exitDialog.Title = "Exit Game";
@@ -29,6 +36,8 @@ public partial class MainMenuOverlay : Control
 		_exitDialog.GetOkButton().Text = "Yes";
 		_exitDialog.GetCancelButton().Text = "No";
 		_exitDialog.Confirmed += () => GetTree().Quit();
+		ButtonSoundHelper.Wire(_exitDialog.GetOkButton());
+		ButtonSoundHelper.Wire(_exitDialog.GetCancelButton());
 		AddChild(_exitDialog);
 
 		// ── First-play difficulty dialog ────────────────────────────
@@ -76,6 +85,9 @@ public partial class MainMenuOverlay : Control
 		_firstPlayDialog.GetOkButton().Text = "Start";
 		_firstPlayDialog.GetCancelButton().Text = "Cancel";
 		_firstPlayDialog.Confirmed += OnFirstPlayConfirmed;
+
+		ButtonSoundHelper.Wire(_firstPlayDialog.GetOkButton());
+		ButtonSoundHelper.Wire(_firstPlayDialog.GetCancelButton());
 
 		// Content container
 		var content = new VBoxContainer();

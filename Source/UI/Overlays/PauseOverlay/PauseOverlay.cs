@@ -10,9 +10,14 @@ public partial class PauseOverlay : Control
 	public override void _Ready()
 	{
 		if (_resumeButton != null)
+		{
 			_resumeButton.Pressed += ResumeGame;
+			ButtonSoundHelper.Wire(_resumeButton);
+		}
 
 		if (_settingsButton != null)
+		{
+			ButtonSoundHelper.Wire(_settingsButton);
 			_settingsButton.Pressed += () =>
 			{
 				var settings = SceneManager.Instance.GetSettingsOverlay();
@@ -23,13 +28,17 @@ public partial class PauseOverlay : Control
 				}
 				SceneManager.Instance.ShowSettingsOverlay();
 			};
+		}
 
 		if (_mainMenuButton != null)
+		{
+			ButtonSoundHelper.Wire(_mainMenuButton);
 			_mainMenuButton.Pressed += () =>
 			{
 				GetTree().Paused = false;
 				GameManager.Instance.ReturnToMainMenu();
 			};
+		}
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -75,6 +84,7 @@ public partial class PauseOverlay : Control
 		GetTree().Paused = true;
 		Input.MouseMode = Input.MouseModeEnum.Visible;
 		AudioManager.Instance.ApplyPauseEffect();
+		AudioManager.Instance.StopLoopingSFX(); // zatrzymaj tykanie stopera
 	}
 
 	/// <summary>

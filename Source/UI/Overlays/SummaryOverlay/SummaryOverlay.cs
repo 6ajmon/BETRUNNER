@@ -14,7 +14,10 @@ public partial class SummaryOverlay : Control
 	public override void _Ready()
 	{
 		if (_continueButton != null)
+		{
 			_continueButton.Pressed += OnContinuePressed;
+			ButtonSoundHelper.Wire(_continueButton);
+		}
 
 		// Enable BBCode on all value labels (in case not set in scene)
 		foreach (var rt in new[] { _bonusValueLabel, _betLabel, _timeLabel, _penaltyLabel, _RemainingLabel })

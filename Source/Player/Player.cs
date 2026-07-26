@@ -101,7 +101,7 @@ public partial class Player : CharacterBody3D
 	/// Show/hide the player's 3D visuals (body mesh + arms).
 	/// Hide when preview camera is active, show for first-person.
 	/// </summary>
-	public void SetVisible(bool visible)
+	public void SetModelVisible(bool visible)
 	{
 		var mesh = GetNodeOrNull<MeshInstance3D>("MeshInstance3D");
 		if (mesh != null) mesh.Visible = visible;

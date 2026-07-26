@@ -38,7 +38,7 @@ public partial class AudioManager : Node
 	/// <summary>Game-over music bus, heavily muffled (GameOver).</summary>
 	private const string MusicGameOverBus = "Music_GameOver";
 	private const string SfxBus = "SFX";
-	private const string Sfx3DBus = "SFX3D";
+	private const string Sfx3DBus = "SFX 3D";
 
 	// ── Music state ──────────────────────────────────────────────────────
 	private AudioStreamPlayer _musicPlayer;
@@ -57,6 +57,18 @@ public partial class AudioManager : Node
 
 	private Node _sfxContainer;
 	private Node _sfx3DContainer;
+
+	// ── Dedicated looping SFX player (timer, etc.) ──────────────────────
+	private AudioStreamPlayer _loopingSFXPlayer;
+
+	// ── SFX library (assign clips in Inspector) ─────────────────────────
+	[Export] private SfxLibrary _sfxLibrary;
+
+	/// <summary>
+	/// Provides access to all assigned sound-effect clips.
+	/// Used by convenience Play methods; can also be accessed directly.
+	/// </summary>
+	public SfxLibrary Sfx => _sfxLibrary;
 
 	// ══════════════════════════════════════════════════════════════════════
 	//  INITIALIZATION
@@ -546,6 +558,148 @@ public partial class AudioManager : Node
 	{
 		int busIndex = AudioServer.GetBusIndex(busName);
 		if (busIndex >= 0) AudioServer.SetBusVolumeDb(busIndex, volumeDb);
+	}
+
+	// ══════════════════════════════════════════════════════════════════════
+	//  SFX LIBRARY CONVENIENCE METHODS
+	// ══════════════════════════════════════════════════════════════════════
+
+	// ── UI ───────────────────────────────────────────────────────────────
+
+	/// <summary>Play the UI focus-change sound.</summary>
+	public void PlayUIFocusChange() =>
+		PlaySFX(_sfxLibrary?.UIFocusChange);
+
+	/// <summary>Play the UI button-click sound.</summary>
+	public void PlayUIButtonClick() =>
+		PlaySFX(_sfxLibrary?.UIButtonClick);
+
+	// ── Gameplay ─────────────────────────────────────────────────────────
+
+	/// <summary>Play the finish-line / level-complete sound.</summary>
+	public void PlayFinishLine() =>
+		PlaySFX(_sfxLibrary?.FinishLine);
+
+	/// <summary>Play a laser-fire sound.</summary>
+	public void PlayLaserFire() =>
+		PlaySFX(_sfxLibrary?.LaserBuzz);
+
+	/// <summary>Play the sound of the player entering / touching a laser.</summary>
+	public void PlayLaserEnter() =>
+		PlaySFX(_sfxLibrary?.LaserEnter);
+
+	// ── Player Movement ──────────────────────────────────────────────────
+
+	/// <summary>Play a footstep sound.</summary>
+	public void PlayPlayerFootstep() =>
+		PlaySFX(_sfxLibrary?.PlayerFootstep);
+
+	/// <summary>Play a jump sound.</summary>
+	public void PlayPlayerJump() =>
+		PlaySFX(_sfxLibrary?.PlayerJump);
+
+	/// <summary>Play a landing sound.</summary>
+	public void PlayPlayerLand() =>
+		PlaySFX(_sfxLibrary?.PlayerLand);
+
+	// ── Timer / Countdown ────────────────────────────────────────────────
+
+	/// <summary>Play the bet / countdown tick sound.</summary>
+	public void PlayTimerBetTick() =>
+		PlaySFX(_sfxLibrary?.TimerBetTick);
+
+	/// <summary>Play the limit-time warning sound (plays when time is almost up).</summary>
+	public void PlayTimerLimitWarning() =>
+		PlaySFX(_sfxLibrary?.TimerLimitWarning);
+
+	/// <summary>
+	/// Play the limit-time ended sound (one-shot — nie zapętla się,
+	/// nawet jeśli plik audio ma loop=true w imporcie).
+	/// </summary>
+	public void PlayTimerLimitEnd()
+	{
+		var sound = _sfxLibrary?.TimerLimitEnd;
+		if (sound == null) return;
+
+		// Dedicated player — zatrzymuje się po naturalnej długości streamu
+		var player = new AudioStreamPlayer();
+		player.Bus = SfxBus;
+		player.Stream = sound;
+		AddChild(player);
+		player.Play();
+
+		double length = sound.GetLength();
+		if (length > 0.0)
+		{
+			var timer = GetTree().CreateTimer(length);
+			timer.Timeout += () =>
+			{
+				if (IsInstanceValid(player))
+				{
+					player.Stop();
+					player.QueueFree();
+				}
+			};
+		}
+		else
+		{
+			// Fallback: jeśli długość nieznana, zatrzymaj po 1 sekundzie
+			var timer = GetTree().CreateTimer(1.0);
+			timer.Timeout += () =>
+			{
+				if (IsInstanceValid(player))
+				{
+					player.Stop();
+					player.QueueFree();
+				}
+			};
+		}
+	}
+
+	// ══════════════════════════════════════════════════════════════════════
+	//  LOOPING / CONTINUOUS SFX
+	// ══════════════════════════════════════════════════════════════════════
+
+	/// <summary>
+	/// Starts (or switches) a looping sound that plays continuously until
+	/// <see cref="StopLoopingSFX"/> is called. Only one looping SFX can play
+	/// at a time — calling this again replaces the current loop.
+	/// </summary>
+	/// <param name="sound">Audio stream to loop (should have loop=true in import).</param>
+	/// <param name="pitchScale">Pitch multiplier (1.0 = normal, 2.0 = double speed).</param>
+	/// <param name="volumeDb">Volume offset in dB (0 = default bus).</param>
+	public void StartLoopingSFX(AudioStream sound, float pitchScale = 1f, float volumeDb = 0f)
+	{
+		if (sound == null) return;
+
+		if (_loopingSFXPlayer == null)
+		{
+			_loopingSFXPlayer = new AudioStreamPlayer();
+			_loopingSFXPlayer.Name = "LoopingSFX";
+			_loopingSFXPlayer.Bus = SfxBus;
+			AddChild(_loopingSFXPlayer);
+		}
+
+		// Already playing this exact stream at the same pitch — no-op
+		if (_loopingSFXPlayer.Playing
+			&& _loopingSFXPlayer.Stream == sound
+			&& Mathf.Abs(_loopingSFXPlayer.PitchScale - pitchScale) < 0.01f)
+			return;
+
+		_loopingSFXPlayer.Stop();
+		_loopingSFXPlayer.Stream = sound;
+		_loopingSFXPlayer.PitchScale = pitchScale;
+		_loopingSFXPlayer.VolumeDb = volumeDb;
+		_loopingSFXPlayer.Play();
+	}
+
+	/// <summary>
+	/// Stops the currently looping SFX, if any.
+	/// </summary>
+	public void StopLoopingSFX()
+	{
+		if (_loopingSFXPlayer != null && _loopingSFXPlayer.Playing)
+			_loopingSFXPlayer.Stop();
 	}
 
 	// ══════════════════════════════════════════════════════════════════════
