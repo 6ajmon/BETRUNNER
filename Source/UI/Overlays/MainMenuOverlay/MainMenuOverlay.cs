@@ -19,6 +19,7 @@ public partial class MainMenuOverlay : Control
 		// ── Connect buttons ─────────────────────────────────────────
 		PlayButton.Pressed += OnPlayButtonPressed;
 		SettingsButton.Pressed += OnSettingsButtonPressed;
+		LevelSelectButton.Pressed += OnLevelSelectPressed;
 		CreditsButton.Pressed += OnCreditsButtonPressed;
 		ExitButton.Pressed += OnExitButtonPressed;
 
@@ -46,7 +47,7 @@ public partial class MainMenuOverlay : Control
 		// ── Hook into SettingsOverlay back (managed by SceneManager) ─
 		var settings = SceneManager.Instance.GetSettingsOverlay();
 		if (settings != null)
-			settings.OnBackClicked += OnSettingsBackPressed;
+			settings.OnBackClicked += OnBackPressed;
 
 		// Re-wire when becoming visible (in case pause overwrote it)
 		VisibilityChanged += OnVisibilityChanged;
@@ -62,7 +63,7 @@ public partial class MainMenuOverlay : Control
 		var settings = SceneManager.Instance?.GetSettingsOverlay();
 		if (settings != null)
 		{
-			settings.OnBackClicked -= OnSettingsBackPressed;
+			settings.OnBackClicked -= OnBackPressed;
 			VisibilityChanged -= OnVisibilityChanged;
 		}
 	}
@@ -73,7 +74,7 @@ public partial class MainMenuOverlay : Control
 
 		var settings = SceneManager.Instance.GetSettingsOverlay();
 		if (settings != null)
-			settings.OnBackClicked = OnSettingsBackPressed;
+			settings.OnBackClicked = OnBackPressed;
 	}
 
 	// ── First-play dialog ─────────────────────────────────────────────────
@@ -150,9 +151,14 @@ public partial class MainMenuOverlay : Control
 		SceneManager.Instance.ShowSettingsOverlay();
 	}
 
-	private void OnSettingsBackPressed()
+	private void OnBackPressed()
 	{
 		SceneManager.Instance.ShowMainMenuOverlay();
+	}
+
+	private void OnLevelSelectPressed()
+	{
+		SceneManager.Instance.ShowLevelSelectOverlay();
 	}
 
 	private void OnCreditsButtonPressed()

@@ -13,6 +13,9 @@ public partial class GameManager : Node
 	[Signal] public delegate void CountdownPausedEventHandler();
 	[Signal] public delegate void EndBettingPhaseEventHandler();
 	[Signal] public delegate void PreviewCameraLoadedEventHandler();
+
+	[Signal]
+	public delegate void LevelSelectedEventHandler(int levelId);
 	
 
 	public enum gameState
@@ -51,6 +54,7 @@ public partial class GameManager : Node
 		PreviewCameraLoaded += OnPreviewCameraLoaded;
 		EndBettingPhase += OnEndBettingPhase;
 		PlayButtonPressed += OnPlayButton_Pressed;
+		LevelSelected += OnLevelSelected;
 
 		// Start main-menu music after all autoloads are initialised
 		Callable.From(() => AudioManager.Instance.UpdateMusicForGameState()).CallDeferred();
@@ -105,6 +109,15 @@ public partial class GameManager : Node
 		{
 			TryAdvanceToNextLevel(); // sets index to 0, calls SetCurrentLevel + loads scene
 		}
+	}
+
+	private void OnLevelSelected(int LevelId)
+	{
+		CurrentState = gameState.Loading;
+		AudioManager.Instance.UpdateMusicForGameState();
+		_currentLevelIndex = LevelId - 1;
+		TryAdvanceToNextLevel();
+		
 	}
 	
 	private void OnPreviewCameraLoaded()
