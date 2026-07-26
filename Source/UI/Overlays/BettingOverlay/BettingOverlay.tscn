@@ -3,17 +3,16 @@
 [ext_resource type="Theme" uid="uid://cw0cqpcgx8o18" path="res://Assets/Themes/MainUITheme.tres" id="1_7awfd"]
 [ext_resource type="Script" uid="uid://d1s2odkr5sh7q" path="res://Source/UI/Overlays/BettingOverlay/BettingOverlay.cs" id="1_8i2ax"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8i2ax"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7awfd"]
 content_margin_left = 16.0
 content_margin_top = 16.0
 content_margin_right = 16.0
 content_margin_bottom = 16.0
-bg_color = Color(0.1, 0.1, 0.1, 0.6)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-corner_detail = 5
+bg_color = Color(0.02745098, 0.36862746, 0.34509805, 0.64705884)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
 
 [node name="BettingOverlay" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_betSlider", "_levelTimeLabel", "_totalTimeLabel", "_sliderMinLabel", "_sliderMaxLabel", "_sliderValueLabel")]
 layout_mode = 3
@@ -24,20 +23,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_7awfd")
 script = ExtResource("1_8i2ax")
-_betSlider = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/BetAmountSlider")
-_levelTimeLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/MarginContainer/LevelTimeLabel")
-_totalTimeLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/MarginContainer/TotalTimeLabel")
-_sliderMinLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer/MarginContainer/MinSliderValueLabel")
-_sliderMaxLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer/MarginContainer2/MaxSliderValueLabel")
-_sliderValueLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer/MarginContainer3/SliderValueLabel")
-
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1695877596]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+_betSlider = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/VBoxContainer/BetAmountSlider")
+_levelTimeLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/VBoxContainer/MarginContainer/LevelTimeLabel")
+_totalTimeLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/VBoxContainer/MarginContainer/TotalTimeLabel")
+_sliderMinLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer/MarginContainer/MinSliderValueLabel")
+_sliderMaxLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer/MarginContainer2/MaxSliderValueLabel")
+_sliderValueLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer/MarginContainer3/SliderValueLabel")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1842317583]
 layout_mode = 1
@@ -71,64 +62,72 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=665736661]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=424544629]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_8i2ax")
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=1417215869]
+[node name="VBoxContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer" unique_id=665736661]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_7awfd")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer" unique_id=1417215869]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2" unique_id=647013508]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2" unique_id=647013508]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.5
 
-[node name="MarginContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=936900231]
+[node name="MarginContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=936900231]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="LevelTimeLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/MarginContainer" unique_id=1747789071]
+[node name="LevelTimeLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/VBoxContainer/MarginContainer" unique_id=1747789071]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="TotalTimeLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/MarginContainer" unique_id=1824554202]
+[node name="TotalTimeLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/VBoxContainer/MarginContainer" unique_id=1824554202]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=1972049367]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=1972049367]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer" unique_id=772944481]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer" unique_id=772944481]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MinSliderValueLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer/MarginContainer" unique_id=608223448]
+[node name="MinSliderValueLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer/MarginContainer" unique_id=608223448]
 layout_mode = 2
 text = "0.0 s"
 
-[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer" unique_id=1705188804]
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer" unique_id=1705188804]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SliderValueLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer/MarginContainer3" unique_id=413889675]
+[node name="SliderValueLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer/MarginContainer3" unique_id=413889675]
 layout_mode = 2
 text = "0.0 s"
 horizontal_alignment = 1
 
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer" unique_id=169746677]
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer" unique_id=169746677]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MaxSliderValueLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer/MarginContainer2" unique_id=2029929865]
+[node name="MaxSliderValueLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/VBoxContainer/HBoxContainer/MarginContainer2" unique_id=2029929865]
 layout_mode = 2
 text = "0.0 s"
 horizontal_alignment = 2
 
-[node name="BetAmountSlider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=978186477]
+[node name="BetAmountSlider" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=978186477]
 layout_mode = 2
 size_flags_vertical = 3
 value = 50.0
@@ -136,7 +135,7 @@ tick_count = 2
 ticks_on_borders = true
 ticks_position = 3
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2" unique_id=1517190049]
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2" unique_id=1517190049]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -162,4 +161,4 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_vertical = 3
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/Button" to="." method="_on_bet_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer/VBoxContainer2/Button" to="." method="_on_bet_button_pressed"]
