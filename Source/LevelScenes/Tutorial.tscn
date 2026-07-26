@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bh2u0crmw0n4c" path="res://Source/MapObjects/wall.tscn" id="8_wl206"]
 [ext_resource type="PackedScene" uid="uid://d38pigd56rdna" path="res://Assets/gtlf/Hazard_Floor_1.glb" id="9_wsmac"]
 [ext_resource type="Script" uid="uid://d3o83ikxfnant" path="res://Source/MapObjects/MovingPlatform/MovingPlatform.cs" id="10_l3tf0"]
+[ext_resource type="PackedScene" uid="uid://bywuidtihbx5j" path="res://Source/Components/ButtonBeam/button_beam.tscn" id="11_c4esg"]
 [ext_resource type="PackedScene" uid="uid://b50je4svyhxt6" path="res://Source/Player/Player.tscn" id="11_jegd7"]
 [ext_resource type="PackedScene" uid="uid://cx8mg5moh6k3y" path="res://Source/Components/EventNode/EventNode.tscn" id="12_nwub4"]
 [ext_resource type="PackedScene" uid="uid://bjckh1vja8nig" path="res://Source/Components/CameraPathFollow/CameraPathFollow.tscn" id="13_nwub4"]
@@ -590,13 +591,17 @@ transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 16.1
 [node name="Glass" parent="MapContainer/Fifth Bridge/GlassEnd/Glass3" unique_id=2118645745 instance=ExtResource("6_o8g5b")]
 
 [node name="MovingPlatform4" parent="MapContainer/Fifth Bridge" unique_id=497398687 node_paths=PackedStringArray("_pressurePlate") instance=ExtResource("9_wsmac")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.177456, -1.1387045, -5.8536034)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.177, -1.2, -5.854)
 script = ExtResource("10_l3tf0")
-_target = Vector3(0, 4, 0)
+_target = Vector3(0, 1.8, 0)
 _speed = 2.0
+_comeback = false
 _pressurePlate = NodePath("../../../PressurePlate")
 
 [node name="FloorPanel" parent="MapContainer/Fifth Bridge/MovingPlatform4" unique_id=1987877331 instance=ExtResource("4_poj3h")]
+
+[node name="ButtonBeam" parent="MapContainer/Fifth Bridge/MovingPlatform4" unique_id=376831290 node_paths=PackedStringArray("ButtonNode") instance=ExtResource("11_c4esg")]
+ButtonNode = NodePath("../../../../PressurePlate")
 
 [node name="SixthBridge" type="Node3D" parent="MapContainer" unique_id=1241705341]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 58, 3.6, 80)
@@ -764,7 +769,7 @@ mesh = SubResource("BoxMesh_m0frt")
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 
 [node name="PressurePlate" parent="." unique_id=158581914 instance=ExtResource("14_5a36w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60.146397, -1.6387045, 53.822495)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60.146, -1.65, 53.822)
 
 [node name="Preview" type="Path3D" parent="." unique_id=411543500]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 4, -4)

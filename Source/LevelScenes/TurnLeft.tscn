@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://c3sg4vp604qt6" path="res://Assets/gtlf/Wall_Glass_Clear.glb" id="9_2cced"]
 [ext_resource type="PackedScene" uid="uid://b3ogk047evk56" path="res://Source/MapObjects/Glass.tscn" id="10_nwy88"]
 [ext_resource type="PackedScene" uid="uid://d38pigd56rdna" path="res://Assets/gtlf/Hazard_Floor_1.glb" id="11_csfd2"]
+[ext_resource type="PackedScene" uid="uid://bywuidtihbx5j" path="res://Source/Components/ButtonBeam/button_beam.tscn" id="12_ihedd"]
 [ext_resource type="Script" uid="uid://d3o83ikxfnant" path="res://Source/MapObjects/MovingPlatform/MovingPlatform.cs" id="12_y6gru"]
 [ext_resource type="Texture2D" uid="uid://cr15mjetijl8m" path="res://Assets/gtlf/Hazard_Floor_1_Gradient Texture Atlas by Imphenzia.png" id="13_2cced"]
 [ext_resource type="PackedScene" uid="uid://qurbeehr7tu1" path="res://Assets/gtlf/Wall_Red.glb" id="14_nwy88"]
@@ -278,8 +279,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.25, 4)
 transform = Transform3D(-4.3711385e-08, -1, -4.3711385e-08, 0, -4.371139e-08, 0.99999994, -0.99999994, 4.371139e-08, 1.9106853e-15, 10, 1.9, 4)
 script = ExtResource("12_y6gru")
 _target = Vector3(-200, 0, 0)
-_comeback = false
 _speed = 2.0
+_comeback = false
 _pressurePlate = NodePath("../PressurePlate2")
 
 [node name="FloorPanel" parent="MapContainer/MovingPlatform5" unique_id=1447087859 instance=ExtResource("8_y6gru")]
@@ -292,8 +293,8 @@ mesh = SubResource("ArrayMesh_42477")
 transform = Transform3D(-4.3711385e-08, -1, -4.3711385e-08, 0, -4.371139e-08, 0.99999994, -0.99999994, 4.371139e-08, 1.9106853e-15, 2, 1.9, 4)
 script = ExtResource("12_y6gru")
 _target = Vector3(-200, 0, 0)
-_comeback = false
 _speed = 2.0
+_comeback = false
 _pressurePlate = NodePath("../PressurePlate2")
 
 [node name="FloorPanel" parent="MapContainer/MovingPlatform6" unique_id=1848227831 instance=ExtResource("8_y6gru")]
@@ -306,8 +307,8 @@ mesh = SubResource("ArrayMesh_42477")
 transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, 4, -0.1, 4)
 script = ExtResource("12_y6gru")
 _target = Vector3(-200, 0, 0)
-_comeback = false
 _speed = 2.0
+_comeback = false
 _pressurePlate = NodePath("../PressurePlate2")
 
 [node name="FloorPanel" parent="MapContainer/MovingPlatform7" unique_id=1677599584 instance=ExtResource("8_y6gru")]
@@ -320,8 +321,8 @@ mesh = SubResource("ArrayMesh_42477")
 transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, 8, -0.1, 4)
 script = ExtResource("12_y6gru")
 _target = Vector3(-200, 0, 0)
-_comeback = false
 _speed = 2.0
+_comeback = false
 _pressurePlate = NodePath("../PressurePlate2")
 
 [node name="FloorPanel" parent="MapContainer/MovingPlatform8" unique_id=1714779244 instance=ExtResource("8_y6gru")]
@@ -461,6 +462,9 @@ _pressurePlate = NodePath("../PressurePlate")
 [node name="Hazard Floor 2" type="MeshInstance3D" parent="MapContainer/MovingPlatform10" unique_id=15321327]
 transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, -0.2, 0)
 mesh = SubResource("ArrayMesh_42477")
+
+[node name="ButtonBeam" parent="MapContainer/MovingPlatform10" unique_id=376831290 node_paths=PackedStringArray("ButtonNode") instance=ExtResource("12_ihedd")]
+ButtonNode = NodePath("../../PressurePlate")
 
 [node name="WaitingRoom2" parent="MapContainer" unique_id=1861540171 instance=ExtResource("1_vtnb4")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -20.2, 0, -8)
