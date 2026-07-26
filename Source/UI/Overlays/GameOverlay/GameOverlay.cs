@@ -28,6 +28,8 @@ public partial class GameOverlay : Control
 	{
 		_isRunning = false;
 		_finishTriggered = true;
+		if (_stoperBar != null)
+			_stoperBar.TimerFlowing = false;
 		if (AudioManager.Instance != null)
 			AudioManager.Instance.StopLoopingSFX();
 	}
@@ -156,7 +158,9 @@ public partial class GameOverlay : Control
 
 		_isRunning = false;
 
-		// Zatrzymaj ciągły dźwięk stopera
+		// Zatrzymaj ciągły dźwięk stopera i zresetuj stan stoper-bara
+		if (_stoperBar != null)
+			_stoperBar.TimerFlowing = false;
 		if (AudioManager.Instance != null)
 			AudioManager.Instance.StopLoopingSFX();
 

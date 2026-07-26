@@ -146,6 +146,7 @@ public partial class GameManager : Node
 		CountdownManager.Instance.OnLevelFinished(actualTime);
 
 		CurrentState = gameState.Loading;
+		AudioManager.Instance.StopLoopingSFX(); // zatrzymaj tykanie stopera
 
 		// Zwolnij myszkę i włącz kamerę podglądu
 		Input.MouseMode = Input.MouseModeEnum.Visible;
@@ -154,6 +155,7 @@ public partial class GameManager : Node
 		// Pokaż odpowiedni ekran podsumowania — przegrana tylko gdy przekroczono zakład i pula jest pusta
 		if (overshoot > 0.0 && CountdownManager.Instance.IsEffectivelyBankrupt)
 		{
+			AudioManager.Instance.PlayFinishLine();
 			AudioManager.Instance.PlayGameOverMusic();
 			SceneManager.Instance.ShowFinishOverlay();
 			var fail = SceneManager.Instance.GetFailureOverlay();
@@ -162,6 +164,7 @@ public partial class GameManager : Node
 		else if (_currentLevelIndex >= _levelScenes.Length - 1)
 		{
 			// Ostatni poziom ukończony — finish overlay z podsumowaniem całej gry
+			AudioManager.Instance.PlayFinishLine();
 			AudioManager.Instance.PlayVictoryMusic();
 			SceneManager.Instance.ShowFinishOverlay();
 			var finish = SceneManager.Instance.GetFailureOverlay();
@@ -228,6 +231,8 @@ public partial class GameManager : Node
 	public void TriggerDynamicFailure()
 	{
 		CurrentState = gameState.Loading;
+		AudioManager.Instance.StopLoopingSFX(); // zatrzymaj tykanie stopera
+		AudioManager.Instance.PlayFinishLine();
 		AudioManager.Instance.PlayGameOverMusic();
 		Input.MouseMode = Input.MouseModeEnum.Visible;
 		SceneManager.Instance.ShowFinishOverlay();
