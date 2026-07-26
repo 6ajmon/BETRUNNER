@@ -1,4 +1,4 @@
-# GMTK Game Jam 2026 entry
+# BETRUNNER
 
 <img width="3810" height="1974" alt="image" src="https://github.com/user-attachments/assets/8b51c0c7-6dc0-4af3-9e73-be87b3a9c147" />
 <img width="3804" height="1957" alt="image" src="https://github.com/user-attachments/assets/a62d1ac6-0f99-456b-b6d8-c87b9c8cedd4" />
