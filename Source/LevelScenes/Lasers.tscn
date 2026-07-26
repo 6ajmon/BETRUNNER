@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://qurbeehr7tu1" path="res://Assets/gtlf/Wall_Red.glb" id="14_f0ori"]
 [ext_resource type="PackedScene" uid="uid://bywuidtihbx5j" path="res://Source/Components/ButtonBeam/button_beam.tscn" id="15_7sk74"]
 [ext_resource type="PackedScene" uid="uid://bh2u0crmw0n4c" path="res://Source/MapObjects/wall.tscn" id="15_q0wej"]
+[ext_resource type="Script" uid="uid://dadumhfb7i7o" path="res://Source/Components/ButtonBeam/ButtonBeam.cs" id="16_7he7u"]
 [ext_resource type="PackedScene" uid="uid://daawyxd153sdm" path="res://Assets/gtlf/Floor_Tile_Carpet_Red.glb" id="16_xwbpt"]
 
 [sub_resource type="Environment" id="Environment_wnvvs"]
@@ -584,6 +585,7 @@ _pressurePlate = NodePath("../PressurePlate")
 [node name="FloorPanel" parent="MapContainer/MovingPlatform2" unique_id=1635165799 instance=ExtResource("8_wnvvs")]
 
 [node name="ButtonBeam" parent="MapContainer/MovingPlatform2" unique_id=376831290 node_paths=PackedStringArray("ButtonNode") instance=ExtResource("15_7sk74")]
+script = ExtResource("16_7he7u")
 ButtonNode = NodePath("../../PressurePlate")
 
 [node name="Walls" type="Node3D" parent="MapContainer" unique_id=1429630391]

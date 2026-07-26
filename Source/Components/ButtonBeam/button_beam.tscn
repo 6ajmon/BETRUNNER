@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bywuidtihbx5j"]
 
-[ext_resource type="Script" uid="uid://bt4igsqn78m64" path="res://Source/ButtonBeam.cs" id="1_e3qmv"]
+[ext_resource type="Script" uid="uid://dadumhfb7i7o" path="res://Source/Components/ButtonBeam/ButtonBeam.cs" id="1_p7dt4"]
 
 [node name="ButtonBeam" type="MeshInstance3D" unique_id=376831290]
-script = ExtResource("1_e3qmv")
+script = ExtResource("1_p7dt4")

@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://b3ogk047evk56" path="res://Source/MapObjects/Glass.tscn" id="11_otlxe"]
 [ext_resource type="PackedScene" uid="uid://bywuidtihbx5j" path="res://Source/Components/ButtonBeam/button_beam.tscn" id="13_g8vy3"]
 [ext_resource type="PackedScene" uid="uid://qurbeehr7tu1" path="res://Assets/gtlf/Wall_Red.glb" id="13_o676h"]
+[ext_resource type="Script" uid="uid://dadumhfb7i7o" path="res://Source/Components/ButtonBeam/ButtonBeam.cs" id="14_gryc4"]
 [ext_resource type="PackedScene" uid="uid://bh2u0crmw0n4c" path="res://Source/MapObjects/wall.tscn" id="14_hb1jc"]
 
 [sub_resource type="Environment" id="Environment_7kem0"]
@@ -402,6 +403,7 @@ transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 6, 2
 [node name="Glass" parent="MapContainer/FirstBridge3/Glass1" unique_id=1273704857 instance=ExtResource("11_otlxe")]
 
 [node name="ButtonBeam" parent="MapContainer/FirstBridge3/Glass1" unique_id=376831290 node_paths=PackedStringArray("ButtonNode") instance=ExtResource("13_g8vy3")]
+script = ExtResource("14_gryc4")
 ButtonNode = NodePath("../../../Platform3x3(3/Panel2/RightPlate")
 
 [node name="Glass2" parent="MapContainer/FirstBridge3" unique_id=1086342004 instance=ExtResource("10_3sb85")]
@@ -420,6 +422,7 @@ transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 6, 2
 [node name="Glass" parent="MapContainer/FirstBridge3/Glass4" unique_id=1132241166 instance=ExtResource("11_otlxe")]
 
 [node name="ButtonBeam" parent="MapContainer/FirstBridge3/Glass4" unique_id=203420305 node_paths=PackedStringArray("ButtonNode") instance=ExtResource("13_g8vy3")]
+script = ExtResource("14_gryc4")
 ButtonNode = NodePath("../../../Platform3x3(4/Panel2/LeftPlate")
 
 [node name="Glass5" parent="MapContainer/FirstBridge3" unique_id=1334217366 instance=ExtResource("10_3sb85")]

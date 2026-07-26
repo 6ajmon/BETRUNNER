@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://d3o83ikxfnant" path="res://Source/MapObjects/MovingPlatform/MovingPlatform.cs" id="10_l3tf0"]
 [ext_resource type="PackedScene" uid="uid://bywuidtihbx5j" path="res://Source/Components/ButtonBeam/button_beam.tscn" id="11_c4esg"]
 [ext_resource type="PackedScene" uid="uid://b50je4svyhxt6" path="res://Source/Player/Player.tscn" id="11_jegd7"]
+[ext_resource type="Script" uid="uid://dadumhfb7i7o" path="res://Source/Components/ButtonBeam/ButtonBeam.cs" id="12_67f6t"]
 [ext_resource type="PackedScene" uid="uid://cx8mg5moh6k3y" path="res://Source/Components/EventNode/EventNode.tscn" id="12_nwub4"]
 [ext_resource type="PackedScene" uid="uid://bjckh1vja8nig" path="res://Source/Components/CameraPathFollow/CameraPathFollow.tscn" id="13_nwub4"]
 [ext_resource type="Script" uid="uid://u4gco1pgre3a" path="res://Source/Components/EventNode/EventNode.cs" id="13_poj3h"]
@@ -601,6 +602,7 @@ _pressurePlate = NodePath("../../../PressurePlate")
 [node name="FloorPanel" parent="MapContainer/Fifth Bridge/MovingPlatform4" unique_id=1987877331 instance=ExtResource("4_poj3h")]
 
 [node name="ButtonBeam" parent="MapContainer/Fifth Bridge/MovingPlatform4" unique_id=376831290 node_paths=PackedStringArray("ButtonNode") instance=ExtResource("11_c4esg")]
+script = ExtResource("12_67f6t")
 ButtonNode = NodePath("../../../../PressurePlate")
 
 [node name="SixthBridge" type="Node3D" parent="MapContainer" unique_id=1241705341]
