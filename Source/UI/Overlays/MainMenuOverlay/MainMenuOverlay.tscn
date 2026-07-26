@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cyckpnpoh1sh7"]
 
 [ext_resource type="Script" uid="uid://ixrgoi7fpu2t" path="res://Source/UI/Overlays/MainMenuOverlay/MainMenuOverlay.cs" id="1_4u05w"]
+[ext_resource type="Theme" uid="uid://cw0cqpcgx8o18" path="res://Assets/Themes/MainUITheme.tres" id="1_243br"]
 
 [node name="MainMenuOverlay" type="Control" unique_id=1904148748 node_paths=PackedStringArray("PlayButton", "SettingsButton", "LevelSelectButton", "CreditsButton", "ExitButton")]
 layout_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_243br")
 script = ExtResource("1_4u05w")
 PlayButton = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer4/PlayButton")
 SettingsButton = NodePath("PanelContainer/MarginContainer2/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer4/SettingsButton")

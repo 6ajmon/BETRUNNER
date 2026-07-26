@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://mse67hi2gqw0"]
 
 [ext_resource type="Script" uid="uid://qpu1h8gms2i2" path="res://Source/UI/Overlays/SummaryOverlay/SummaryOverlay.cs" id="1_2vk15"]
+[ext_resource type="Theme" uid="uid://cw0cqpcgx8o18" path="res://Assets/Themes/MainUITheme.tres" id="1_nwp8f"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8i2ax"]
 content_margin_left = 16.0
@@ -14,18 +15,19 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 5
 
-[node name="SummaryOverlay" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_bonusValueLabel", "_betLabel", "_timeLabel", "_penaltyLabel", "_RemainingLabel", "_continueButton")]
+[node name="SummaryOverlay" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_bonusValueLabel", "_betLabel", "_penaltyLabel", "_timeLabel", "_RemainingLabel", "_continueButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_nwp8f")
 script = ExtResource("1_2vk15")
 _bonusValueLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/BonusLabel")
 _betLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/BetLabel")
-_timeLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/TimeLabel")
 _penaltyLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/PenaltyLabel")
+_timeLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/TimeLabel")
 _RemainingLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/RemainingTimeLabel")
 _continueButton = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/Button")
 

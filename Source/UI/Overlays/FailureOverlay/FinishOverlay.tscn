@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dswf70upb16sn"]
 
+[ext_resource type="Theme" uid="uid://cw0cqpcgx8o18" path="res://Assets/Themes/MainUITheme.tres" id="1_dng2x"]
 [ext_resource type="Script" uid="uid://cdn1wvdseyujp" path="res://Source/UI/Overlays/FailureOverlay/FinishOverlay.cs" id="1_r6e7e"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8i2ax"]
@@ -21,6 +22,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_dng2x")
 script = ExtResource("1_r6e7e")
 _menuButton = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/Button")
 _levelStatsContainer = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/MarginContainer2/MarginContainer/ScrollContainer/LevelStatsContainer")

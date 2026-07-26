@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://b0vre76lrmauc"]
 
+[ext_resource type="Theme" uid="uid://cw0cqpcgx8o18" path="res://Assets/Themes/MainUITheme.tres" id="1_7awfd"]
 [ext_resource type="Script" uid="uid://d1s2odkr5sh7q" path="res://Source/UI/Overlays/BettingOverlay/BettingOverlay.cs" id="1_8i2ax"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8i2ax"]
@@ -21,6 +22,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_7awfd")
 script = ExtResource("1_8i2ax")
 _betSlider = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/BetAmountSlider")
 _levelTimeLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer2/VBoxContainer/MarginContainer/LevelTimeLabel")

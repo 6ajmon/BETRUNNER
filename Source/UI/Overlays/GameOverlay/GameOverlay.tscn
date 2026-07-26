@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bg4brd8hew2uc"]
 
 [ext_resource type="Script" uid="uid://d1tvbpv8330po" path="res://Source/UI/Overlays/GameOverlay/GameOverlay.cs" id="1_c58pn"]
+[ext_resource type="Theme" uid="uid://cw0cqpcgx8o18" path="res://Assets/Themes/MainUITheme.tres" id="1_maxwh"]
 [ext_resource type="PackedScene" uid="uid://dphhikovty8je" path="res://Source/UI/Controls/StoperProgressBar/StoperProgressBar.tscn" id="2_hbv1b"]
 
 [node name="GameOverlay" type="Control" unique_id=1477386783 node_paths=PackedStringArray("_countdownLabel", "_limitLabel", "_stoperBar")]
@@ -10,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_maxwh")
 script = ExtResource("1_c58pn")
 _countdownLabel = NodePath("MarginContainer/TimeLabel")
 _limitLabel = NodePath("MarginContainer/LimitLabel")
